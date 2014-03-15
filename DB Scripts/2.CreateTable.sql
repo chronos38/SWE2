@@ -14,26 +14,27 @@ create table CompanyData (
 	Name text not null
 );
 
-drop table if exists Contact cascade;
-create table Contact (
-	ID serial primary key,
-	fk_CompanyData integer references CompanyData(ID) null,
-	fk_PersonData integer references PersonData(ID) null
-);
-
 drop table if exists Address cascade;
 create table Address (
 	ID serial primary key,
 	Street text not null,
-	StreetNumber text not null,
+	StreetNumber integer not null,
 	PostalCode integer not null,
 	City text not null
 );
 
-drop table if exists AddressType cascade;
-create table AddressType (
+drop table if exists Contact cascade;
+create table Contact (
 	ID serial primary key,
-	Type text not null, -- values are 'Main', 'Delivery', 'Billing'
+	fk_CompanyData integer references CompanyData(ID) null,
+	fk_PersonData integer references PersonData(ID) null,
+	fk_Address integer references Address(ID) not null
+);
+
+drop table if exists AdditionalAddress cascade;
+create table AdditionalAddress (
+	ID serial primary key,
+	Type text not null, -- either 'Delivery' or 'Billing'
 	fk_Contact integer references Contact(ID) not null,
 	fk_Address integer references Address(ID) not null
 );
@@ -67,8 +68,8 @@ create table InvoiceItem (
 	ID serial primary key,
 	UnitPrice float not null,
 	Quantity integer not null,
-	Amount float null,
-	AmountNet float null,
+	--Amount float null,
+	--AmountNet float null,
 	fk_TaxType integer references ValueAddedTax(ID) not null
 );
 
@@ -76,5 +77,5 @@ drop table if exists InvoicePosition cascade;
 create table InvoicePosition (
 	ID serial primary key,
 	fk_Invoice integer references Invoice(ID) not null,
-	fk_IvoiceItem integer references InvoiceItem(ID) not null
+	fk_InvoiceItem integer references InvoiceItem(ID) not null
 );
