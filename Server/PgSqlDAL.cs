@@ -10,7 +10,7 @@ namespace Server
 {
 	class PgSqlDAL
 	{
-		string _connString = "Server=127.0.0.1;Port=5432;User Id=sweadmin;Password=swe;Database=swedb;";
+		string _connString; 
 
 		public PgSqlDAL(string connString)
 		{
@@ -55,11 +55,18 @@ namespace Server
 		{
 			NpgsqlConnection dbConn = new NpgsqlConnection(_connString);
 			dbConn.Open();
-			NpgsqlCommand dbCommand = new NpgsqlCommand(sql);
-			int rows = dbCommand.ExecuteNonQuery();
-			dbConn.Close();
-			return rows;
+			try
+			{
+				NpgsqlCommand dbCommand = new NpgsqlCommand(sql);
+				int rows = dbCommand.ExecuteNonQuery();
+				dbConn.Close();
+				return rows;
+			} 
+			catch(Exception ex)
+			{
+				dbConn.Close();
+				throw ex;
+			}
 		}
-
 	}
 }
