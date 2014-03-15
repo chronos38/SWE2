@@ -44,9 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\GenericTable.cs" />
     <Compile Include="DAL\Table.cs" />
-    <Compile Include="DAL\TableContact.cs" />
     <Compile Include="DAL\Database.cs" />
     <Compile Include="DAL\IDataMinpulation.cs" />
     <Compile Include="DAL\IDataAccess.cs" />

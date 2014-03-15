@@ -15,11 +15,14 @@ namespace Server
 		{
 			Database db = Database.Instance;
 			db.Connect();
-			TableContact contacts = new TableContact();
-			
-			foreach (DataRow row in contacts.Rows) {
-				foreach (object item in row.ItemArray) {
-					Console.Write(String.Format("{0}", item));
+
+			Table contact = Table.Contact;
+
+			foreach (DataRow row in contact.Rows) {
+				DataColumnCollection columns = row.Table.Columns;
+
+				for (int i = 0; i < columns.Count; i++) {
+					Console.Write(String.Format("{0}: {1} ", columns[i], row.ItemArray[i]));
 				}
 				Console.Write('\n');
 			}

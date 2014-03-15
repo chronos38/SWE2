@@ -127,7 +127,7 @@ namespace Server.DAL
 			if (_connection != null) {
 				lock (_syncRoot) {
 					try {
-						NpgsqlCommand dbCommand = new NpgsqlCommand(sql);
+						NpgsqlCommand dbCommand = new NpgsqlCommand(sql, _connection);
 						return dbCommand.ExecuteNonQuery();
 					} catch {
 						// TODO: specific exception handling

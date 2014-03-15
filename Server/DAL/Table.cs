@@ -7,9 +7,32 @@ using System.Threading.Tasks;
 
 namespace Server.DAL
 {
-	abstract class Table : IDisposable, IDataAccess, IDataManipulation
+	class Table : IDisposable, IDataAccess, IDataManipulation
 	{
-		protected DataTable DataTable { get; set; }
+		private DataTable DataTable { get; set; }
+		private string TableName { get; set; }
+
+		public Table(string table)
+		{
+			// variables
+			Database db = Database.Instance;
+
+			// check database state
+			if (!db.IsConnected()) {
+				throw new ApplicationException("Database is not connected.");
+			}
+
+			// select data table
+			DataTable = db.Select(String.Format("SELECT * FROM {0}", table));
+
+			// check if all went successful
+			if (DataTable == null) {
+				throw new NullReferenceException("No tables were found.");
+			}
+
+			// set table name
+			TableName = table;
+		}
 
 		public void Dispose()
 		{
@@ -54,6 +77,35 @@ namespace Server.DAL
 
 		public void AcceptChanges()
 		{
+			// variables
+			Database db = Database.Instance;
+			DataTable changes = DataTable.GetChanges();
+			DataRowCollection rows = changes.Rows;
+
+			// check database state
+			if (!db.IsConnected()) {
+				throw new ApplicationException("Database is not connected.");
+			}
+
+			// add changes to database
+			foreach (DataRow row in rows) {
+				switch (row.RowState) {
+					case DataRowState.Added:
+						Insert(row);
+						break;
+					case DataRowState.Deleted:
+						Delete(row["ID"]); // it is assumed that every table has an ID
+						break;
+					case DataRowState.Modified:
+						Update(row);
+						break;
+					default:
+						rows.Remove(row);
+						break;
+				}
+			}
+
+			// accept changes
 			DataTable.AcceptChanges();
 		}
 
@@ -84,9 +136,111 @@ namespace Server.DAL
 			return new DataView(DataTable);
 		}
 
-		public DataView GetDataView(string filter, string sort)
+		public DataView GetDataView(string filter, string sort, DataViewRowState state = DataViewRowState.None)
 		{
-			return new DataView(DataTable, filter, sort, DataViewRowState.None);
+			return new DataView(DataTable, filter, sort, state);
+		}
+
+		public static Table AdditionalAddress
+		{
+			get
+			{
+				return new Table("AdditionalAddress");
+			}
+		}
+
+		public static Table Address
+		{
+			get
+			{
+				return new Table("Address");
+			}
+		}
+
+		public static Table CompanyData
+		{
+			get
+			{
+				return new Table("CompanyData");
+			}
+		}
+
+		public static Table Contact
+		{
+			get
+			{
+				return new Table("Contact");
+			}
+		}
+
+		public static Table Invoice
+		{
+			get
+			{
+				return new Table("Invoice");
+			}
+		}
+
+		public static Table InvoiceItem
+		{
+			get
+			{
+				return new Table("InvoiceItem");
+			}
+		}
+
+		public static Table InvoicePosition
+		{
+			get
+			{
+				return new Table("InvoicePosition");
+			}
+		}
+
+		public static Table InvoiceType
+		{
+			get
+			{
+				return new Table("InvoiceType");
+			}
+		}
+
+		public static Table PersonData
+		{
+			get
+			{
+				return new Table("PersonData");
+			}
+		}
+
+		public static Table ValueAddedTax
+		{
+			get
+			{
+				return new Table("ValueAddedTax");
+			}
+		}
+
+		private void Insert(DataRow row)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void Update(DataRow row)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void Delete(object id)
+		{
+			// variables
+			string query = String.Format("DELETE FROM {0} WHERE ID = {1}", TableName, id);
+			Database db = Database.Instance;
+
+			// delete
+			if (db.InsertUpdateDelete(query) != 1) {
+				throw new ApplicationException(query);
+			}
 		}
 	}
 }
