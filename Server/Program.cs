@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 using Npgsql;
 
 namespace Server
@@ -11,18 +12,13 @@ namespace Server
 	{
 		static void Main(string[] args)
 		{
-			NpgsqlConnection dbConn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;User Id=sweadmin;Password=swe;Database=swedb;");
-			dbConn.Open();
 			string sql = "SELECT pk_test, test_data FROM test";
-			NpgsqlCommand dbCommand = new NpgsqlCommand(sql, dbConn);
-			NpgsqlDataReader dbDataReader = dbCommand.ExecuteReader();
-			while(dbDataReader.Read())
+			PgSqlDAL dal = new PgSqlDAL("127.0.0.1", 5432, "sweadmin", "swe", "swedb");
+			DataTable result = dal.GetData(sql);
+			foreach(DataRow row in result.Rows)
 			{
-				String id = dbDataReader[0].ToString();
-				String data = dbDataReader[1].ToString(); 
-				Console.WriteLine(id + " | " + data);
+				Console.WriteLine(row[0] + " | " + row[1]);
 			}
-			dbConn.Close();
 			Console.ReadKey();
 
 		}
