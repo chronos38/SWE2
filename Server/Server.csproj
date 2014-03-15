@@ -44,7 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PgSqlDAL.cs" />
+    <Compile Include="DAL\GenericTable.cs" />
+    <Compile Include="DAL\Table.cs" />
+    <Compile Include="DAL\TableContact.cs" />
+    <Compile Include="DAL\Database.cs" />
+    <Compile Include="DAL\IDataMinpulation.cs" />
+    <Compile Include="DAL\IDataAccess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
