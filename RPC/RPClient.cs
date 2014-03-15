@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace RPC
@@ -22,7 +24,15 @@ namespace RPC
 		{
 			if (_netStream.CanWrite)
 			{
-				_serializer.Serialize(_netStream, procedure);
+				MemoryStream mem = new MemoryStream();
+				_serializer.Serialize(mem, procedure);
+
+				byte[] message = mem.GetBuffer();
+				byte[] lengthPrefix = BitConverter.GetBytes(message.Length);
+				byte[] buffer = new byte[message.Length + lengthPrefix.Length];
+				lengthPrefix.CopyTo(buffer, 0);
+				message.CopyTo(buffer, lengthPrefix.Length);
+				_netStream.Write(buffer, 0, buffer.Length);
 			}
 		}
 

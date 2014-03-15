@@ -13,8 +13,7 @@ namespace RPC
 		Thread _thread;
 		int _port;
 
-		Queue _queue;
-		
+		Queue _queue = new Queue();
 
 		public RPServer()
 		{

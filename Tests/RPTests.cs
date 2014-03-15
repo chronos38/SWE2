@@ -30,9 +30,12 @@ namespace Tests
 			test.procedureArgs = new string[]{"asd", "abc"};
 
 			_rc.Send(test);
+			Thread.Sleep(2000); // race condition... 
 			RPCall result = (RPCall)_rs.RPCallQueue.Dequeue();
-			Assert.AreEqual(test, result);
-
+			Assert.AreEqual(test.id, result.id);
+			Assert.AreEqual(test.procedureName, result.procedureName);
+			Assert.AreEqual(test.procedureArgs[0], result.procedureArgs[0]);
+			Assert.AreEqual(test.procedureArgs[1], result.procedureArgs[1]);
 		}
 	}
 }

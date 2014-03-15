@@ -14,11 +14,13 @@ namespace RPC
 		TcpClient _client;
 		XmlSerializer _serializer;
 		Thread _thread;
+		byte[] _received;
 
 		public RPHandler(RPServer server, TcpClient client)
 		{
 			_server = server;
 			_client = client;
+			_received = new byte[_client.ReceiveBufferSize];
 			_netStream = _client.GetStream();
 
 			_serializer = new XmlSerializer(typeof(RPCall));
@@ -31,9 +33,14 @@ namespace RPC
 		{
 			while(_client.Connected)
 			{
-				StreamReader reader = new StreamReader(_netStream);
-				 object result = _serializer.Deserialize(reader);
-				 Thread.Sleep(2000);
+				byte[] buffer = new byte[_client.ReceiveBufferSize];
+				int received = _netStream.Read(buffer, 0, _client.ReceiveBufferSize);
+				int messageLength = BitConverter.ToInt32(buffer, 0);
+				MemoryStream mem = new MemoryStream(buffer, 4, messageLength);
+				StreamReader reader = new StreamReader(mem);
+				string test = reader.ReadToEnd();
+				mem.Position = 0;
+				object result = _serializer.Deserialize(mem);
 				_server.RPCallQueue.Enqueue(result);
 			}
 
