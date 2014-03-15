@@ -54,9 +54,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{8f49e9aa-6a6d-499c-abd5-0838b1fbf6ef}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RPC\RPC.csproj">
       <Project>{d8452737-e069-46d9-8325-b8dba46fa2b4}</Project>
       <Name>RPC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server\Server.csproj">
+      <Project>{b9fbd772-ed5b-4f59-9bce-2fa10bd8af93}</Project>
+      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
