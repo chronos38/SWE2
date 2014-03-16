@@ -39,11 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PacketProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RPCall.cs" />
+    <Compile Include="Serializable\RPCall.cs" />
     <Compile Include="RPClient.cs" />
     <Compile Include="RPHandler.cs" />
-    <Compile Include="RPResult.cs" />
+    <Compile Include="Serializable\RPResult.cs" />
     <Compile Include="RPServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

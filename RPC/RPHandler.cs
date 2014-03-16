@@ -14,13 +14,12 @@ namespace RPC
 		TcpClient _client;
 		XmlSerializer _serializer;
 		Thread _thread;
-		byte[] _received;
-
+		PacketProtocol _pp;
 		public RPHandler(RPServer server, TcpClient client)
 		{
 			_server = server;
 			_client = client;
-			_received = new byte[_client.ReceiveBufferSize];
+			_pp = new PacketProtocol(_client.ReceiveBufferSize);
 			_netStream = _client.GetStream();
 
 			_serializer = new XmlSerializer(typeof(RPCall));
@@ -31,21 +30,30 @@ namespace RPC
 
 		void Receive()
 		{
-			while(_client.Connected)
+			while (_client.Connected)
 			{
-				byte[] buffer = new byte[_client.ReceiveBufferSize];
-				int received = _netStream.Read(buffer, 0, _client.ReceiveBufferSize);
-				int messageLength = BitConverter.ToInt32(buffer, 0);
-				MemoryStream mem = new MemoryStream(buffer, 4, messageLength);
-				StreamReader reader = new StreamReader(mem);
-				string test = reader.ReadToEnd();
-				mem.Position = 0;
-				object result = _serializer.Deserialize(mem);
-				_server.RPCallQueue.Enqueue(result);
+				if (_pp.Messages.Count == 0)
+				{
+					byte[] buffer = new byte[_client.ReceiveBufferSize];
+					int received = _netStream.Read(buffer, 0, _client.ReceiveBufferSize);
+					_pp.DataReceived(buffer);
+				} 
+				else
+				{
+					DeserializeMessage();
+				}
 			}
 
 		}
-		
+
+		void DeserializeMessage()
+		{
+			byte[] message = (byte[])_pp.Messages.Dequeue();
+			MemoryStream mem = new MemoryStream(message, 0, message.Length);
+			object result = _serializer.Deserialize(mem);
+			_server.RPCallQueue.Enqueue(result);
+		}
+
 		public void Send(int id, RPResult result)
 		{
 			_serializer.Serialize(_netStream, result);

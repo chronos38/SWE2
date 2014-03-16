@@ -26,12 +26,7 @@ namespace RPC
 			{
 				MemoryStream mem = new MemoryStream();
 				_serializer.Serialize(mem, procedure);
-
-				byte[] message = mem.GetBuffer();
-				byte[] lengthPrefix = BitConverter.GetBytes(message.Length);
-				byte[] buffer = new byte[message.Length + lengthPrefix.Length];
-				lengthPrefix.CopyTo(buffer, 0);
-				message.CopyTo(buffer, lengthPrefix.Length);
+				byte [] buffer = PacketProtocol.WrapMessage(mem.GetBuffer());
 				_netStream.Write(buffer, 0, buffer.Length);
 			}
 		}
