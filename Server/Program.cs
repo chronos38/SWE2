@@ -22,7 +22,7 @@ namespace Server
 				DataColumnCollection columns = row.Table.Columns;
 
 				for (int i = 0; i < columns.Count; i++) {
-					Console.Write(String.Format("{0}: {1} ", columns[i], row.ItemArray[i]));
+					Console.Write(String.Format("{0}: {1}\n", columns[i], row.ItemArray[i]));
 				}
 				Console.Write('\n');
 			}

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,13 +11,14 @@ namespace Server.DAL
 {
 	class Table : IDisposable, IDataAccess, IDataManipulation
 	{
-		private DataTable DataTable { get; set; }
+		public DataTable DataTable { get; private set; }
 		private string TableName { get; set; }
 
-		public Table(string table)
+		private Table(string table)
 		{
 			// variables
 			Database db = Database.Instance;
+			string query = String.Format("SELECT * FROM {0}", table);
 
 			// check database state
 			if (!db.IsConnected()) {
@@ -23,15 +26,37 @@ namespace Server.DAL
 			}
 
 			// select data table
-			DataTable = db.Select(String.Format("SELECT * FROM {0}", table));
+			DataTable = db.Select(query);
 
 			// check if all went successful
 			if (DataTable == null) {
-				throw new NullReferenceException("No tables were found.");
+				throw new ApplicationException(query);
 			}
 
 			// set table name
 			TableName = table;
+		}
+
+		private void Insert(DataRow row)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void Update(DataRow row)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void Delete(object id)
+		{
+			// variables
+			string query = String.Format("DELETE FROM {0} WHERE ID = {1}", TableName, id);
+			Database db = Database.Instance;
+
+			// delete
+			if (db.InsertUpdateDelete(query) != 1) {
+				throw new ApplicationException(query);
+			}
 		}
 
 		public void Dispose()
@@ -218,28 +243,6 @@ namespace Server.DAL
 			get
 			{
 				return new Table("ValueAddedTax");
-			}
-		}
-
-		private void Insert(DataRow row)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void Update(DataRow row)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void Delete(object id)
-		{
-			// variables
-			string query = String.Format("DELETE FROM {0} WHERE ID = {1}", TableName, id);
-			Database db = Database.Instance;
-
-			// delete
-			if (db.InsertUpdateDelete(query) != 1) {
-				throw new ApplicationException(query);
 			}
 		}
 	}
