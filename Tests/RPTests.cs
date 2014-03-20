@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
@@ -15,9 +16,16 @@ namespace Tests
 		[TestInitialize]
 		public void Setup()
 		{
-			_rs = new RPServer();
+			_rs = new RPServer(IPAddress.Parse("127.0.0.1"), 12345);
 			_rc = new RPClient();
 
+		}
+
+		[TestCleanup]
+		public void CleanUp()
+		{
+			_rc.Dispose();
+			_rs.Dispose();
 		}
 
 		[TestMethod]
@@ -37,5 +45,6 @@ namespace Tests
 			Assert.AreEqual(test.procedureArgs[0], result.procedureArgs[0]);
 			Assert.AreEqual(test.procedureArgs[1], result.procedureArgs[1]);
 		}
+
 	}
 }

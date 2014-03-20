@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace RPC
 {
-	public class RPServer
+	public class RPServer : IDisposable
 	{
 		TcpListener _server;
 		IPAddress _ip;
@@ -15,12 +15,6 @@ namespace RPC
 
 		Queue _queue = new Queue();
 
-		public RPServer()
-		{
-			_ip = IPAddress.Parse("127.0.0.1");
-			_port = 12345;
-			StartServer();
-		}
 
 		public RPServer(IPAddress ip, int port)
 		{
@@ -54,10 +48,10 @@ namespace RPC
 			}
 		}
 
-		public void Close()
+		public void Dispose()
 		{
-			_thread.Abort();
 			_server.Stop();
+			_thread.Abort();
 		}
 
 		public Queue RPCallQueue

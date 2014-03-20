@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace RPC
 {
-	public class RPClient
+	public class RPClient : IDisposable
 	{
 		TcpClient _client;
 		NetworkStream _netStream;
@@ -29,6 +29,12 @@ namespace RPC
 				byte [] buffer = PacketProtocol.WrapMessage(mem.GetBuffer());
 				_netStream.Write(buffer, 0, buffer.Length);
 			}
+		}
+
+		public void Dispose()
+		{
+			_netStream.Close();
+			_client.Close();
 		}
 
 	}
