@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Xml.Serialization;
 using System.Threading.Tasks;
+using RPC;
 
 namespace RPC
 {
@@ -20,17 +21,19 @@ namespace RPC
 			_serializer = new XmlSerializer(typeof(RPCall));
 		}
 		
-		public async void Send()
+		public async void Send(RPCall call)
 		{
-			HttpResponseMessage response = await _client.GetAsync("http://localhost:12345/?function1=testargument");
-			/*MemoryStream mem = new MemoryStream();
-			_serializer.Serialize(mem, procedure);
-			byte[] buffer = PacketProtocol.WrapMessage(mem.GetBuffer());
-			_netStream.Write(buffer, 0, buffer.Length);*/
+			StringWriter textWriter = new StringWriter();
+			_serializer.Serialize(textWriter, call);
+			HttpResponseMessage response = await _client.PostAsync("http://localhost:12345/", new StringContent(textWriter.ToString()));
+			response.EnsureSuccessStatusCode();
+			string result = await response.Content.ReadAsStringAsync();
+			Console.WriteLine(result);
 		}
 
 		public void Dispose()
 		{
+			_client.Dispose();
 		}
 
 	}

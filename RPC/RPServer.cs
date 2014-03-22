@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using System.Web;
+using System.Xml.Serialization;
 
 
 namespace RPC
@@ -16,16 +19,13 @@ namespace RPC
 		Semaphore _sem;
 		int _port;
 		readonly int _accepts;
+		XmlSerializer _serializer;
 		
-
-		Queue _queue = new Queue();
-		public string test;
-
 		public RPServer(int port, int accepts)
 		{
 			_port = port;
 			_accepts = accepts * Environment.ProcessorCount;
-
+			_serializer = new XmlSerializer(typeof(RPResult));
 			_listener = new HttpListener();
 			_listener.Prefixes.Add(String.Format("http://localhost:{0}/", _port));
 		}
@@ -56,7 +56,7 @@ namespace RPC
 						_sem.Release();
 
 						HttpListenerContext ctx = await ctxTask;
-						ParseUrl(ctx);
+						HandleConnection(ctx);
 						return;
 					}
 					catch(Exception ex)
@@ -68,7 +68,7 @@ namespace RPC
 			}
 		}
 
-		void ParseUrl(HttpListenerContext ctx)
+		void HandleConnection(HttpListenerContext ctx)
 		{
 			Debug.Assert(ctx != null);
 
@@ -76,8 +76,14 @@ namespace RPC
 			{
 				HttpListenerRequest req = ctx.Request;
 				HttpListenerResponse res = ctx.Response;
-				test = HttpUtility.ParseQueryString(req.Url.Query).Get("function1");
+				res.StatusCode = 200;
+				string postBody = new StreamReader(req.InputStream).ReadToEnd();
 
+				byte[] buffer = Encoding.UTF8.GetBytes(postBody);
+				Stream output = res.OutputStream;
+				output.Write(buffer, 0, buffer.Length);
+				output.Close();
+				res.Close();
 			}
 			catch(HttpListenerException)
 			{
@@ -88,11 +94,6 @@ namespace RPC
 		public void Dispose()
 		{
 			_listener.Stop();
-		}
-
-		public Queue RPCallQueue
-		{
-			get { return _queue; }
 		}
 	}
 }
