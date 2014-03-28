@@ -20,7 +20,7 @@ namespace RPC
 			_client = new HttpClient();
 			_serializer = new XmlSerializer(typeof(RPCall));
 		}
-		
+
 		public async void Send(RPCall call)
 		{
 			StringWriter textWriter = new StringWriter();
