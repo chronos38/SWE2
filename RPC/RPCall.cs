@@ -12,5 +12,19 @@ namespace DataTransfer
 		[XmlArray("procedureArguments")]
 		[XmlArrayItem("Argument")]
 		public string[] procedureArgs { get; set; }
+		
+		public RPCall()
+		{
+		}
+		public RPCall(string procName, string[] args)
+		{
+			procedureName = procName;
+			procedureArgs = args;
+		}
+
+		public RPCall(string procName)
+		{
+			procedureName = procName;
+		}
 	}
 }

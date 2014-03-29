@@ -8,6 +8,7 @@ using DataTransfer;
 using Server.BusinessLayer;
 using Server.BusinessLayer.Commands;
 using Server.RPC;
+using Client.RPC;
 
 namespace Tests
 {
@@ -40,10 +41,8 @@ namespace Tests
 		{
 			_runThread = new Thread(_rs.Run);
 			_runThread.Start();
-			RPCall test = new RPCall();
-			test.procedureName = "CommandContact";
-			test.procedureArgs = new string[]{"arg1", "arg2"};
-			await _rc.SendAsync(test);
+			Proxy prox = new Proxy();
+			await prox.GetContactsAsync();
 		}
 
 	}
