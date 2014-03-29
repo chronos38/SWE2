@@ -10,8 +10,6 @@ namespace Server.DAL
 {
 	public class Database
 	{
-		private static volatile Database _instance = null;
-		private static object _syncRoot = new object();
 		private NpgsqlConnection _connection = null;
 
 		private Database()
@@ -26,21 +24,15 @@ namespace Server.DAL
 		}
 
 		/// <summary>
-		/// Get current instance
+		/// Get new connection
 		/// </summary>
-		public static Database Instance
+		public static Database Factory
 		{
 			get
 			{
-				if (_instance == null) {
-					lock (_syncRoot) {
-						if (_instance == null) {
-							_instance = new Database();
-						}
-					}
-				}
-
-				return _instance;
+				Database result = new Database();
+				result.Connect();
+				return result;
 			}
 		}
 
@@ -57,21 +49,19 @@ namespace Server.DAL
 			// close old connection if there is any
 			Close();
 
-			lock (_syncRoot) {
-				// connect database
-				_connection = new NpgsqlConnection(
-					String.Format(
-						"Server={0};Port={1};User Id={2};Password={3};Database={4};",
-						ip,
-						port.ToString(),
-						user,
-						password,
-						db
-					)
-				);
+			// connect database
+			_connection = new NpgsqlConnection(
+				String.Format(
+					"Server={0};Port={1};User Id={2};Password={3};Database={4};",
+					ip,
+					port.ToString(),
+					user,
+					password,
+					db
+				)
+			);
 
-				_connection.Open();
-			}
+			_connection.Open();
 		}
 
 		public bool IsConnected()
@@ -85,11 +75,14 @@ namespace Server.DAL
 		public void Close()
 		{
 			if (_connection != null) {
-				lock (_syncRoot) {
-					_connection.Close();
-					_connection = null;
-				}
+				_connection.Close();
+				_connection = null;
 			}
+		}
+
+		public List<Contact> SearchContacts(string filter)
+		{
+			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -97,20 +90,18 @@ namespace Server.DAL
 		/// </summary>
 		/// <param name="sql">Select query to execute</param>
 		/// <returns>Selected rows or null if any error happened</returns>
-		public DataTable Select(string sql)
+		private DataTable Select(string sql)
 		{
 			if (_connection != null) {
-				lock (_syncRoot) {
-					try {
-						NpgsqlCommand dbCommand = new NpgsqlCommand(sql, _connection);
-						NpgsqlDataReader dbReader = dbCommand.ExecuteReader();
-						DataTable dt = new DataTable();
-						dt.Load(dbReader);
-						return dt;
-					} catch {
-						// TODO: specific exception handling
-						return null;
-					}
+				try {
+					NpgsqlCommand dbCommand = new NpgsqlCommand(sql, _connection);
+					NpgsqlDataReader dbReader = dbCommand.ExecuteReader();
+					DataTable dt = new DataTable();
+					dt.Load(dbReader);
+					return dt;
+				} catch {
+					// TODO: specific exception handling
+					return null;
 				}
 			}
 
@@ -122,17 +113,15 @@ namespace Server.DAL
 		/// </summary>
 		/// <param name="sql"></param>
 		/// <returns>Returns number of effected rows.</returns>
-		public int InsertUpdateDelete(string sql)
+		private int InsertUpdateDelete(string sql)
 		{
 			if (_connection != null) {
-				lock (_syncRoot) {
-					try {
-						NpgsqlCommand dbCommand = new NpgsqlCommand(sql, _connection);
-						return dbCommand.ExecuteNonQuery();
-					} catch {
-						// TODO: specific exception handling
-						return 0;
-					}
+				try {
+					NpgsqlCommand dbCommand = new NpgsqlCommand(sql, _connection);
+					return dbCommand.ExecuteNonQuery();
+				} catch {
+					// TODO: specific exception handling
+					return 0;
 				}
 			}
 

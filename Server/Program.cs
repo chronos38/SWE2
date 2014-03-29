@@ -13,20 +13,6 @@ namespace Server
 	{
 		static void Main(string[] args)
 		{
-			Database db = Database.Instance;
-			db.Connect();
-
-			Table contact = Table.Contact;
-
-			foreach (DataRow row in contact.Rows) {
-				DataColumnCollection columns = row.Table.Columns;
-
-				for (int i = 0; i < columns.Count; i++) {
-					Console.Write(String.Format("{0}: {1}\n", columns[i], row.ItemArray[i]));
-				}
-				Console.Write('\n');
-			}
-
 			Console.ReadKey();
 		}
 	}

@@ -6,22 +6,15 @@
         <TabControl x:Name="tabMain" Margin="0">
             <TabItem x:Name="titmBase" Header="Base" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="57">
                 <Grid Background="#FFE5E5E5">
-                    <GroupBox Header="Filter" Margin="10,10,10,0" VerticalAlignment="Top" Width="444" Height="128">
-                        <Grid Margin="0,0,0,7">
-                            <Label Content="Forename" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Surname" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtFilterForename" Height="23" Margin="80,13,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtFilterSurname" Height="23" Margin="80,41,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                            <Button x:Name="btnFilterSearch" Content="Search" HorizontalAlignment="Left" Margin="347,69,0,0" VerticalAlignment="Top" Width="75"/>
-                        </Grid>
-                    </GroupBox>
-                    <ListView x:Name="lstResult" Margin="10,143,10,10">
+                    <ListView x:Name="lstResult" Margin="10,38,10,10">
                         <ListView.View>
                             <GridView ColumnHeaderStringFormat="">
                                 <GridViewColumn/>
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="364"/>
+                    <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="379,10,0,0" VerticalAlignment="Top" Width="75"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="titmInvoice" Header="Invoice">
@@ -53,10 +46,10 @@
                         <Grid Margin="0">
                             <ListBox HorizontalAlignment="Left" Margin="10,10,0,10" Width="125"/>
                             <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Height="23" Margin="224,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
-                            <Label Content="Address" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Address" HorizontalAlignment="Left" Margin="140,12,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtPostalcode" HorizontalAlignment="Left" Height="23" Margin="224,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
-                            <Label Content="Postalcode" HorizontalAlignment="Left" Margin="140,36,0,0" VerticalAlignment="Top"/>
-                            <Label Content="City" HorizontalAlignment="Left" Margin="140,67,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Postalcode" HorizontalAlignment="Left" Margin="140,40,0,0" VerticalAlignment="Top"/>
+                            <Label Content="City" HorizontalAlignment="Left" Margin="140,68,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtCity" HorizontalAlignment="Left" Height="23" Margin="224,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
                         </Grid>
                     </GroupBox>
@@ -65,6 +58,5 @@
                 </Grid>
             </TabItem>
         </TabControl>
-
     </Grid>
 </Window>

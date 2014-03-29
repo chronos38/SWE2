@@ -17,10 +17,10 @@ namespace Server.BusinessLayer.Commands
 
 		public RPResult Execute(RPCall call)
 		{
-			Database db = Database.Instance;
+			Database db = Database.Factory;
 			db.Connect();
 			RPResult retVal = new RPResult();
-			retVal.dt = Table.Contact.DataTable;
+			//retVal.dt = Table.Contact.DataTable;
 			retVal.dt.TableName = "Contacts";
 			return retVal;
 		}
