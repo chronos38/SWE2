@@ -2,7 +2,7 @@
 using System.Data;
 using System.Xml.Serialization;
 
-namespace RPC
+namespace DataTransfer
 {
 	[XmlRoot("RPResult")]
 	[Serializable]

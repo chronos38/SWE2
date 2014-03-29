@@ -3,7 +3,10 @@ using System.Net;
 using System.Net.Sockets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
-using RPC;
+using System.Threading.Tasks;
+using DataTransfer;
+using Server.RPC;
+using Server.BusinessLayer.Commands;
 
 namespace Tests
 {
@@ -19,6 +22,7 @@ namespace Tests
 		{
 			_rs = new RPServer(12345, 2);
 			_rc = new RPClient();
+			Facade.RegisterCommand("CommandTest", new CommandTest());
 		}
 
 		[TestCleanup]
@@ -30,17 +34,14 @@ namespace Tests
 		}
 
 		[TestMethod]
-		public void TestMethod1()
+		public async Task TestMethod1()
 		{
 			_runThread = new Thread(_rs.Run);
 			_runThread.Start();
-
 			RPCall test = new RPCall();
-			test.procedureName = "test";
+			test.procedureName = "CommandTest";
 			test.procedureArgs = new string[]{"arg1", "arg2"};
-
-			_rc.Send(test);
-			
+			await _rc.SendAsync(test);
 		}
 
 	}

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace RPC
+namespace DataTransfer
 {
 	[XmlRoot("RPCall")]
 	[Serializable]

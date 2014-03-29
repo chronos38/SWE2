@@ -8,10 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using System.Xml.Serialization;
 
-
-namespace RPC
+namespace Server.RPC
 {
 	public class RPServer : IDisposable
 	{
@@ -19,64 +17,54 @@ namespace RPC
 		Semaphore _sem;
 		int _port;
 		readonly int _accepts;
-		XmlSerializer _serializer;
-
+		Facade _facade = new Facade();
+		/// <summary>
+		/// Creates an asyncronous HTTP server
+		/// </summary>
+		/// <param name="port">The port the server listens on</param>
+		/// <param name="accepts">
+		/// Higher numbers mean more connections can be maintained but at a slower response time.
+		/// Lower numbers mean less connections can be maintained but at a faster response time.
+		/// </param>
 		public RPServer(int port, int accepts)
 		{
 			_port = port;
 			_accepts = accepts * Environment.ProcessorCount;
-			_serializer = new XmlSerializer(typeof(RPResult));
 			_listener = new HttpListener();
 			_listener.Prefixes.Add(String.Format("http://localhost:{0}/", _port));
 		}
-
+		/// <summary>
+		/// Starts the server.
+		/// This method will block.
+		/// </summary>
 		public void Run()
 		{
 			try {
 				_listener.Start();
 			} catch (HttpListenerException ex) {
-				//netsh http add urlacl url=http://localhost:12345/ user=YOUR_USERNAME listen=yes
 				Console.WriteLine(ex.Message);
+				Console.WriteLine("Try running the following command: netsh http add urlacl url=http://localhost:<port>/ user=YOUR_USERNAME listen=yes");
 				return;
 			}
-
+			
+			// Create Semaphore according to the number of accepted Connections.
 			_sem = new Semaphore(_accepts, _accepts);
 
 			while (true) {
+				// Block if maximum number of concurrent threads is reached.
 				_sem.WaitOne();
 				_listener.GetContextAsync().ContinueWith(async (ctxTask) => {
 					string error;
 					try {
-						_sem.Release();
-
+						_sem.Release(); // At this point a new listener thread can be created.
 						HttpListenerContext ctx = await ctxTask;
-						HandleConnection(ctx);
+						_facade.HandleConnection(ctx);
 						return;
 					} catch (Exception ex) {
 						error = ex.ToString();
 					}
 					await Console.Error.WriteLineAsync(error);
 				});
-			}
-		}
-
-		void HandleConnection(HttpListenerContext ctx)
-		{
-			Debug.Assert(ctx != null);
-
-			try {
-				HttpListenerRequest req = ctx.Request;
-				HttpListenerResponse res = ctx.Response;
-				res.StatusCode = 200;
-				string postBody = new StreamReader(req.InputStream).ReadToEnd();
-
-				byte[] buffer = Encoding.UTF8.GetBytes(postBody);
-				Stream output = res.OutputStream;
-				output.Write(buffer, 0, buffer.Length);
-				output.Close();
-				res.Close();
-			} catch (HttpListenerException) {
-				//dunno
 			}
 		}
 

@@ -6,9 +6,8 @@ using System.Net.Http;
 using System.Text;
 using System.Xml.Serialization;
 using System.Threading.Tasks;
-using RPC;
 
-namespace RPC
+namespace DataTransfer
 {
 	public class RPClient : IDisposable
 	{
@@ -21,7 +20,7 @@ namespace RPC
 			_serializer = new XmlSerializer(typeof(RPCall));
 		}
 
-		public async void Send(RPCall call)
+		public async Task SendAsync(RPCall call)
 		{
 			StringWriter textWriter = new StringWriter();
 			_serializer.Serialize(textWriter, call);

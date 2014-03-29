@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
+using DataTransfer;
 
-namespace Server.BusinessLayer
+namespace Server.BusinessLayer.Commands
 {
-	interface IFacade
+	public interface ICommand
 	{
-		DataTable GetData();
+		RPResult Execute(RPCall call);
 	}
 }

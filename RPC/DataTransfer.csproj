@@ -7,7 +7,7 @@
     <ProjectGuid>{D8452737-E069-46D9-8325-B8DBA46FA2B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RPC</RootNamespace>
+    <RootNamespace>DataTransfer</RootNamespace>
     <AssemblyName>RPC</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -43,9 +43,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RPClient.cs" />
-    <Compile Include="Serializable\RPCall.cs" />
-    <Compile Include="Serializable\RPResult.cs" />
-    <Compile Include="RPServer.cs" />
+    <Compile Include="RPCall.cs" />
+    <Compile Include="RPResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

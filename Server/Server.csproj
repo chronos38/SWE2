@@ -44,21 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLayer\IFacade.cs" />
+    <Compile Include="BusinessLayer\Commands\CommandTest.cs" />
+    <Compile Include="BusinessLayer\Commands\ICommand.cs" />
+    <Compile Include="RPC\Facade.cs" />
     <Compile Include="DAL\Table.cs" />
     <Compile Include="DAL\Database.cs" />
     <Compile Include="DAL\IDataMinpulation.cs" />
     <Compile Include="DAL\IDataAccess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RPC\RPServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RPC\RPC.csproj">
+    <ProjectReference Include="..\RPC\DataTransfer.csproj">
       <Project>{d8452737-e069-46d9-8325-b8dba46fa2b4}</Project>
-      <Name>RPC</Name>
+      <Name>DataTransfer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
