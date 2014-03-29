@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Xml.Serialization;
+using Server.BusinessLayer;
 using Server.BusinessLayer.Commands;
 using DataTransfer;
 
@@ -14,7 +15,6 @@ namespace Server.RPC
 {
 	public class Facade
 	{
-		static ConcurrentDictionary<string, ICommand> _availableCommands = new ConcurrentDictionary<string, ICommand>();
 
 		XmlSerializer _RPCallSerializer = new XmlSerializer(typeof(RPCall));
 		XmlSerializer _RPResultSerializer = new XmlSerializer(typeof(RPResult));
@@ -42,7 +42,10 @@ namespace Server.RPC
 				try{
 					RPCall clientCall = Deserialize(msg);
 					ICommand requestedCommand;
-					_availableCommands.TryGetValue(clientCall.procedureName, out requestedCommand);
+					if (!CommandDictionary.Instance.GetCommand(clientCall.procedureName, out requestedCommand)) {
+						// Wahrscheinlich besser eine eigene Exception zu schreiben und 404 zurückgeben.
+						throw new InvalidOperationException(); 
+					}
 					RPResult result = requestedCommand.Execute(clientCall);
 					byte[] buffer = Encoding.UTF8.GetBytes(Serialize(result));
 					Stream output = res.OutputStream;
@@ -76,22 +79,6 @@ namespace Server.RPC
 			StringWriter writer = new StringWriter();
 			_RPResultSerializer.Serialize(writer, result);
 			return writer.ToString();
-		}
-
-		/// <summary>
-		/// Register a new Command to be executed via RPC.
-		/// </summary>
-		/// <param name="commandName">The name of the method</param>
-		/// <param name="command">The instance of the command to be executed</param>
-		static public void RegisterCommand(string commandName, ICommand command)
-		{
-			try {
-				_availableCommands.TryAdd(commandName, command);
-			} catch (ArgumentNullException ex) {
-				Console.WriteLine(ex.Message);
-			} catch (OverflowException ex) {
-				Console.WriteLine(ex.Message);
-			}
 		}
 	}
 }

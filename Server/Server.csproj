@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLayer\CommandDictionary.cs" />
     <Compile Include="BusinessLayer\Commands\CommandTest.cs" />
     <Compile Include="BusinessLayer\Commands\ICommand.cs" />
     <Compile Include="RPC\Facade.cs" />

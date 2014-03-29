@@ -5,8 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using System.Threading.Tasks;
 using DataTransfer;
-using Server.RPC;
+using Server.BusinessLayer;
 using Server.BusinessLayer.Commands;
+using Server.RPC;
 
 namespace Tests
 {
@@ -22,7 +23,7 @@ namespace Tests
 		{
 			_rs = new RPServer(12345, 2);
 			_rc = new RPClient();
-			Facade.RegisterCommand("CommandTest", new CommandTest());
+			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
 		}
 
 		[TestCleanup]
