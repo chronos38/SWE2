@@ -17,7 +17,7 @@
                     </GroupBox>
                     <ListView x:Name="lstResult" Margin="10,143,10,10">
                         <ListView.View>
-                            <GridView>
+                            <GridView ColumnHeaderStringFormat="">
                                 <GridViewColumn/>
                             </GridView>
                         </ListView.View>
@@ -26,7 +26,6 @@
             </TabItem>
             <TabItem x:Name="titmInvoice" Header="Invoice">
                 <Grid Background="#FFE5E5E5">
-                    <StackPanel Margin="0"/>
                     <GroupBox x:Name="grpCompany" Header="Company" Margin="10,10,10,0" VerticalAlignment="Top" Height="96">
                         <Grid Margin="0">
                             <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -50,7 +49,19 @@
                             <ComboBox x:Name="cmbPersonCompany" HorizontalAlignment="Left" Margin="102,66,0,0" VerticalAlignment="Top" Width="160" IsEditable="True"/>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Addresses" Margin="10,270,10,10" Width="444"/>
+                    <GroupBox Header="Addresses" Margin="10,270,10,0" Width="444" VerticalAlignment="Top" Height="273">
+                        <Grid Margin="0">
+                            <ListBox HorizontalAlignment="Left" Margin="10,10,0,10" Width="125"/>
+                            <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Height="23" Margin="224,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
+                            <Label Content="Address" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPostalcode" HorizontalAlignment="Left" Height="23" Margin="224,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
+                            <Label Content="Postalcode" HorizontalAlignment="Left" Margin="140,36,0,0" VerticalAlignment="Top"/>
+                            <Label Content="City" HorizontalAlignment="Left" Margin="140,67,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtCity" HorizontalAlignment="Left" Height="23" Margin="224,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
+                        </Grid>
+                    </GroupBox>
+                    <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="379,548,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="299,548,0,0" VerticalAlignment="Top" Width="75"/>
                 </Grid>
             </TabItem>
         </TabControl>
