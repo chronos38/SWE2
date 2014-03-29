@@ -8,15 +8,25 @@ namespace Server.DAL
 {
 	public class Contact
 	{
-		public Company Company { get; private set; }
-		public Person Person { get; private set; }
+		public int ID { get; private set; }
+		public string Name { get; private set; }
+		public string Title { get; private set; }
+		public string Forename { get; private set; }
+		public string Surname { get; private set; }
+		public string Suffix { get; private set; }
+		public DateTime Birthday { get; private set; }
 		public Address Address { get; private set; }
 		public List<AdditionalAddress> AdditionalAddresses { get; private set; }
 
-		public Contact(Company company, Person person, Address address, List<AdditionalAddress> addresses)
+		public Contact(int id, string name, string title, string fore, string sur, string suffix, DateTime birth, Address address, List<AdditionalAddress> addresses)
 		{
-			Company = company;
-			Person = person;
+			ID = id;
+			Name = name;
+			Title = title;
+			Forename = fore;
+			Surname = sur;
+			Suffix = suffix;
+			Birthday = birth;
 			Address = address;
 			AdditionalAddresses = addresses;
 		}

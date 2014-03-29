@@ -1,4 +1,5 @@
-﻿drop table if exists PersonData cascade;
+﻿/*
+drop table if exists PersonData cascade;
 create table PersonData (
 	ID serial primary key,
 	Forename text null,
@@ -8,7 +9,6 @@ create table PersonData (
 	BirthDate date null
 );
 
-/*
 drop table if exists CompanyData cascade;
 create table CompanyData (
 	ID serial primary key,
@@ -29,7 +29,11 @@ drop table if exists Contact cascade;
 create table Contact (
 	ID serial primary key,
 	Name text null,
-	fk_PersonData integer references PersonData(ID) null,
+	Forename text null,
+	Surname text null,
+	Title text null,
+	Suffix text null,
+	BirthDate date null,
 	fk_Address integer references Address(ID) null
 );
 

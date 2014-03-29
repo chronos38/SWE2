@@ -1,13 +1,9 @@
 ﻿-- person
-insert into PersonData (Forename, Surname, BirthDate) values ('Max', 'Mustermann', '1988-08-01');
 insert into Address (Street, StreetNumber, PostalCode, City) values ('Musterstrasse', 1, 54321, 'Musterstadt');
-
--- company
--- insert into CompanyData (Name) values ('Dreamland');
-insert into Address (Street, StreetNumber, PostalCode, City) values ('Dreamstreet', 2, 12345, 'Dreamcity');
+insert into Contact (Forename, Surname, BirthDate, fk_Address) values ('Max', 'Mustermann', '1988-08-01', 1);
 
 -- contact
-insert into Contact (fk_PersonData, fk_Address) values (1, 1);
+insert into Address (Street, StreetNumber, PostalCode, City) values ('Dreamstreet', 2, 12345, 'Dreamcity');
 insert into Contact (Name, fk_Address) values ('Dreamland', 2);
 
 -- invoice type

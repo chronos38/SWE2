@@ -100,14 +100,15 @@ namespace Server.DAL
 
 		private DataTable SelectContacts(string filter)
 		{
+			// TODO: add address
 			string query = String.Format("" +
-				"SELECT Contact.ID, Contact.Name, PersonData.Title, PersonData.Forename, PersonData.Surname, PersonData.Suffix, PersonData.BirthDate " +
+				"SELECT Contact.ID, Contact.Name, Contact.Title, Contact.Forename, Contact.Surname, Contact.Suffix, Contact.BirthDate " +
 				"FROM Contact " +
-				"JOIN PersonData " +
-				"ON Contact.fk_PersonData = PersonData.ID " +
+				"JOIN Address " +
+				"ON Contact.fk_Address = Address.ID " +
 				"WHERE Contact.Name = '{0}'" +
-				"OR PersonData.Forename = '{0}' " +
-				"OR PersonData.Surname = '{0}';", filter);
+				"OR Contact.Forename = '{0}' " +
+				"OR Contact.Surname = '{0}';", filter);
 			return Select(query);
 		}
 
@@ -115,29 +116,32 @@ namespace Server.DAL
 		{
 			// variables
 			List<Contact> result = new List<Contact>();
-			int id = -1;
-			string name = null;
-			string forename = null;
-			string surname = null;
-			string title = null;
-			string suffix = null;
-			DateTime birth = new DateTime();
 
 			foreach (DataRow row in contacts.Rows) {
-				id = (int)row["ID"];
-				name = (row["Name"].GetType().Name == "DBNull" ? null : (string)row["Name"]);
-				forename = (row["Forename"].GetType().Name == "DBNull" ? null : (string)row["Forename"]);
-				surname = (row["Surname"].GetType().Name == "DBNull" ? null : (string)row["Surname"]);
-				title = (row["Title"].GetType().Name == "DBNull" ? null : (string)row["Title"]);
-				suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
-				birth = (row["BirthDate"].GetType().Name == "DBNull" ? new DateTime() : (DateTime)row["BirthDate"]);
+				int id = (int)row["ID"];
+				string name = (row["Name"].GetType().Name == "DBNull" ? null : (string)row["Name"]);
+				string forename = (row["Forename"].GetType().Name == "DBNull" ? null : (string)row["Forename"]);
+				string surname = (row["Surname"].GetType().Name == "DBNull" ? null : (string)row["Surname"]);
+				string title = (row["Title"].GetType().Name == "DBNull" ? null : (string)row["Title"]);
+				string suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
+				DateTime birth = (row["BirthDate"].GetType().Name == "DBNull" ? new DateTime() : (DateTime)row["BirthDate"]);
 
-				Company company = new Company(id, name);
-				Person person = new Person(forename, surname, title, suffix, birth);
-				result.Add(new Contact(company, person, null, null));
+				result.Add(new Contact(id, name, title, forename, surname, suffix, birth, GetAddress(id), GetAdditionalAddresses(id)));
 			}
 
 			return result;
+		}
+
+		private Address GetAddress(int id)
+		{
+			// TODO: SQL-Query for main address
+			return null;
+		}
+
+		private List<AdditionalAddress> GetAdditionalAddresses(int id)
+		{
+			// TODO: SQL-Query for addresses
+			return null;
 		}
 
 		/// <summary>
