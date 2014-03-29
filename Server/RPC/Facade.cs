@@ -55,7 +55,7 @@ namespace Server.RPC
 					// Deserialization did not work aborting.
 					if (ex is InvalidOperationException || ex is ArgumentNullException) {
 						Console.WriteLine(ex.Message);
-						res.StatusCode = 505;
+						res.StatusCode = 500;
 						res.Close();
 						return;
 					}

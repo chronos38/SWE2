@@ -24,6 +24,7 @@ namespace Tests
 			_rs = new RPServer(12345, 2);
 			_rc = new RPClient();
 			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
+			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 		}
 
 		[TestCleanup]
@@ -40,7 +41,7 @@ namespace Tests
 			_runThread = new Thread(_rs.Run);
 			_runThread.Start();
 			RPCall test = new RPCall();
-			test.procedureName = "CommandTest";
+			test.procedureName = "CommandContact";
 			test.procedureArgs = new string[]{"arg1", "arg2"};
 			await _rc.SendAsync(test);
 		}
