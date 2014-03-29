@@ -13,6 +13,7 @@ namespace Server
 	{
 		static void Main(string[] args)
 		{
+			List<Contact> contacts = Database.Factory.SearchContacts("Max");
 			Console.ReadKey();
 		}
 	}

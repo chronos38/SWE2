@@ -48,9 +48,11 @@
     <Compile Include="BusinessLayer\Commands\CommandContact.cs" />
     <Compile Include="BusinessLayer\Commands\CommandTest.cs" />
     <Compile Include="BusinessLayer\Commands\ICommand.cs" />
+    <Compile Include="DAL\AdditionalAddress.cs" />
     <Compile Include="DAL\Address.cs" />
     <Compile Include="DAL\Company.cs" />
     <Compile Include="DAL\Contact.cs" />
+    <Compile Include="DAL\Invoice.cs" />
     <Compile Include="DAL\Person.cs" />
     <Compile Include="RPC\Facade.cs" />
     <Compile Include="DAL\Database.cs" />

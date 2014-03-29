@@ -11,9 +11,9 @@ namespace Server.DAL
 		public Company Company { get; private set; }
 		public Person Person { get; private set; }
 		public Address Address { get; private set; }
-		public List<Address> AdditionalAddresses { get; private set; }
+		public List<AdditionalAddress> AdditionalAddresses { get; private set; }
 
-		public Contact(Company company, Person person, Address address, List<Address> addresses)
+		public Contact(Company company, Person person, Address address, List<AdditionalAddress> addresses)
 		{
 			Company = company;
 			Person = person;

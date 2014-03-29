@@ -8,15 +8,13 @@ namespace Server.DAL
 {
 	public class Address
 	{
-		public long ID { get; private set; }
-		public string Street { get; private set; }
-		public int StreetNumber { get; private set; }
-		public int PostalCode { get; private set; }
-		public string City { get; private set; }
+		public string Street { get; protected set; }
+		public int StreetNumber { get; protected set; }
+		public int PostalCode { get; protected set; }
+		public string City { get; protected set; }
 
-		public Address(long id, string street, int streetNumber, int postalCode, string city)
+		public Address(string street, int streetNumber, int postalCode, string city)
 		{
-			ID = id;
 			Street = street;
 			StreetNumber = streetNumber;
 			PostalCode = postalCode;

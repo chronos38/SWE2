@@ -82,7 +82,62 @@ namespace Server.DAL
 
 		public List<Contact> SearchContacts(string filter)
 		{
+			// variables
+			DataTable contacts = SelectContacts(filter);
+
+			// check result
+			if (contacts == null) {
+				return new List<Contact>();
+			}
+
+			return CreateContactList(contacts);
+		}
+
+		public List<Invoice> SearchInvoices(string filter)
+		{
 			throw new NotImplementedException();
+		}
+
+		private DataTable SelectContacts(string filter)
+		{
+			string query = String.Format("" +
+				"SELECT Contact.ID, Contact.Name, PersonData.Title, PersonData.Forename, PersonData.Surname, PersonData.Suffix, PersonData.BirthDate " +
+				"FROM Contact " +
+				"JOIN PersonData " +
+				"ON Contact.fk_PersonData = PersonData.ID " +
+				"WHERE Contact.Name = '{0}'" +
+				"OR PersonData.Forename = '{0}' " +
+				"OR PersonData.Surname = '{0}';", filter);
+			return Select(query);
+		}
+
+		private List<Contact> CreateContactList(DataTable contacts)
+		{
+			// variables
+			List<Contact> result = new List<Contact>();
+			int id = -1;
+			string name = null;
+			string forename = null;
+			string surname = null;
+			string title = null;
+			string suffix = null;
+			DateTime birth = new DateTime();
+
+			foreach (DataRow row in contacts.Rows) {
+				id = (int)row["ID"];
+				name = (row["Name"].GetType().Name == "DBNull" ? null : (string)row["Name"]);
+				forename = (row["Forename"].GetType().Name == "DBNull" ? null : (string)row["Forename"]);
+				surname = (row["Surname"].GetType().Name == "DBNull" ? null : (string)row["Surname"]);
+				title = (row["Title"].GetType().Name == "DBNull" ? null : (string)row["Title"]);
+				suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
+				birth = (row["BirthDate"].GetType().Name == "DBNull" ? new DateTime() : (DateTime)row["BirthDate"]);
+
+				Company company = new Company(id, name);
+				Person person = new Person(forename, surname, title, suffix, birth);
+				result.Add(new Contact(company, person, null, null));
+			}
+
+			return result;
 		}
 
 		/// <summary>
