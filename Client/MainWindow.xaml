@@ -7,7 +7,7 @@
             <TabItem x:Name="titmBase" Header="Base" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="57">
                 <Grid Background="#FFE5E5E5">
                     <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="364" KeyDown="txtSearch_KeyDown" KeyUp="txtSearch_KeyUp" GotFocus="txtSearch_GotFocus"/>
-                    <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="379,10,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="379,10,0,0" VerticalAlignment="Top" Width="75" Click="btnSearch_Click"/>
                     <DataGrid x:Name="dgrdSearchResult" AutoGenerateColumns="False" Margin="10,38,10,10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding ID}" Header="ID" Width="64"/>

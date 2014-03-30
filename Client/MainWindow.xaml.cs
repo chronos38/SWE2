@@ -36,6 +36,14 @@ namespace Client
 			//this.dgrdSearchResult.ItemsSource = this.BindEmployee().DefaultView;
 		}
 
+		private async void btnSearch_Click(object sender, RoutedEventArgs e)
+		{
+			if (this.txtSearch.Text != "") {
+				Task<RPResult> task = Proxy.SearchContactsAsync(this.txtSearch.Text);
+				this.dgrdSearchResult.ItemsSource = await CreateSearchResult(task);
+			}
+		}
+
 		private void txtSearch_KeyDown(object sender, KeyEventArgs e)
 		{
 			Pressed = e.Key;
@@ -43,7 +51,7 @@ namespace Client
 
 		private async void txtSearch_KeyUp(object sender, KeyEventArgs e)
 		{
-			if (e.Key == Key.Return && Pressed == Key.Return) {
+			if (e.Key == Key.Return && Pressed == Key.Return && this.txtSearch.Text != "") {
 				Task<RPResult> task = Proxy.SearchContactsAsync(this.txtSearch.Text);
 				this.dgrdSearchResult.ItemsSource = await CreateSearchResult(task);
 			}
