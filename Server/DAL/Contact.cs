@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,46 @@ namespace Server.DAL
 			Birthday = birth;
 			Address = address;
 			AdditionalAddresses = addresses;
+		}
+
+		public Contact(DataRow row)
+		{
+			FromDataRow(row);
+		}
+
+		public DataRow ToDataRow()
+		{
+			// variables
+			DataRow result = new DataRow();
+
+			// create entries
+			result["ID"] = ID;
+			result["Name"] = Name;
+			result["Title"] = Title;
+			result["Forename"] = Forename;
+			result["Surname"] = Surname;
+			result["Suffix"] = Suffix;
+			result["Birthday"] = Birthday;
+			result["Address"] = Address;
+			result["AdditionalAddresses"] = AdditionalAddresses;
+
+			// return
+			return result;
+		}
+
+		public Contact FromDataRow(DataRow row)
+		{
+			ID = (int)row["ID"];
+			Name = row["Name"] as string;
+			Title = row["Title"] as string;
+			Forename = row["Forename"] as string;
+			Surname = row["Surname"] as string;
+			Suffix = row["Suffix"] as string;
+			Birthday = (DateTime)row["Birthday"];
+			Address = row["Address"] as Address;
+			AdditionalAddresses = row["AddtionalAddresses"] as List<AdditionalAddress>;
+
+			return this;
 		}
 	}
 }
