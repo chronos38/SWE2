@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Server.Converter
 {
-	class ContactConverter : TypeConverter
+	public class ContactConverter : TypeConverter
 	{
 		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
 		{
