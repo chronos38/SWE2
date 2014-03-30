@@ -16,14 +16,12 @@ namespace Tests
 	public class RPTests
 	{
 		RPServer _rs;
-		RPClient _rc;
 		Thread _runThread;
 
 		[TestInitialize]
 		public void Setup()
 		{
 			_rs = new RPServer(12345, 2);
-			_rc = new RPClient();
 			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
 			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 		}
