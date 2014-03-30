@@ -44,10 +44,8 @@ namespace Client
 		private async void txtSearch_KeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return && Pressed == Key.Return) {
-				// TODO: search for content
 				Task<RPResult> task = Proxy.SearchContactsAsync(this.txtSearch.Text);
-				RPResult result = await task;
-				this.dgrdSearchResult.ItemsSource = result.dt.DefaultView;
+				this.dgrdSearchResult.ItemsSource = await CreateSearchResult(task);
 			}
 		}
 
@@ -56,8 +54,33 @@ namespace Client
 			this.txtSearch.Text = "";
 		}
 
-		private void LoadSearchResultAsync(Task<RPResult> task)
+		private async Task<DataView> CreateSearchResult(Task<RPResult> rpresult)
 		{
+			// variables
+			DataTable table = (await rpresult).dt;
+			DataTable result = new DataTable("Contact");
+
+			// add columns
+			result.Columns.Add(new DataColumn("ID", typeof(int)));
+			result.Columns.Add(new DataColumn("Name", typeof(string)));
+			result.Columns.Add(new DataColumn("Forename", typeof(string)));
+			result.Columns.Add(new DataColumn("Surname", typeof(string)));
+
+			// copy values to view
+			foreach (DataRow row in table.Rows) {
+				// create row and insert values
+				DataRow insert = result.NewRow();
+				insert["ID"] = row["ID"];
+				insert["Name"] = row["Name"];
+				insert["Forename"] = row["Forename"];
+				insert["Surname"] = row["Surname"];
+
+				// add row
+				result.Rows.Add(insert);
+			}
+
+			// return
+			return result.DefaultView;
 		}
 
 		/*
@@ -65,7 +88,7 @@ namespace Client
 		{
 			try {
 				DataTable employee = new DataTable();
-				employee.Columns.Add(new DataColumn("Id", Type.GetType("System.Int32")));
+				employee.Columns.Add(new DataColumn("ID", Type.GetType("System.Int32")));
 				employee.Columns.Add(new DataColumn("Name", Type.GetType("System.String")));
 
 				int iterator = 0;
@@ -73,7 +96,7 @@ namespace Client
 				while (++iterator < 101) {
 					DataRow row = null;
 					row = employee.NewRow();
-					row["Id"] = iterator;
+					row["ID"] = iterator;
 					row["Name"] = "Employee " + iterator;
 					employee.Rows.Add(row);
 				}

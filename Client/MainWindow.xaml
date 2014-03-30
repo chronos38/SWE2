@@ -8,9 +8,9 @@
                 <Grid Background="#FFE5E5E5">
                     <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="364" KeyDown="txtSearch_KeyDown" KeyUp="txtSearch_KeyUp" GotFocus="txtSearch_GotFocus"/>
                     <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="379,10,0,0" VerticalAlignment="Top" Width="75"/>
-                    <DataGrid x:Name="dgrdSearchResult" Margin="10,38,10,10">
+                    <DataGrid x:Name="dgrdSearchResult" AutoGenerateColumns="False" Margin="10,38,10,10">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="80"/>
+                            <DataGridTextColumn Binding="{Binding ID}" Header="ID" Width="64"/>
                             <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="120"/>
                             <DataGridTextColumn Binding="{Binding Forename}" Header="Forename" Width="120"/>
                             <DataGridTextColumn Binding="{Binding Surname}" Header="Surname" Width="120"/>
