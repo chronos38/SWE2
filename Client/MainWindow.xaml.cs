@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Client.RPC;
+using DataTransfer;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -21,13 +23,13 @@ namespace Client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private CollectionViewSource ListingDataView { get; set; }
+		private Proxy Proxy { get; set; }
 		private Key Pressed { get; set; }
 		
 		public MainWindow()
 		{
 			InitializeComponent();
-			ListingDataView = (CollectionViewSource)(this.Resources["ListingDataView"]);
+			Proxy = new Proxy();
 
 			// Base
 			this.txtSearch.Text = "enter searchterm";
@@ -43,12 +45,19 @@ namespace Client
 		{
 			if (e.Key == Key.Return && Pressed == Key.Return) {
 				// TODO: search for content
+				Task<RPResult> task = Proxy.SearchContactsAsync(this.txtSearch.Text);
+				RPResult result = task.Result;
+				this.dgrdSearchResult.ItemsSource = result.dt.DefaultView;
 			}
 		}
 
 		private void txtSearch_GotFocus(object sender, RoutedEventArgs e)
 		{
 			this.txtSearch.Text = "";
+		}
+
+		private void LoadSearchResultAsync(Task<RPResult> task)
+		{
 		}
 
 		/*
