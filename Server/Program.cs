@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Server.RPC;
+using Server.BusinessLayer;
+using Server.BusinessLayer.Commands;
 
 namespace Server
 {
@@ -13,6 +15,8 @@ namespace Server
 
 		static void Main(string[] args)
 		{
+			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
+			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 			RPServer rs = new RPServer(12345, 2);
 			Thread runThread = new Thread(rs.Run);
 			runThread.Start();

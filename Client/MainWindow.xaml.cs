@@ -41,12 +41,12 @@ namespace Client
 			Pressed = e.Key;
 		}
 
-		private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+		private async void txtSearch_KeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return && Pressed == Key.Return) {
 				// TODO: search for content
 				Task<RPResult> task = Proxy.SearchContactsAsync(this.txtSearch.Text);
-				RPResult result = task.Result;
+				RPResult result = await task;
 				this.dgrdSearchResult.ItemsSource = result.dt.DefaultView;
 			}
 		}

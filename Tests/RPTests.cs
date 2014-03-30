@@ -30,7 +30,6 @@ namespace Tests
 		public void CleanUp()
 		{
 			_runThread.Abort();
-			_rc.Dispose();
 			_rs.Dispose();
 		}
 

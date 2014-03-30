@@ -70,7 +70,7 @@ namespace Server.RPC
 
 		public void Dispose()
 		{
-			_listener.Stop();
+			_listener.Close();
 		}
 	}
 }
