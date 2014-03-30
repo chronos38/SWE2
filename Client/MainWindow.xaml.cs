@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,8 +29,9 @@ namespace Client
 			InitializeComponent();
 			ListingDataView = (CollectionViewSource)(this.Resources["ListingDataView"]);
 
-			// text input
+			// Base
 			this.txtSearch.Text = "enter searchterm";
+			//this.dgrdSearchResult.ItemsSource = this.BindEmployee().DefaultView;
 		}
 
 		private void txtSearch_KeyDown(object sender, KeyEventArgs e)
@@ -48,5 +50,29 @@ namespace Client
 		{
 			this.txtSearch.Text = "";
 		}
+
+		/*
+		private DataTable BindEmployee()
+		{
+			try {
+				DataTable employee = new DataTable();
+				employee.Columns.Add(new DataColumn("Id", Type.GetType("System.Int32")));
+				employee.Columns.Add(new DataColumn("Name", Type.GetType("System.String")));
+
+				int iterator = 0;
+
+				while (++iterator < 101) {
+					DataRow row = null;
+					row = employee.NewRow();
+					row["Id"] = iterator;
+					row["Name"] = "Employee " + iterator;
+					employee.Rows.Add(row);
+				}
+				return employee;
+			} catch (Exception) {
+				throw;
+			}
+		}
+		*/
 	}
 }

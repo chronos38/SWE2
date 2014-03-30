@@ -56,9 +56,10 @@ namespace Server.Converter
 			}
 
 			foreach (Contact contact in contacts) {
-				result.ImportRow(contact.ToDataRow());
+				result.Rows.Add(contact.ToDataRow(result));
 			}
 
+			result.AcceptChanges();
 			return result;
 		}
 

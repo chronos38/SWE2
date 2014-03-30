@@ -106,7 +106,7 @@ namespace Server.DAL
 				"FROM Contact " +
 				"JOIN Address " +
 				"ON Contact.fk_Address = Address.ID " +
-				"WHERE Contact.Name = '{0}'" +
+				"WHERE Contact.Name = '{0}' " +
 				"OR Contact.Forename = '{0}' " +
 				"OR Contact.Surname = '{0}';", filter);
 			return Select(query);

@@ -48,7 +48,6 @@
     <Compile Include="BusinessLayer\Commands\CommandContact.cs" />
     <Compile Include="BusinessLayer\Commands\CommandTest.cs" />
     <Compile Include="BusinessLayer\Commands\ICommand.cs" />
-    <Compile Include="Converter\ContactConverter.cs" />
     <Compile Include="Converter\ContactListConverter.cs" />
     <Compile Include="DAL\AdditionalAddress.cs" />
     <Compile Include="DAL\Address.cs" />

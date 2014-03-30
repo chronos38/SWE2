@@ -37,10 +37,9 @@ namespace Server.DAL
 			FromDataRow(row);
 		}
 
-		public DataRow ToDataRow()
+		public DataRow ToDataRow(DataTable table)
 		{
 			// variables
-			DataTable table = CreateTable();
 			DataRow result = table.NewRow();
 
 			// create entries
