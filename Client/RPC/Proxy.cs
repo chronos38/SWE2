@@ -15,11 +15,20 @@ namespace Client.RPC
 
 		}
 
-		public async Task GetContactsAsync()
+		/// <summary>
+		/// Search for a specific contact.
+		/// </summary>
+		/// <param name="name">The contacts name</param>
+		/// <returns></returns>
+		public async Task<RPResult> SearchContactsAsync(string name)
 		{
+			if (String.IsNullOrEmpty(name)) {
+				throw new ArgumentNullException();
+			}
 			RPCall call = new RPCall("CommandContact");
+			call.procedureArgs = new string[] { name };
 			RPResult result = await _client.SendAndReceiveAsync(call);
-			Console.WriteLine(result.dt.Rows[0].ItemArray[0]);
+			return result;
 		}
 	}
 }

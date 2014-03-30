@@ -42,7 +42,7 @@ namespace Tests
 			_runThread = new Thread(_rs.Run);
 			_runThread.Start();
 			Proxy prox = new Proxy();
-			await prox.GetContactsAsync();
+			await prox.SearchContactsAsync("Max");
 		}
 
 	}

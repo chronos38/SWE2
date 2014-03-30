@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 using DataTransfer;
 using Server.DAL;
+using Server.Converter;
 
 namespace Server.BusinessLayer.Commands
 {
@@ -17,10 +19,14 @@ namespace Server.BusinessLayer.Commands
 
 		public RPResult Execute(RPCall call)
 		{
-			Database db = Database.Factory;
-			db.Connect();
+			if (call.procedureArgs == null || call.procedureArgs.Length < 1) {
+				throw new InvalidOperationException();
+			}
+			List<Contact> contacts = Database.Factory.SearchContacts(call.procedureArgs[0]);
+			ContactListConverter conv = new ContactListConverter();
+
 			RPResult retVal = new RPResult();
-			//retVal.dt = Table.Contact.DataTable;
+			retVal.dt = (DataTable) conv.ConvertTo(null, null, contacts, typeof(DataTable));
 			retVal.dt.TableName = "Contacts";
 			return retVal;
 		}
