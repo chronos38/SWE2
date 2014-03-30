@@ -87,6 +87,7 @@ namespace Server.DAL
 			table.Columns.Add("Birthday");
 			table.Columns.Add("Address");
 			table.Columns.Add("AdditionalAddresses");
+			table.TableName = "Contact";
 
 			return table;
 		}
