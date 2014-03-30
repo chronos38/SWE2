@@ -20,9 +20,33 @@ namespace Client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private CollectionViewSource ListingDataView { get; set; }
+		private Key Pressed { get; set; }
+		
 		public MainWindow()
 		{
 			InitializeComponent();
+			ListingDataView = (CollectionViewSource)(this.Resources["ListingDataView"]);
+
+			// text input
+			this.txtSearch.Text = "enter searchterm";
+		}
+
+		private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+		{
+			Pressed = e.Key;
+		}
+
+		private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Return && Pressed == Key.Return) {
+				// TODO: search for content
+			}
+		}
+
+		private void txtSearch_GotFocus(object sender, RoutedEventArgs e)
+		{
+			this.txtSearch.Text = "";
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace Server.Converter
 	{
 		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
 		{
-			if (sourceType == typeof(DataTable) {
+			if (sourceType == typeof(DataTable)) {
 				return true;
 			}
 
@@ -48,7 +48,7 @@ namespace Server.Converter
 
 		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
 		{
-			DataTable result = new DataTable();
+			DataTable result = Contact.CreateTable();
 			List<Contact> contacts = value as List<Contact>;
 
 			if (contacts == null) {

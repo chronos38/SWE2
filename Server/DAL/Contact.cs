@@ -40,7 +40,8 @@ namespace Server.DAL
 		public DataRow ToDataRow()
 		{
 			// variables
-			DataRow result = new DataRow();
+			DataTable table = CreateTable();
+			DataRow result = table.NewRow();
 
 			// create entries
 			result["ID"] = ID;
@@ -70,6 +71,25 @@ namespace Server.DAL
 			AdditionalAddresses = row["AddtionalAddresses"] as List<AdditionalAddress>;
 
 			return this;
+		}
+
+		public static DataTable CreateTable()
+		{
+			// variables
+			DataTable table = new DataTable();
+
+			// add columns
+			table.Columns.Add("ID");
+			table.Columns.Add("Name");
+			table.Columns.Add("Title");
+			table.Columns.Add("Forename");
+			table.Columns.Add("Surname");
+			table.Columns.Add("Suffix");
+			table.Columns.Add("Birthday");
+			table.Columns.Add("Address");
+			table.Columns.Add("AdditionalAddresses");
+
+			return table;
 		}
 	}
 }
