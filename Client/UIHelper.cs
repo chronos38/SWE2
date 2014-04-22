@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Client
 {
-	class UIHelper
+	static class UIHelper
 	{/// <summary>
 		/// Finds a parent of a given item on the visual tree.
 		/// </summary>

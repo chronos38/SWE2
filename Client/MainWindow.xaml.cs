@@ -70,7 +70,9 @@ namespace Client
 		{
 			// variables
 			DependencyObject source = (DependencyObject)e.OriginalSource;
-			var row = UIHelper.GetParentObject(source);
+			DataGridRow row = UIHelper.TryFindParent<DataGridRow>(source);
+			DataRowView view = (DataRowView)row.Item;
+			object[] items = view.Row.ItemArray;
 
 			e.Handled = true;
 		}
