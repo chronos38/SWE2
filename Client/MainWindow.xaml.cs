@@ -52,8 +52,8 @@ namespace Client
 		private async void txtSearch_KeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return && Pressed == Key.Return && this.txtSearch.Text != "") {
-				Task<RPResult> task = Proxy.SearchContactsAsync(this.txtSearch.Text);
-				this.dgrdSearchResult.ItemsSource = await CreateSearchResult(task);
+				RPResult result = await Proxy.SearchContactsAsync(this.txtSearch.Text);
+				this.dgrdSearchResult.ItemsSource = result.dt.DefaultView;
 			}
 		}
 

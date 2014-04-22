@@ -100,16 +100,34 @@ namespace Server.DAL
 
 		private DataTable SelectContacts(string filter)
 		{
-			// TODO: add address
-			string query = String.Format("" +
+			// variables
+			NpgsqlCommand command = new NpgsqlCommand("" +
 				"SELECT Contact.ID, Contact.Name, Contact.Title, Contact.Forename, Contact.Surname, Contact.Suffix, Contact.BirthDate " +
 				"FROM Contact " +
 				"JOIN Address " +
 				"ON Contact.fk_Address = Address.ID " +
-				"WHERE Contact.Name = '{0}' " +
-				"OR Contact.Forename = '{0}' " +
-				"OR Contact.Surname = '{0}';", filter);
-			return Select(query);
+				"WHERE lower(Contact.Name) = lower(:name) " +
+				"OR lower(Contact.Forename) = lower(:forename) " +
+				"OR lower(Contact.Surname) = lower(:surname) " +
+				"OR lower(Address.Street) = lower(:street) " +
+				"OR lower(Address.City) = lower(:city)", _connection);
+
+			// add parameters and prepare query
+			command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("forename", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("surname", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("street", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("city", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Prepare();
+
+			// add values
+			command.Parameters["name"].Value = filter;
+			command.Parameters["forename"].Value = filter;
+			command.Parameters["surname"].Value = filter;
+			command.Parameters["street"].Value = filter;
+			command.Parameters["city"].Value = filter;
+
+			return Select(command);
 		}
 
 		private List<Contact> CreateContactList(DataTable contacts)
@@ -149,22 +167,17 @@ namespace Server.DAL
 		/// </summary>
 		/// <param name="sql">Select query to execute</param>
 		/// <returns>Selected rows or null if any error happened</returns>
-		private DataTable Select(string sql)
+		private DataTable Select(NpgsqlCommand command)
 		{
-			if (_connection != null) {
-				try {
-					NpgsqlCommand dbCommand = new NpgsqlCommand(sql, _connection);
-					NpgsqlDataReader dbReader = dbCommand.ExecuteReader();
-					DataTable dt = new DataTable();
-					dt.Load(dbReader);
-					return dt;
-				} catch {
-					// TODO: specific exception handling
-					return null;
-				}
+			try {
+				NpgsqlDataReader dbReader = command.ExecuteReader();
+				DataTable dt = new DataTable();
+				dt.Load(dbReader);
+				return dt;
+			} catch {
+				// TODO: specific exception handling
+				return null;
 			}
-
-			return null;
 		}
 
 		/// <summary>
@@ -172,19 +185,14 @@ namespace Server.DAL
 		/// </summary>
 		/// <param name="sql"></param>
 		/// <returns>Returns number of effected rows.</returns>
-		private int InsertUpdateDelete(string sql)
+		private int InsertUpdateDelete(NpgsqlCommand command)
 		{
-			if (_connection != null) {
-				try {
-					NpgsqlCommand dbCommand = new NpgsqlCommand(sql, _connection);
-					return dbCommand.ExecuteNonQuery();
-				} catch {
-					// TODO: specific exception handling
-					return 0;
-				}
+			try {
+				return command.ExecuteNonQuery();
+			} catch {
+				// TODO: specific exception handling
+				return -1;
 			}
-
-			return 0;
 		}
 	}
 }
