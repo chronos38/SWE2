@@ -39,9 +39,11 @@ namespace Client
 		private async void btnSearch_Click(object sender, RoutedEventArgs e)
 		{
 			if (this.txtSearch.Text != "") {
-				Task<RPResult> task = Proxy.SearchContactsAsync(this.txtSearch.Text);
-				this.dgrdSearchResult.ItemsSource = await CreateSearchResult(task);
+				RPResult result = await Proxy.SearchContactsAsync(this.txtSearch.Text);
+				this.dgrdSearchResult.ItemsSource = result.dt.DefaultView;
 			}
+
+			e.Handled = true;
 		}
 
 		private void txtSearch_KeyDown(object sender, KeyEventArgs e)
@@ -55,6 +57,8 @@ namespace Client
 				RPResult result = await Proxy.SearchContactsAsync(this.txtSearch.Text);
 				this.dgrdSearchResult.ItemsSource = result.dt.DefaultView;
 			}
+
+			e.Handled = true;
 		}
 
 		private void txtSearch_GotFocus(object sender, RoutedEventArgs e)
@@ -62,57 +66,13 @@ namespace Client
 			this.txtSearch.Text = "";
 		}
 
-		private async Task<DataView> CreateSearchResult(Task<RPResult> rpresult)
+		private void dgrdSearchResult_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 			// variables
-			DataTable table = (await rpresult).dt;
-			DataTable result = new DataTable("Contact");
+			DependencyObject source = (DependencyObject)e.OriginalSource;
+			var row = UIHelper.GetParentObject(source);
 
-			// add columns
-			result.Columns.Add(new DataColumn("ID", typeof(int)));
-			result.Columns.Add(new DataColumn("Name", typeof(string)));
-			result.Columns.Add(new DataColumn("Forename", typeof(string)));
-			result.Columns.Add(new DataColumn("Surname", typeof(string)));
-
-			// copy values to view
-			foreach (DataRow row in table.Rows) {
-				// create row and insert values
-				DataRow insert = result.NewRow();
-				insert["ID"] = row["ID"];
-				insert["Name"] = row["Name"];
-				insert["Forename"] = row["Forename"];
-				insert["Surname"] = row["Surname"];
-
-				// add row
-				result.Rows.Add(insert);
-			}
-
-			// return
-			return result.DefaultView;
+			e.Handled = true;
 		}
-
-		/*
-		private DataTable BindEmployee()
-		{
-			try {
-				DataTable employee = new DataTable();
-				employee.Columns.Add(new DataColumn("ID", Type.GetType("System.Int32")));
-				employee.Columns.Add(new DataColumn("Name", Type.GetType("System.String")));
-
-				int iterator = 0;
-
-				while (++iterator < 101) {
-					DataRow row = null;
-					row = employee.NewRow();
-					row["ID"] = iterator;
-					row["Name"] = "Employee " + iterator;
-					employee.Rows.Add(row);
-				}
-				return employee;
-			} catch (Exception) {
-				throw;
-			}
-		}
-		*/
 	}
 }
