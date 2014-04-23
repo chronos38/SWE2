@@ -21,19 +21,15 @@ namespace Client
 	/// </summary>
 	public partial class EditWindow : Window
 	{
-		private Contact Contact { get; set; }
-
-		public EditWindow()
+		public EditWindow(Contact contact)
 		{
-			InitializeComponent();
-		}
-
-		public EditWindow(object[] items)
-		{
-			this.Contact = new Contact(items);
+			this.Contact = contact;
 
 			// initialize all
 			InitializeComponent();
+
+			// set content
+			IntializeContact();
 		}
 	}
 }

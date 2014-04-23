@@ -111,29 +111,31 @@ namespace Server.DAL
 				"FROM Contact " +
 				"JOIN Address " +
 				"ON Contact.fk_Address = Address.ID " +
-				"WHERE lower(Contact.UID) = lower(:uid) " +
-				"OR lower(Contact.Name) = lower(:name) " +
-				"OR lower(Contact.Forename) = lower(:forename) " +
-				"OR lower(Contact.Surname) = lower(:surname) " +
-				"OR lower(Address.Street) = lower(:street) " +
-				"OR lower(Address.City) = lower(:city)", _connection);
+				"WHERE lower(Contact.UID) LIKE lower(:uid) " +
+				"OR lower(Contact.Name) LIKE lower(:name) " +
+				"OR lower(Contact.Forename) LIKE lower(:forename) " +
+				"OR lower(Contact.Surname) LIKE lower(:surname)", _connection);
+				/*"OR lower(Contact.Surname) LIKE lower(:surname) " +
+				"OR lower(Address.Street) LIKE lower(:street) " +
+				"OR lower(Address.City) LIKE lower(:city)", _connection);*/
 
 			// add parameters and prepare query
 			command.Parameters.Add("uid", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("forename", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("surname", NpgsqlTypes.NpgsqlDbType.Text);
-			command.Parameters.Add("street", NpgsqlTypes.NpgsqlDbType.Text);
-			command.Parameters.Add("city", NpgsqlTypes.NpgsqlDbType.Text);
+			/*command.Parameters.Add("street", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("city", NpgsqlTypes.NpgsqlDbType.Text);*/
 			command.Prepare();
 
 			// add values
+			filter = "%" + filter + "%";
 			command.Parameters["uid"].Value = filter;
 			command.Parameters["name"].Value = filter;
 			command.Parameters["forename"].Value = filter;
 			command.Parameters["surname"].Value = filter;
-			command.Parameters["street"].Value = filter;
-			command.Parameters["city"].Value = filter;
+			/*command.Parameters["street"].Value = filter;
+			command.Parameters["city"].Value = filter;*/
 
 			return Select(command);
 		}
@@ -153,7 +155,7 @@ namespace Server.DAL
 				string suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
 				DateTime birth = (row["BirthDate"].GetType().Name == "DBNull" ? new DateTime() : (DateTime)row["BirthDate"]);
 
-				result.Add(new Contact(uid, name, title, forename, surname, suffix, birth, GetAddress(id), GetAdditionalAddresses(id)));
+				result.Add(new Contact(id, uid, name, title, forename, surname, suffix, birth, GetAddress(id), GetAdditionalAddresses(id)));
 			}
 
 			return result;
