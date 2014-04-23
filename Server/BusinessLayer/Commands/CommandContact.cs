@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.Data;
 using DataTransfer;
 using Server.DAL;
-using Server.Converter;
+using DataTransfer.Types;
+using DataTransfer.Converter;
 
 namespace Server.BusinessLayer.Commands
 {

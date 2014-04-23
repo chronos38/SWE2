@@ -4,7 +4,7 @@ insert into Contact (Forename, Surname, BirthDate, fk_Address) values ('Max', 'M
 
 -- contact
 insert into Address (Street, StreetNumber, PostalCode, City) values ('Dreamstreet', 2, 12345, 'Dreamcity');
-insert into Contact (Name, fk_Address) values ('Dreamland', 2);
+insert into Contact (UID, Name, fk_Address) values ('Dreamer', 'Dreamland', 2);
 
 -- invoice type
 insert into InvoiceType (Type) values ('Sale');

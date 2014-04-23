@@ -23,6 +23,7 @@ namespace Client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private Window Editor { get; set; }
 		private Proxy Proxy { get; set; }
 		private Key Pressed { get; set; }
 		
@@ -33,7 +34,8 @@ namespace Client
 
 			// Base
 			this.txtSearch.Text = "enter searchterm";
-			//this.dgrdSearchResult.ItemsSource = this.BindEmployee().DefaultView;
+
+			Editor = null;
 		}
 
 		private async void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -70,11 +72,35 @@ namespace Client
 		{
 			// variables
 			DependencyObject source = (DependencyObject)e.OriginalSource;
-			DataGridRow row = UIHelper.TryFindParent<DataGridRow>(source);
-			DataRowView view = (DataRowView)row.Item;
-			object[] items = view.Row.ItemArray;
+			DataGridRow rows = UIHelper.TryFindParent<DataGridRow>(source);
+
+			// try casting to row
+			OpenEditor((DataRowView)rows.Item);
 
 			e.Handled = true;
+		}
+
+		private void btnOpen_Click(object sender, RoutedEventArgs e)
+		{
+			OpenEditor((DataRowView)this.dgrdSearchResult.SelectedItem);
+		}
+
+		private void OpenEditor(DataRowView view)
+		{
+			// check row
+			if (view == null) {
+				return;
+			}
+
+			// variables
+			object[] items = view.Row.ItemArray;
+
+			// open edit window
+			if (Editor == null) {
+				Editor = new EditWindow(items);
+				Editor.ShowDialog();
+				Editor = null;
+			}
 		}
 	}
 }

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.DAL
+namespace DataTransfer.Types
 {
 	public class Contact
 	{
-		public int ID { get; private set; }
+		public string UID { get; private set; }
 		public string Name { get; private set; }
 		public string Title { get; private set; }
 		public string Forename { get; private set; }
@@ -19,9 +19,9 @@ namespace Server.DAL
 		public Address Address { get; private set; }
 		public List<AdditionalAddress> AdditionalAddresses { get; private set; }
 
-		public Contact(int id, string name, string title, string fore, string sur, string suffix, DateTime birth, Address address, List<AdditionalAddress> addresses)
+		public Contact(string uid, string name, string title, string fore, string sur, string suffix, DateTime birth, Address address, List<AdditionalAddress> addresses)
 		{
-			ID = id;
+			UID = uid;
 			Name = name;
 			Title = title;
 			Forename = fore;
@@ -37,13 +37,18 @@ namespace Server.DAL
 			FromDataRow(row);
 		}
 
+		public Contact(object[] items)
+		{
+			FromObjectArray(items);
+		}
+
 		public DataRow ToDataRow(DataTable table)
 		{
 			// variables
 			DataRow result = table.NewRow();
 
 			// create entries
-			result["ID"] = ID;
+			result["UID"] = UID;
 			result["Name"] = Name;
 			result["Title"] = Title;
 			result["Forename"] = Forename;
@@ -59,7 +64,7 @@ namespace Server.DAL
 
 		public Contact FromDataRow(DataRow row)
 		{
-			ID = (int)row["ID"];
+			UID = row["UID"] as string;
 			Name = row["Name"] as string;
 			Title = row["Title"] as string;
 			Forename = row["Forename"] as string;
@@ -72,13 +77,28 @@ namespace Server.DAL
 			return this;
 		}
 
+		public Contact FromObjectArray(object[] items)
+		{
+			UID = items[0] as string;
+			Name = items[1] as string;
+			Title = items[2] as string;
+			Forename = items[3] as string;
+			Surname = items[4] as string;
+			Suffix = items[5] as string;
+			Birthday = DateTime.Parse(items[6] as string, null);
+			Address = items[7] as Address;
+			AdditionalAddresses = items[8] as List<AdditionalAddress>;
+
+			return this;
+		}
+
 		public static DataTable CreateTable()
 		{
 			// variables
 			DataTable table = new DataTable();
 
 			// add columns
-			table.Columns.Add("ID");
+			table.Columns.Add("UID");
 			table.Columns.Add("Name");
 			table.Columns.Add("Title");
 			table.Columns.Add("Forename");

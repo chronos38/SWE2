@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataTransfer.Converter;
+using DataTransfer.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +21,18 @@ namespace Client
 	/// </summary>
 	public partial class EditWindow : Window
 	{
+		private Contact Contact { get; set; }
+
 		public EditWindow()
 		{
+			InitializeComponent();
+		}
+
+		public EditWindow(object[] items)
+		{
+			this.Contact = new Contact(items);
+
+			// initialize all
 			InitializeComponent();
 		}
 	}

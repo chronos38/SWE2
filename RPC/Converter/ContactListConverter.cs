@@ -1,4 +1,4 @@
-﻿using Server.DAL;
+﻿using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.Converter
+namespace DataTransfer.Converter
 {
 	public class ContactListConverter : TypeConverter
 	{
@@ -30,6 +30,11 @@ namespace Server.Converter
 			return base.CanConvertTo(context, destinationType);
 		}
 
+		public virtual object ConvertFrom(object value)
+		{
+			return ConvertFrom(null, null, value);
+		}
+
 		public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
 		{
 			List<Contact> result = new List<Contact>();
@@ -44,6 +49,11 @@ namespace Server.Converter
 			}
 
 			return result;
+		}
+
+		public virtual object ConvertTo(object value, Type destinationType)
+		{
+			return ConvertTo(null, null, value, destinationType);
 		}
 
 		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)

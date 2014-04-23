@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using Npgsql;
+using DataTransfer.Types;
 
 namespace Server.DAL
 {
@@ -98,21 +99,27 @@ namespace Server.DAL
 			throw new NotImplementedException();
 		}
 
+		public void UpdateContact(List<Contact> contacts)
+		{
+		}
+
 		private DataTable SelectContacts(string filter)
 		{
 			// variables
 			NpgsqlCommand command = new NpgsqlCommand("" +
-				"SELECT Contact.ID, Contact.Name, Contact.Title, Contact.Forename, Contact.Surname, Contact.Suffix, Contact.BirthDate " +
+				"SELECT Contact.ID, Contact.UID, Contact.Name, Contact.Title, Contact.Forename, Contact.Surname, Contact.Suffix, Contact.BirthDate " +
 				"FROM Contact " +
 				"JOIN Address " +
 				"ON Contact.fk_Address = Address.ID " +
-				"WHERE lower(Contact.Name) = lower(:name) " +
+				"WHERE lower(Contact.UID) = lower(:uid) " +
+				"OR lower(Contact.Name) = lower(:name) " +
 				"OR lower(Contact.Forename) = lower(:forename) " +
 				"OR lower(Contact.Surname) = lower(:surname) " +
 				"OR lower(Address.Street) = lower(:street) " +
 				"OR lower(Address.City) = lower(:city)", _connection);
 
 			// add parameters and prepare query
+			command.Parameters.Add("uid", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("forename", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("surname", NpgsqlTypes.NpgsqlDbType.Text);
@@ -121,6 +128,7 @@ namespace Server.DAL
 			command.Prepare();
 
 			// add values
+			command.Parameters["uid"].Value = filter;
 			command.Parameters["name"].Value = filter;
 			command.Parameters["forename"].Value = filter;
 			command.Parameters["surname"].Value = filter;
@@ -137,6 +145,7 @@ namespace Server.DAL
 
 			foreach (DataRow row in contacts.Rows) {
 				int id = (int)row["ID"];
+				string uid = (row["UID"].GetType().Name == "DBNull" ? null : (string)row["UID"]);
 				string name = (row["Name"].GetType().Name == "DBNull" ? null : (string)row["Name"]);
 				string forename = (row["Forename"].GetType().Name == "DBNull" ? null : (string)row["Forename"]);
 				string surname = (row["Surname"].GetType().Name == "DBNull" ? null : (string)row["Surname"]);
@@ -144,7 +153,7 @@ namespace Server.DAL
 				string suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
 				DateTime birth = (row["BirthDate"].GetType().Name == "DBNull" ? new DateTime() : (DateTime)row["BirthDate"]);
 
-				result.Add(new Contact(id, name, title, forename, surname, suffix, birth, GetAddress(id), GetAdditionalAddresses(id)));
+				result.Add(new Contact(uid, name, title, forename, surname, suffix, birth, GetAddress(id), GetAdditionalAddresses(id)));
 			}
 
 			return result;

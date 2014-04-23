@@ -28,6 +28,7 @@ create table Address (
 drop table if exists Contact cascade;
 create table Contact (
 	ID serial primary key,
+	UID text null,
 	Name text null,
 	Forename text null,
 	Surname text null,
