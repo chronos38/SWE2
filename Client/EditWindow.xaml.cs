@@ -31,5 +31,22 @@ namespace Client
 			// set content
 			IntializeContact();
 		}
+
+		private void btnSave_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("Should save entry", "Save", MessageBoxButton.OK);
+		}
+
+		private void btnCancel_Click(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+
+		private void btnDelete_Click(object sender, RoutedEventArgs e)
+		{
+			if (MessageBox.Show("Are you sure?", "Delete", MessageBoxButton.OKCancel) == MessageBoxResult.OK) {
+				MessageBox.Show("Should delete entry", "Delete", MessageBoxButton.OK);
+			}
+		}
 	}
 }
