@@ -4,21 +4,18 @@
         Title="Contact" Height="620" Width="960" MinHeight="620" MinWidth="960" ResizeMode="CanMinimize">
     <Grid>
         <Grid Background="#FFE5E5E5">
-            <GroupBox x:Name="grpCompany" Header="Company" Margin="10,10,0,0" VerticalAlignment="Top" Height="96" Width="452" HorizontalAlignment="Left">
+            <GroupBox x:Name="grpCompany" IsEnabled="{Binding CanEditCompany}" Header="Company" Margin="10,10,0,0" VerticalAlignment="Top" Height="96" Width="452" HorizontalAlignment="Left">
                 <Grid Margin="0">
                     <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     <Label Content="UID" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtCompanyName" HorizontalAlignment="Left" Height="23" Margin="88,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
-                    <TextBox x:Name="txtCompanyUID" HorizontalAlignment="Left" Height="23" Margin="88,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtCompanyName" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtCompanyUID" Text="{Binding UID, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
                 </Grid>
             </GroupBox>
-            <GroupBox x:Name="grpPerson" Header="Person" Margin="10,111,0,0" VerticalAlignment="Top" Height="235" Width="452" HorizontalAlignment="Left">
+            <GroupBox x:Name="grpPerson" IsEnabled="{Binding CanEditPerson}" Header="Person" Margin="10,111,0,0" VerticalAlignment="Top" Height="235" Width="452" HorizontalAlignment="Left">
                 <Grid Margin="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="txtPersonForename" HorizontalAlignment="Left" Height="23" Margin="88,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
-                    <TextBox x:Name="txtPersonSurname" HorizontalAlignment="Left" Height="23" Margin="88,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtPersonForename" Text="{Binding Forename, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtPersonSurname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
                     <CheckBox x:Name="chkPersonCompany" Content="" HorizontalAlignment="Left" Margin="88,125,0,0" VerticalAlignment="Top"/>
                     <Button x:Name="btnPersonSearch" Content="Search" HorizontalAlignment="Left" Margin="269,149,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="btnPersonDelete" Content="Delete" HorizontalAlignment="Left" Margin="347,149,0,0" VerticalAlignment="Top" Width="75"/>
@@ -26,10 +23,10 @@
                     <Label Content="Surname" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
                     <Label Content="Company" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top"/>
                     <Label Content="Birthday" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top"/>
-                    <DatePicker x:Name="dtePersonBirthday" HorizontalAlignment="Left" Margin="88,176,0,0" VerticalAlignment="Top" Width="342"/>
+                    <DatePicker x:Name="dtePersonBirthday" SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="88,176,0,0" VerticalAlignment="Top" Width="342"/>
                     <ComboBox x:Name="cmbPersonCompany" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" IsEditable="True"/>
-                    <TextBox x:Name="txtPersonSuffix" HorizontalAlignment="Left" Height="23" Margin="88,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
-                    <TextBox x:Name="txtPersonTitle" HorizontalAlignment="Left" Height="23" Margin="88,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtPersonSuffix" Text="{Binding Suffix, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtPersonTitle" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
                     <Label Content="Suffix" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top"/>
                     <Label Content="Title" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
                 </Grid>
@@ -45,9 +42,8 @@
                     <TextBox x:Name="txtCity" HorizontalAlignment="Left" Height="23" Margin="232,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
                 </Grid>
             </GroupBox>
-            <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="379,548,0,0" VerticalAlignment="Top" Width="75" Height="22" Click="btnDelete_Click"/>
-            <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="219,548,0,0" VerticalAlignment="Top" Width="75" Height="22" Click="btnSave_Click"/>
-            <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="299,548,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+            <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="307,548,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
+            <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="387,548,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
         </Grid>
     </Grid>
 </Window>

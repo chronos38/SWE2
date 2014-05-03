@@ -55,11 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="EditWindow.cs" />
     <Compile Include="EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.cs" />
+    <Compile Include="Model\ContactModel.cs" />
     <Compile Include="RPC\Proxy.cs" />
     <Compile Include="RPC\RPClient.cs" />
     <Compile Include="UIHelper.cs" />
@@ -114,7 +114,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converter\" />
+    <Folder Include="Controller\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

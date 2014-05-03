@@ -23,13 +23,13 @@ namespace Client
 	{
 		public EditWindow(Contact contact)
 		{
-			this.Contact = contact;
-
 			// initialize all
 			InitializeComponent();
 
 			// set content
-			IntializeContact();
+			//IntializeContact();
+
+			this.DataContext = new Model.ContactModel(contact);
 		}
 
 		private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -40,13 +40,6 @@ namespace Client
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
-		}
-
-		private void btnDelete_Click(object sender, RoutedEventArgs e)
-		{
-			if (MessageBox.Show("Are you sure?", "Delete", MessageBoxButton.OKCancel) == MessageBoxResult.OK) {
-				MessageBox.Show("Should delete entry", "Delete", MessageBoxButton.OK);
-			}
 		}
 	}
 }

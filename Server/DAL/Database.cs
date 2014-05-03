@@ -153,7 +153,7 @@ namespace Server.DAL
 				string surname = (row["Surname"].GetType().Name == "DBNull" ? null : (string)row["Surname"]);
 				string title = (row["Title"].GetType().Name == "DBNull" ? null : (string)row["Title"]);
 				string suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
-				DateTime birth = (row["BirthDate"].GetType().Name == "DBNull" ? new DateTime() : (DateTime)row["BirthDate"]);
+				DateTime? birth = (row["BirthDate"].GetType().Name == "DBNull" ? new Nullable<DateTime>() : (DateTime)row["BirthDate"]);
 
 				result.Add(new Contact(id, uid, name, title, forename, surname, suffix, birth, GetAddress(id), GetAdditionalAddresses(id)));
 			}
