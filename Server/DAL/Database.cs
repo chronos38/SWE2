@@ -107,25 +107,20 @@ namespace Server.DAL
 		{
 			// variables
 			NpgsqlCommand command = new NpgsqlCommand("" +
-				"SELECT Contact.ID, Contact.UID, Contact.Name, Contact.Title, Contact.Forename, Contact.Surname, Contact.Suffix, Contact.BirthDate " +
+				"SELECT * " +
 				"FROM Contact " +
-				"JOIN Address " +
-				"ON Contact.fk_Address = Address.ID " +
-				"WHERE lower(Contact.UID) LIKE lower(:uid) " +
-				"OR lower(Contact.Name) LIKE lower(:name) " +
-				"OR lower(Contact.Forename) LIKE lower(:forename) " +
-				"OR lower(Contact.Surname) LIKE lower(:surname)", _connection);
-				/*"OR lower(Contact.Surname) LIKE lower(:surname) " +
-				"OR lower(Address.Street) LIKE lower(:street) " +
-				"OR lower(Address.City) LIKE lower(:city)", _connection);*/
+				"WHERE lower(UID) LIKE lower(:uid) " +
+				"OR lower(Name) LIKE lower(:name) " +
+				"OR lower(Forename) LIKE lower(:forename) " +
+				"OR lower(Surname) LIKE lower(:surname) " +
+				"OR lower(City) LIKE lower(:city)", _connection);
 
 			// add parameters and prepare query
 			command.Parameters.Add("uid", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("forename", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("surname", NpgsqlTypes.NpgsqlDbType.Text);
-			/*command.Parameters.Add("street", NpgsqlTypes.NpgsqlDbType.Text);
-			command.Parameters.Add("city", NpgsqlTypes.NpgsqlDbType.Text);*/
+			command.Parameters.Add("city", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Prepare();
 
 			// add values
@@ -134,8 +129,7 @@ namespace Server.DAL
 			command.Parameters["name"].Value = filter;
 			command.Parameters["forename"].Value = filter;
 			command.Parameters["surname"].Value = filter;
-			/*command.Parameters["street"].Value = filter;
-			command.Parameters["city"].Value = filter;*/
+			command.Parameters["city"].Value = filter;
 
 			return Select(command);
 		}
@@ -154,23 +148,15 @@ namespace Server.DAL
 				string title = (row["Title"].GetType().Name == "DBNull" ? null : (string)row["Title"]);
 				string suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
 				DateTime? birth = (row["BirthDate"].GetType().Name == "DBNull" ? new Nullable<DateTime>() : (DateTime)row["BirthDate"]);
+				string street = (row["Street"].GetType().Name == "DBNull" ? null : row["Street"] as string);
+				string number = (row["StreetNumber"].GetType().Name == "DBNull" ? null : row["StreetNumber"] as string);
+				string code = (row["PostalCode"].GetType().Name == "DBNull" ? null : row["PostalCode"] as string);
+				string city = (row["City"].GetType().Name == "DBNull" ? null : row["City"] as string);
 
-				result.Add(new Contact(id, uid, name, title, forename, surname, suffix, birth, GetAddress(id), GetAdditionalAddresses(id)));
+				result.Add(new Contact(id, uid, name, title, forename, surname, suffix, birth, street, number, code, city));
 			}
 
 			return result;
-		}
-
-		private Address GetAddress(int id)
-		{
-			// TODO: SQL-Query for main address
-			return null;
-		}
-
-		private List<AdditionalAddress> GetAdditionalAddresses(int id)
-		{
-			// TODO: SQL-Query for addresses
-			return null;
 		}
 
 		/// <summary>

@@ -43,8 +43,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RPCall.cs" />
     <Compile Include="RPResult.cs" />
-    <Compile Include="Types\AdditionalAddress.cs" />
-    <Compile Include="Types\Address.cs" />
     <Compile Include="Types\Contact.cs" />
     <Compile Include="Types\Invoice.cs" />
   </ItemGroup>

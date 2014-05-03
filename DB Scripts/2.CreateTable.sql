@@ -1,29 +1,5 @@
-﻿/*
-drop table if exists PersonData cascade;
-create table PersonData (
-	ID serial primary key,
-	Forename text null,
-	Surname text null,
-	Title text null,
-	Suffix text null,
-	BirthDate date null
-);
-
-drop table if exists CompanyData cascade;
-create table CompanyData (
-	ID serial primary key,
-	Name text null
-);
-*/
-
-drop table if exists Address cascade;
-create table Address (
-	ID serial primary key,
-	Street text null,
-	StreetNumber integer null,
-	PostalCode integer null,
-	City text null
-);
+﻿drop table if exists Address cascade;
+drop table if exists AdditionalAddress cascade;
 
 drop table if exists Contact cascade;
 create table Contact (
@@ -35,15 +11,10 @@ create table Contact (
 	Title text null,
 	Suffix text null,
 	BirthDate date null,
-	fk_Address integer references Address(ID) null
-);
-
-drop table if exists AdditionalAddress cascade;
-create table AdditionalAddress (
-	ID serial primary key,
-	Type text null, -- either 'Delivery' or 'Billing'
-	fk_Contact integer references Contact(ID) null,
-	fk_Address integer references Address(ID) null
+	Street text null,
+	StreetNumber text null,
+	PostalCode text null,
+	City text null
 );
 
 drop table if exists InvoiceType cascade;

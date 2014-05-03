@@ -55,11 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\Command.cs" />
+    <Compile Include="Command\ContactCancelCommand.cs" />
+    <Compile Include="Command\ContactSaveCommand.cs" />
+    <Compile Include="Command\MainNewCommand.cs" />
+    <Compile Include="Command\MainOpenCommand.cs" />
+    <Compile Include="Command\MainSearchCommand.cs" />
     <Compile Include="EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.cs" />
-    <Compile Include="Model\ContactModel.cs" />
+    <Compile Include="ViewModel\EditViewModel.cs" />
+    <Compile Include="ViewModel\SearchViewModel.cs" />
+    <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="RPC\Proxy.cs" />
     <Compile Include="RPC\RPClient.cs" />
     <Compile Include="UIHelper.cs" />
@@ -113,10 +120,7 @@
       <Name>DataTransfer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

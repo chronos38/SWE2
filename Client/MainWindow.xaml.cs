@@ -1,4 +1,5 @@
 ﻿using Client.RPC;
+using Client.ViewModel;
 using DataTransfer;
 using DataTransfer.Types;
 using System;
@@ -27,64 +28,8 @@ namespace Client
 		public MainWindow()
 		{
 			InitializeComponent();
-			Proxy = new Proxy();
 
-			// Base
-			this.txtSearch.Text = "enter searchterm";
-
-			Editor = null;
-		}
-
-		private async void btnSearch_Click(object sender, RoutedEventArgs e)
-		{
-			if (this.txtSearch.Text != "") {
-				RPResult result = await Proxy.SearchContactsAsync(this.txtSearch.Text);
-				this.dgrdSearchResult.ItemsSource = result.dt.DefaultView;
-			}
-
-			e.Handled = true;
-		}
-
-		private void txtSearch_KeyDown(object sender, KeyEventArgs e)
-		{
-			Pressed = e.Key;
-		}
-
-		private async void txtSearch_KeyUp(object sender, KeyEventArgs e)
-		{
-			if (e.Key == Key.Return && Pressed == Key.Return && this.txtSearch.Text != "") {
-				RPResult result = await Proxy.SearchContactsAsync(this.txtSearch.Text);
-				this.dgrdSearchResult.ItemsSource = result.dt.DefaultView;
-			}
-
-			e.Handled = true;
-		}
-
-		private void txtSearch_GotFocus(object sender, RoutedEventArgs e)
-		{
-			this.txtSearch.Text = "";
-		}
-
-		private void dgrdSearchResult_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-		{
-			// variables
-			DependencyObject source = (DependencyObject)e.OriginalSource;
-			DataGridRow rows = UIHelper.TryFindParent<DataGridRow>(source);
-
-			// check rows
-			if (rows == null) {
-				return;
-			}
-
-			// try casting to row
-			OpenEditor((DataRowView)rows.Item);
-
-			e.Handled = true;
-		}
-
-		private void btnOpen_Click(object sender, RoutedEventArgs e)
-		{
-			OpenEditor((DataRowView)this.dgrdSearchResult.SelectedItem);
+			this.DataContext = new SearchViewModel(this);
 		}
 	}
 }

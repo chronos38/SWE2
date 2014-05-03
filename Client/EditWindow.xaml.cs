@@ -21,6 +21,17 @@ namespace Client
 	/// </summary>
 	public partial class EditWindow : Window
 	{
+		public EditWindow()
+		{
+			// initialize all
+			InitializeComponent();
+
+			// set content
+			//IntializeContact();
+
+			this.DataContext = new ViewModel.EditViewModel(this);
+		}
+
 		public EditWindow(Contact contact)
 		{
 			// initialize all
@@ -29,17 +40,7 @@ namespace Client
 			// set content
 			//IntializeContact();
 
-			this.DataContext = new Model.ContactModel(contact);
-		}
-
-		private void btnSave_Click(object sender, RoutedEventArgs e)
-		{
-			MessageBox.Show("Should save entry", "Save", MessageBoxButton.OK);
-		}
-
-		private void btnCancel_Click(object sender, RoutedEventArgs e)
-		{
-			Close();
+			this.DataContext = new ViewModel.EditViewModel(this, contact);
 		}
 	}
 }

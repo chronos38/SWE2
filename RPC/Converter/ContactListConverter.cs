@@ -30,7 +30,7 @@ namespace DataTransfer.Converter
 			return base.CanConvertTo(context, destinationType);
 		}
 
-		public virtual object ConvertFrom(object value)
+		public new object ConvertFrom(object value)
 		{
 			return ConvertFrom(null, null, value);
 		}
@@ -51,7 +51,7 @@ namespace DataTransfer.Converter
 			return result;
 		}
 
-		public virtual object ConvertTo(object value, Type destinationType)
+		public new object ConvertTo(object value, Type destinationType)
 		{
 			return ConvertTo(null, null, value, destinationType);
 		}

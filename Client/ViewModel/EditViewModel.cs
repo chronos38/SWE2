@@ -6,19 +6,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
-namespace Client.Model
+namespace Client.ViewModel
 {
-	internal class ContactModel : DependencyObject, INotifyPropertyChanged
+	internal class EditViewModel : ViewModel
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
+		public int ID { get; private set; }
 
-		public ContactModel()
+		public EditViewModel(Window window)
 		{
+			ID = -1;
+			UID = null;
+			Name = null;
+			Title = null;
+			Forename = null;
+			Surname = null;
+			Suffix = null;
+			Birthday = null;
+			Street = null;
+			StreetNumber = null;
+			ZIP = null;
+			City = null;
+
+			Cancel = new Command.ContactCancelCommand(window, this);
+			Save = new Command.ContactSaveCommand(window, this);
 		}
 
-		public ContactModel(Contact contact)
+		public EditViewModel(Window window, Contact contact)
 		{
+			ID = contact.ID;
 			UID = contact.UID;
 			Name = contact.Name;
 			Title = contact.Title;
@@ -26,6 +43,13 @@ namespace Client.Model
 			Surname = contact.Surname;
 			Suffix = contact.Suffix;
 			Birthday = contact.Birthday;
+			Street = contact.Street;
+			StreetNumber = contact.StreetNumber;
+			ZIP = contact.PostalCode;
+			City = contact.City;
+
+			Cancel = new Command.ContactCancelCommand(window, this);
+			Save = new Command.ContactSaveCommand(window, this);
 		}
 
 		#region Editable
@@ -169,41 +193,65 @@ namespace Client.Model
 		#endregion
 
 		#region Address
-		public Address _address = null;
-		public Address Address
+		public string _street = null;
+		public string Street
 		{
-			get { return _address; }
+			get { return _street; }
 			set
 			{
-				if (_address != value) {
-					_address = value;
-					OnPropertyChanged("Address");
+				if (_street != value) {
+					_street = value;
+					OnPropertyChanged("Street");
+					NotifyStateChanged();
 				}
 			}
 		}
 
-		public List<AdditionalAddress> _addresses = null;
-		public List<AdditionalAddress> AdditionalAddresses
+		public string _streetNumber = null;
+		public string StreetNumber
 		{
-			get { return _addresses; }
+			get { return _streetNumber; }
 			set
 			{
-				if (_addresses != value) {
-					_addresses = value;
-					OnPropertyChanged("AdditionalAddresses");
+				if (_streetNumber != value) {
+					_streetNumber = value;
+					OnPropertyChanged("StreetNumber");
+					NotifyStateChanged();
+				}
+			}
+		}
+
+		public string _postalcode = null;
+		public string ZIP
+		{
+			get { return _postalcode; }
+			set
+			{
+				if (_postalcode != value) {
+					_postalcode = value;
+					OnPropertyChanged("ZIP");
+					NotifyStateChanged();
+				}
+			}
+		}
+
+		public string _city = null;
+		public string City
+		{
+			get { return _city; }
+			set
+			{
+				if (_city != value) {
+					_city = value;
+					OnPropertyChanged("City");
+					NotifyStateChanged();
 				}
 			}
 		}
 		#endregion
 
-		private void OnPropertyChanged(string prop)
-		{
-			var temp = PropertyChanged;
-
-			if (temp != null) {
-				temp(this, new PropertyChangedEventArgs(prop));
-			}
-		}
+		public ICommand Cancel { get; set; }
+		public ICommand Save { get; set; }
 
 		private void NotifyStateChanged()
 		{

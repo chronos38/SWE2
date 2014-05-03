@@ -17,10 +17,12 @@ namespace DataTransfer.Types
 		public string Surname { get; private set; }
 		public string Suffix { get; private set; }
 		public DateTime? Birthday { get; private set; }
-		public Address Address { get; private set; }
-		public List<AdditionalAddress> AdditionalAddresses { get; private set; }
+		public string Street { get; protected set; }
+		public string StreetNumber { get; protected set; }
+		public string PostalCode { get; protected set; }
+		public string City { get; protected set; }
 
-		public Contact(int id, string uid, string name, string title, string fore, string sur, string suffix, DateTime? birth, Address address, List<AdditionalAddress> addresses)
+		public Contact(int id, string uid, string name, string title, string fore, string sur, string suffix, DateTime? birth, string street, string number, string zip, string city)
 		{
 			ID = id;
 			UID = uid;
@@ -30,8 +32,10 @@ namespace DataTransfer.Types
 			Surname = sur;
 			Suffix = suffix;
 			Birthday = birth;
-			Address = address;
-			AdditionalAddresses = addresses;
+			Street = street;
+			StreetNumber = number;
+			PostalCode = zip;
+			City = city;
 		}
 
 		public Contact(DataRow row)
@@ -58,8 +62,10 @@ namespace DataTransfer.Types
 			result["Surname"] = Surname;
 			result["Suffix"] = Suffix;
 			result["Birthday"] = Birthday;
-			result["Address"] = Address;
-			result["AdditionalAddresses"] = AdditionalAddresses;
+			result["Street"] = Street;
+			result["StreetNumber"] = StreetNumber;
+			result["PostalCode"] = PostalCode;
+			result["City"] = City;
 
 			// return
 			return result;
@@ -75,8 +81,10 @@ namespace DataTransfer.Types
 			Surname = row["Surname"] as string;
 			Suffix = row["Suffix"] as string;
 			Birthday = row["Birthday"] as DateTime?;
-			Address = row["Address"] as Address;
-			AdditionalAddresses = row["AddtionalAddresses"] as List<AdditionalAddress>;
+			Street = row["Street"] as string;
+			StreetNumber = row["StreetNumber"] as string;
+			PostalCode = row["PostalCode"] as string;
+			City = row["City"] as string;
 
 			return this;
 		}
@@ -99,8 +107,10 @@ namespace DataTransfer.Types
 			Surname = items[5] as string;
 			Suffix = items[6] as string;
 			//Birthday = DateTime.Parse(items[7] as string, null);
-			Address = items[8] as Address;
-			AdditionalAddresses = items[9] as List<AdditionalAddress>;
+			Street = items[8] as string;
+			StreetNumber = items[9] as string;
+			PostalCode = items[10] as string;
+			City = items[11] as string;
 
 			return this;
 		}
@@ -119,8 +129,10 @@ namespace DataTransfer.Types
 			table.Columns.Add("Surname");
 			table.Columns.Add("Suffix");
 			table.Columns.Add("Birthday");
-			table.Columns.Add("Address");
-			table.Columns.Add("AdditionalAddresses");
+			table.Columns.Add("Street");
+			table.Columns.Add("StreetNumber");
+			table.Columns.Add("PostalCode");
+			table.Columns.Add("City");
 			table.TableName = "Contact";
 
 			return table;

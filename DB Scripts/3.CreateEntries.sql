@@ -1,10 +1,8 @@
 ﻿-- person
-insert into Address (Street, StreetNumber, PostalCode, City) values ('Musterstrasse', 1, 54321, 'Musterstadt');
-insert into Contact (Forename, Surname, BirthDate, fk_Address) values ('Max', 'Mustermann', '1988-08-01', 1);
+insert into Contact (Forename, Surname, BirthDate, Street, StreetNumber, PostalCode, City) values ('Max', 'Mustermann', '1988-08-01', 'Musterstrasse', 1, 54321, 'Musterstadt');
 
 -- contact
-insert into Address (Street, StreetNumber, PostalCode, City) values ('Dreamstreet', 2, 12345, 'Dreamcity');
-insert into Contact (UID, Name, fk_Address) values ('Dreamer', 'Dreamland', 2);
+insert into Contact (UID, Name, Street, StreetNumber, PostalCode, City) values ('Dreamer', 'Dreamland', 'Dreamstreet', 2, 12345, 'Dreamcity');
 
 -- invoice type
 insert into InvoiceType (Type) values ('Sale');
