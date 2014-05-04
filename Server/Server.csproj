@@ -48,6 +48,8 @@
     <Compile Include="BusinessLayer\Commands\CommandContact.cs" />
     <Compile Include="BusinessLayer\Commands\CommandTest.cs" />
     <Compile Include="BusinessLayer\Commands\ICommand.cs" />
+    <Compile Include="DAL\IDatabase.cs" />
+    <Compile Include="DAL\IDatabaseSingleton.cs" />
     <Compile Include="RPC\Facade.cs" />
     <Compile Include="DAL\Database.cs" />
     <Compile Include="Program.cs" />

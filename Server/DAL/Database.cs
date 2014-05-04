@@ -11,11 +11,11 @@ namespace Server.DAL
 {
 	// TODO: Aufteilen der Datenbankverbindung mit den Contact-Auslesen
 
-	public class Database
+	public class Database : IDatabase
 	{
 		private NpgsqlConnection _connection = null;
 
-		private Database()
+		public Database()
 		{
 		}
 
@@ -23,19 +23,6 @@ namespace Server.DAL
 		{
 			if (_connection != null) {
 				_connection.Close();
-			}
-		}
-
-		/// <summary>
-		/// Get new connection
-		/// </summary>
-		public static Database Factory
-		{
-			get
-			{
-				Database result = new Database();
-				result.Connect();
-				return result;
 			}
 		}
 

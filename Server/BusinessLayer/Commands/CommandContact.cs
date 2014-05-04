@@ -23,7 +23,7 @@ namespace Server.BusinessLayer.Commands
 			if (call.procedureArgs == null || call.procedureArgs.Length < 1) {
 				throw new InvalidOperationException();
 			}
-			List<Contact> contacts = Database.Factory.SearchContacts(call.procedureArgs[0]);
+			List<Contact> contacts = IDatabaseSingleton.Instance<Database>().SearchContacts(call.procedureArgs[0]);
 			ContactListConverter conv = new ContactListConverter();
 
 			RPResult retVal = new RPResult();
