@@ -9,6 +9,8 @@ using DataTransfer.Types;
 
 namespace Server.DAL
 {
+	// TODO: Aufteilen der Datenbankverbindung mit den Contact-Auslesen
+
 	public class Database
 	{
 		private NpgsqlConnection _connection = null;
@@ -99,8 +101,55 @@ namespace Server.DAL
 			throw new NotImplementedException();
 		}
 
-		public void UpdateContact(List<Contact> contacts)
+		public void UpsertContact(Contact contact)
 		{
+			if (contact.ID <= 0) {
+				InsertContact(contact);
+			} else {
+				UpdateContact(contact);
+			}
+		}
+
+		private void InsertContact(Contact contact)
+		{
+			NpgsqlCommand command = new NpgsqlCommand("" +
+				"INSERT INTO Contact" +
+				"(UID,Name,Title,Forename,Surname,Suffix,Birthday,Street,StreetNumber,PostalCode,City)VALUES" +
+				"(:uid,:name,:title,:for,:sur,:suf,:birth,:street,:streetnumber,:zip,:city)",
+				_connection);
+
+			// add parameters and prepare query
+			AddInsertParameters(command);
+			command.Prepare();
+
+			// add values
+			SetInsertParameters(command, contact);
+
+			if (InsertUpdateDelete(command) != 1) {
+				throw new Exception();
+			}
+		}
+
+		private void UpdateContact(Contact contact)
+		{
+			NpgsqlCommand command = new NpgsqlCommand("" +
+				"UPDATE Contact SET " +
+				"UID=:uid,Name=:name,Title=:title,Forename=:forename," +
+				"Surname=:surname,Suffix=:suffix,Birthday=:birth,Street=:street," +
+				"StreetNumber=:number,PostalCode=:zip,City=:city" +
+				"WHERE ID = :id",
+				_connection);
+
+			// add parameters and prepare query
+			AddUpdateParameters(command);
+			command.Prepare();
+
+			// add values
+			SetUpdateParameters(command, contact);
+
+			if (InsertUpdateDelete(command) != 1) {
+				throw new Exception();
+			}
 		}
 
 		private DataTable SelectContacts(string filter)
@@ -113,23 +162,15 @@ namespace Server.DAL
 				"OR lower(Name) LIKE lower(:name) " +
 				"OR lower(Forename) LIKE lower(:forename) " +
 				"OR lower(Surname) LIKE lower(:surname) " +
-				"OR lower(City) LIKE lower(:city)", _connection);
+				"OR lower(City) LIKE lower(:city)",
+				_connection);
 
 			// add parameters and prepare query
-			command.Parameters.Add("uid", NpgsqlTypes.NpgsqlDbType.Text);
-			command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
-			command.Parameters.Add("forename", NpgsqlTypes.NpgsqlDbType.Text);
-			command.Parameters.Add("surname", NpgsqlTypes.NpgsqlDbType.Text);
-			command.Parameters.Add("city", NpgsqlTypes.NpgsqlDbType.Text);
+			AddSelectParameters(command);
 			command.Prepare();
 
 			// add values
-			filter = "%" + filter + "%";
-			command.Parameters["uid"].Value = filter;
-			command.Parameters["name"].Value = filter;
-			command.Parameters["forename"].Value = filter;
-			command.Parameters["surname"].Value = filter;
-			command.Parameters["city"].Value = filter;
+			SetSelectParameters(command, "%" + filter + "%");
 
 			return Select(command);
 		}
@@ -157,6 +198,62 @@ namespace Server.DAL
 			}
 
 			return result;
+		}
+
+		private void AddUpdateParameters(NpgsqlCommand command)
+		{
+			AddInsertParameters(command);
+			command.Parameters.Add("id", NpgsqlTypes.NpgsqlDbType.Integer);
+		}
+
+		private void AddInsertParameters(NpgsqlCommand command)
+		{
+			AddSelectParameters(command);
+			command.Parameters.Add("title", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("suffix", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("birth", NpgsqlTypes.NpgsqlDbType.Date);
+			command.Parameters.Add("street", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("number", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("zip", NpgsqlTypes.NpgsqlDbType.Text);
+		}
+
+		private void AddSelectParameters(NpgsqlCommand command)
+		{
+			command.Parameters.Add("uid", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("forename", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("surname", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("city", NpgsqlTypes.NpgsqlDbType.Text);
+		}
+
+		private void SetUpdateParameters(NpgsqlCommand command, Contact contact)
+		{
+			SetInsertParameters(command, contact);
+			command.Parameters["id"].Value = contact.ID;
+		}
+
+		private void SetInsertParameters(NpgsqlCommand command, Contact contact)
+		{
+			command.Parameters["uid"].Value = contact.UID;
+			command.Parameters["name"].Value = contact.Name;
+			command.Parameters["title"].Value = contact.Title;
+			command.Parameters["forename"].Value = contact.Forename;
+			command.Parameters["surname"].Value = contact.Surname;
+			command.Parameters["suffix"].Value = contact.Suffix;
+			command.Parameters["birth"].Value = contact.Birthday;
+			command.Parameters["street"].Value = contact.Street;
+			command.Parameters["number"].Value = contact.StreetNumber;
+			command.Parameters["zip"].Value = contact.PostalCode;
+			command.Parameters["city"].Value = contact.City;
+		}
+
+		private void SetSelectParameters(NpgsqlCommand command, string filter)
+		{
+			command.Parameters["uid"].Value = filter;
+			command.Parameters["name"].Value = filter;
+			command.Parameters["forename"].Value = filter;
+			command.Parameters["surname"].Value = filter;
+			command.Parameters["city"].Value = filter;
 		}
 
 		/// <summary>

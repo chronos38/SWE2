@@ -19,11 +19,11 @@ namespace Client.Command
 
 		public async override void Execute(object parameter)
 		{
-			Proxy proxy = new Proxy();
-			SearchViewModel model = (SearchViewModel)Model;
 			string text = parameter as string;
 
 			if (!string.IsNullOrWhiteSpace(text)) {
+				SearchViewModel model = Model as SearchViewModel;
+				Proxy proxy = new Proxy();
 				RPResult result = await proxy.SearchContactsAsync(text);
 				model.SearchResult = result.dt.DefaultView;
 			}

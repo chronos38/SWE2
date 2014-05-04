@@ -1,4 +1,6 @@
-﻿using Client.ViewModel;
+﻿using Client.RPC;
+using Client.ViewModel;
+using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,26 @@ namespace Client.Command
 		{
 			// TODO: implement save logic
 			MessageBox.Show("Should save entry", "Save", MessageBoxButton.OK);
+			return;
+
+			/*Proxy proxy = new Proxy();
+			EditViewModel model = Model as EditViewModel;
+			Contact contact = new Contact(
+				model.ID,
+				model.UID,
+				model.Name,
+				model.Title,
+				model.Forename,
+				model.Surname,
+				model.Suffix,
+				model.Birthday,
+				model.Street,
+				model.StreetNumber,
+				model.ZIP,
+				model.City
+			);
+
+			proxy.SendContactAsync(contact);*/
 		}
 
 		public ContactSaveCommand(Window window, EditViewModel model)
