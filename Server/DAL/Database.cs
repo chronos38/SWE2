@@ -70,6 +70,17 @@ namespace Server.DAL
 			}
 		}
 
+		public List<Contact> GetCompanies()
+		{
+			DataTable companies = SelectCompanies();
+
+			if (companies == null) {
+				return new List<Contact>();
+			}
+
+			return CreateContactList(companies);
+		}
+
 		public List<Contact> SearchContacts(string filter)
 		{
 			// variables
@@ -95,6 +106,11 @@ namespace Server.DAL
 			} else {
 				UpdateContact(contact);
 			}
+		}
+
+		private DataTable SelectCompanies()
+		{
+			return Select(new NpgsqlCommand("SELECT * FROM Contact WHERE UID != null OR Name != null", _connection));
 		}
 
 		private void InsertContact(Contact contact)

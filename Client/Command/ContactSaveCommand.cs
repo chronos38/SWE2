@@ -22,7 +22,6 @@ namespace Client.Command
 		{
 			// TODO: implement save logic
 			MessageBox.Show("Should save entry", "Save", MessageBoxButton.OK);
-			return;
 
 			/*Proxy proxy = new Proxy();
 			EditViewModel model = Model as EditViewModel;
