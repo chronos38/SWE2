@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Micro ERP" Height="650" Width="490" MinWidth="490" MinHeight="650" ResizeMode="CanMinimize">
     <Grid Background="#FFE5E5E5">
-        <TextBox x:Name="txtSearch" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374">
+        <TextBox x:Name="txtSearch" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" TabIndex="1">
             <TextBox.InputBindings>
                 <KeyBinding Key="Return" Command="{Binding Search}" CommandParameter="{Binding SearchText}"/>
                 <KeyBinding Key="Enter" Command="{Binding Search}" CommandParameter="{Binding SearchText}"/>
             </TextBox.InputBindings>
         </TextBox>
-        <Button x:Name="btnSearch" Command="{Binding Search}" CommandParameter="{Binding SearchText}" Content="Search" HorizontalAlignment="Left" Margin="389,10,0,0" VerticalAlignment="Top" Width="75"/>
-        <DataGrid x:Name="dgrdSearchResult" ItemsSource="{Binding SearchResult}" IsReadOnly="True" AutoGenerateColumns="False" Margin="10,38,10,0" VerticalAlignment="Top" Height="537" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserResizeRows="False">
+        <Button x:Name="btnSearch" Command="{Binding Search}" CommandParameter="{Binding SearchText}" Content="Search" HorizontalAlignment="Left" Margin="389,10,0,0" VerticalAlignment="Top" Width="75" TabIndex="2"/>
+        <DataGrid x:Name="dgrdSearchResult" ItemsSource="{Binding SearchResult}" IsReadOnly="True" AutoGenerateColumns="False" Margin="10,38,10,0" VerticalAlignment="Top" Height="537" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserResizeRows="False" TabIndex="3">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding UID}" Header="UID" Width="80"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="80"/>
@@ -19,7 +19,7 @@
                 <DataGridTextColumn Binding="{Binding City}" Header="City" Width="80"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnOpen" Command="{Binding Open}" CommandParameter="{Binding ElementName=dgrdSearchResult, Path=SelectedItem}" Content="Open" HorizontalAlignment="Left" Margin="389,580,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btnNew" Command="{Binding New}" Content="New" HorizontalAlignment="Left" Margin="309,580,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnOpen" Command="{Binding Open}" CommandParameter="{Binding ElementName=dgrdSearchResult, Path=SelectedItem}" Content="Open" HorizontalAlignment="Left" Margin="389,580,0,0" VerticalAlignment="Top" Width="75" TabIndex="5"/>
+        <Button x:Name="btnNew" Command="{Binding New}" Content="New" HorizontalAlignment="Left" Margin="309,580,0,0" VerticalAlignment="Top" Width="75" TabIndex="4"/>
     </Grid>
 </Window>

@@ -45,7 +45,7 @@ namespace Server.BusinessLayer.Commands
 			List<Contact> result = new List<Contact>();
 
 			foreach (DataRow row in contacts.Rows) {
-				int id = Convert.ToInt32(row["ID"]);
+				/*int id = Convert.ToInt32(row["ID"]);
 				string uid = (row["UID"].GetType().Name == "DBNull" ? null : (string)row["UID"]);
 				string name = (row["Name"].GetType().Name == "DBNull" ? null : (string)row["Name"]);
 				string forename = (row["Forename"].GetType().Name == "DBNull" ? null : (string)row["Forename"]);
@@ -53,12 +53,13 @@ namespace Server.BusinessLayer.Commands
 				string title = (row["Title"].GetType().Name == "DBNull" ? null : (string)row["Title"]);
 				string suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
 				DateTime? birth = (row["BirthDate"].GetType().Name == "DBNull" ? new Nullable<DateTime>() : DateTime.Parse((string)row["BirthDate"]));
+				int? company = (row["Company"].GetType().Name == "DBNull" ? new Nullable<int>() : row["Company"] as int?);
 				string street = (row["Street"].GetType().Name == "DBNull" ? null : row["Street"] as string);
 				string number = (row["StreetNumber"].GetType().Name == "DBNull" ? null : row["StreetNumber"] as string);
 				string code = (row["PostalCode"].GetType().Name == "DBNull" ? null : row["PostalCode"] as string);
-				string city = (row["City"].GetType().Name == "DBNull" ? null : row["City"] as string);
+				string city = (row["City"].GetType().Name == "DBNull" ? null : row["City"] as string);*/
 
-				result.Add(new Contact(id, uid, name, title, forename, surname, suffix, birth, street, number, code, city));
+				result.Add(new Contact(row));
 			}
 
 			return result;

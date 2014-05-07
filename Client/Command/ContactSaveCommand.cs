@@ -32,6 +32,7 @@ namespace Client.Command
 				model.Surname,
 				model.Suffix,
 				model.Birthday,
+				model.Company,
 				model.Street,
 				model.StreetNumber,
 				model.ZIP,

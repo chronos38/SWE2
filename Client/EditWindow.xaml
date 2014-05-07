@@ -8,43 +8,43 @@
                 <Grid Margin="0">
                     <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     <Label Content="UID" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtCompanyName" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
-                    <TextBox x:Name="txtCompanyUID" Text="{Binding UID, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtCompanyName" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="1"/>
+                    <TextBox x:Name="txtCompanyUID" Text="{Binding UID, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="2"/>
                 </Grid>
             </GroupBox>
             <GroupBox x:Name="grpPerson" IsEnabled="{Binding CanEditPerson}" Header="Person" Margin="10,111,0,0" VerticalAlignment="Top" Height="235" Width="452" HorizontalAlignment="Left">
                 <Grid Margin="0">
-                    <TextBox x:Name="txtPersonForename" Text="{Binding Forename, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
-                    <TextBox x:Name="txtPersonSurname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
-                    <CheckBox x:Name="chkPersonCompany" Content="" HorizontalAlignment="Left" Margin="88,125,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="btnPersonSearch" Content="Search" HorizontalAlignment="Left" Margin="267,149,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnPersonDelete" Content="Delete" HorizontalAlignment="Left" Margin="347,149,0,0" VerticalAlignment="Top" Width="75"/>
+                    <TextBox x:Name="txtPersonForename" Text="{Binding Forename, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="4"/>
+                    <TextBox x:Name="txtPersonSurname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="5"/>
+                    <CheckBox x:Name="chkPersonCompany" Content="" HorizontalAlignment="Left" Margin="88,125,0,0" VerticalAlignment="Top" TabIndex="7"/>
+                    <Button x:Name="btnPersonSearch" Content="Search" HorizontalAlignment="Left" Margin="267,149,0,0" VerticalAlignment="Top" Width="75" TabIndex="9"/>
+                    <Button x:Name="btnPersonDelete" Content="Delete" HorizontalAlignment="Left" Margin="347,149,0,0" VerticalAlignment="Top" Width="75" TabIndex="10"/>
                     <Label Content="Forename" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
                     <Label Content="Surname" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
                     <Label Content="Company" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top"/>
                     <Label Content="Birthday" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top"/>
-                    <DatePicker x:Name="dtePersonBirthday" SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="88,176,0,0" VerticalAlignment="Top" Width="342"/>
-                    <ComboBox x:Name="cmbPersonCompany" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" IsEditable="True"/>
-                    <TextBox x:Name="txtPersonSuffix" Text="{Binding Suffix, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
-                    <TextBox x:Name="txtPersonTitle" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <DatePicker x:Name="dtePersonBirthday" SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="88,176,0,0" VerticalAlignment="Top" Width="342" TabIndex="11"/>
+                    <ComboBox x:Name="cmbPersonCompany" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" IsEditable="True" TabIndex="8"/>
+                    <TextBox x:Name="txtPersonSuffix" Text="{Binding Suffix, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="6"/>
+                    <TextBox x:Name="txtPersonTitle" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="3"/>
                     <Label Content="Suffix" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top"/>
                     <Label Content="Title" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </GroupBox>
             <GroupBox x:Name="grpAddresses" Header="Address" Margin="10,351,0,0" VerticalAlignment="Top" Height="192" Width="452" HorizontalAlignment="Left">
                 <Grid Margin="0">
-                    <TextBox x:Name="txtStreet" Text="{Binding Street, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343"/>
+                    <TextBox x:Name="txtStreet" Text="{Binding Street, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" TabIndex="12"/>
                     <Label Content="Street" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtNumber" Text="{Binding StreetNumber, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtNumber" Text="{Binding StreetNumber, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="13"/>
                     <Label Content="Number" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
                     <Label Content="City" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtZIP" Text="{Binding ZIP, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtZIP" Text="{Binding ZIP, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="14"/>
                     <Label Content="ZIP" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtCity" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+                    <TextBox x:Name="txtCity" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="15"/>
                 </Grid>
             </GroupBox>
-            <Button x:Name="btnSave" Command="{Binding Save}" Content="Save" HorizontalAlignment="Left" Margin="307,548,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Cancel" HorizontalAlignment="Left" Margin="387,548,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="btnSave" Command="{Binding Save}" Content="Save" HorizontalAlignment="Left" Margin="307,548,0,0" VerticalAlignment="Top" Width="75" TabIndex="16"/>
+            <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Cancel" HorizontalAlignment="Left" Margin="387,548,0,0" VerticalAlignment="Top" Width="75" TabIndex="17"/>
         </Grid>
     </Grid>
 </Window>

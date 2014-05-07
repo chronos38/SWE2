@@ -47,7 +47,7 @@ namespace Tests
 			_runThread.Start();
 			Proxy prox = new Proxy();
 			DateTime? time = new DateTime?(new DateTime(2000,1,1));
-			Contact contact = new Contact(1, "1", "teststring", "teststring", "teststring", "teststring", "teststring", time, "teststring", "teststring", "teststring", "teststring");
+			Contact contact = new Contact(1, "1", "teststring", "teststring", "teststring", "teststring", "teststring", time, null, "teststring", "teststring", "teststring", "teststring");
 			RPResult ret = await prox.SendContactAsync(contact);
 			Assert.AreEqual(1, ret.success);
 		}

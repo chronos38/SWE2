@@ -14,7 +14,8 @@ create table Contact (
 	Street text null,
 	StreetNumber text null,
 	PostalCode text null,
-	City text null
+	City text null,
+	Company integer null
 );
 
 drop table if exists InvoiceType cascade;

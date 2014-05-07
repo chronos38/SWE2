@@ -139,7 +139,7 @@ namespace Server.DAL
 				"UPDATE Contact SET " +
 				"UID=:uid,Name=:name,Title=:title,Forename=:forename," +
 				"Surname=:surname,Suffix=:suffix,BirthDate=:birth,Street=:street," +
-				"StreetNumber=:number,PostalCode=:zip,City=:city " +
+				"StreetNumber=:streetnumber,PostalCode=:zip,City=:city " +
 				"WHERE ID = :id",
 				_connection);
 
@@ -192,12 +192,13 @@ namespace Server.DAL
 				string title = (row["Title"].GetType().Name == "DBNull" ? null : (string)row["Title"]);
 				string suffix = (row["Suffix"].GetType().Name == "DBNull" ? null : (string)row["Suffix"]);
 				DateTime? birth = (row["BirthDate"].GetType().Name == "DBNull" ? new Nullable<DateTime>() : (DateTime)row["BirthDate"]);
+				int? company = (row["Company"].GetType().Name == "DBNull" ? new Nullable<int>() : row["Company"] as int?);
 				string street = (row["Street"].GetType().Name == "DBNull" ? null : row["Street"] as string);
 				string number = (row["StreetNumber"].GetType().Name == "DBNull" ? null : row["StreetNumber"] as string);
 				string code = (row["PostalCode"].GetType().Name == "DBNull" ? null : row["PostalCode"] as string);
 				string city = (row["City"].GetType().Name == "DBNull" ? null : row["City"] as string);
 
-				result.Add(new Contact(id, uid, name, title, forename, surname, suffix, birth, street, number, code, city));
+				result.Add(new Contact(id, uid, name, title, forename, surname, suffix, birth, company, street, number, code, city));
 			}
 
 			return result;
