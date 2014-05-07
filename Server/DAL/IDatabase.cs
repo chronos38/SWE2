@@ -14,6 +14,7 @@ namespace Server.DAL
 		void Close();
 		List<Contact> SearchContacts(string filter);
 		List<Invoice> SearchInvoices(string filter);
+		List<Contact> GetCompanies();
 		void UpsertContact(Contact contact);
 	}
 }

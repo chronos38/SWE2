@@ -46,6 +46,13 @@ namespace Tests.MockDAL
 		{
 			throw new NotImplementedException();
 		}
+
+		public List<Contact> GetCompanies()
+		{
+			List<Contact> result = new List<Contact>();
+			result.Add(new Contact(1, "1", "teststring", null, null, null, null, null, "teststring", "teststring", "teststring", "teststring"));
+			return result;
+		}
 		public void UpsertContact(Contact contact)
 		{
 

@@ -50,5 +50,13 @@ namespace Client.RPC
 			return result;
 
 		}
+
+		public async Task<RPResult> GetCompaniesAsync()
+		{
+			RPCall call = new RPCall("CommandGetCompanies");
+			RPResult result = await _client.SendAndReceiveAsync(call);
+			return result;
+
+		}
 	}
 }

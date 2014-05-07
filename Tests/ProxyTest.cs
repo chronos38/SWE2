@@ -29,6 +29,7 @@ namespace Tests
 			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
 			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 			CommandDictionary.Instance.RegisterCommand("CommandUpsert", new CommandUpsert());
+			CommandDictionary.Instance.RegisterCommand("CommandGetCompanies", new CommandGetCompanies());
 			IDatabaseSingleton.SetType<MockDB>();
 		}
 
@@ -60,6 +61,16 @@ namespace Tests
 			RPResult ret = await prox.SearchContactsAsync("Max");
 			Assert.AreEqual(ret.dt.Rows[0]["Forename"], "Max");
 			Assert.AreEqual(ret.dt.Rows[0]["Surname"], "Mustermann");
+		}
+
+		[TestMethod]
+		public async Task GetCompaniesAsyncReturnsCorrectData()
+		{
+			_runThread = new Thread(_rs.Run);
+			_runThread.Start();
+			Proxy prox = new Proxy();
+			RPResult ret = await prox.GetCompaniesAsync();
+			Assert.AreEqual("teststring", ret.dt.Rows[0]["Name"]);
 		}
 	}
 }
