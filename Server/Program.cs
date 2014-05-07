@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Server.RPC;
 using Server.BusinessLayer;
 using Server.BusinessLayer.Commands;
+using Server.DAL;
 
 namespace Server
 {
@@ -18,6 +19,7 @@ namespace Server
 			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
 			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 			CommandDictionary.Instance.RegisterCommand("CommandUpsert", new CommandUpsert());
+			IDatabaseSingleton.SetType<Database>();
 			RPServer rs = new RPServer(12345, 2);
 			Thread runThread = new Thread(rs.Run);
 			runThread.Start();

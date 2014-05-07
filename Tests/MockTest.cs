@@ -26,6 +26,7 @@ namespace Tests
 		[TestMethod]
 		public void DBSingletonReturnsDatabase()
 		{
+			IDatabaseSingleton.SetType<Database>();
 			IDatabase db = IDatabaseSingleton.Instance();
 			Assert.AreEqual(typeof(Database), db.GetType());
 		}

@@ -10,11 +10,14 @@ using Server.BusinessLayer.Commands;
 using Server.RPC;
 using Client.RPC;
 using DataTransfer.Types;
+using Server.DAL;
+using Tests.MockDAL;
+using System.Data;
 
 namespace Tests
 {
 	[TestClass]
-	public class RPTests
+	public class ProxyTest
 	{
 		RPServer _rs;
 		Thread _runThread;
@@ -26,6 +29,7 @@ namespace Tests
 			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
 			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 			CommandDictionary.Instance.RegisterCommand("CommandUpsert", new CommandUpsert());
+			IDatabaseSingleton.SetType<MockDB>();
 		}
 
 		[TestCleanup]
@@ -36,23 +40,26 @@ namespace Tests
 		}
 
 		[TestMethod]
-		public async Task TestMethod1()
+		public async Task SendContactsAsyncIsSuccessful()
 		{
 			_runThread = new Thread(_rs.Run);
 			_runThread.Start();
 			Proxy prox = new Proxy();
 			DateTime? time = new DateTime?(new DateTime(2000,1,1));
 			Contact contact = new Contact(1, "1", "teststring", "teststring", "teststring", "teststring", "teststring", time, "teststring", "teststring", "teststring", "teststring");
-			await prox.SendContactAsync(contact);
+			RPResult ret = await prox.SendContactAsync(contact);
+			Assert.AreEqual(1, ret.success);
 		}
 
 		[TestMethod]
-		public async Task TestMethod2()
+		public async Task SearchContactsAsyncReturnsCorrectData()
 		{
 			_runThread = new Thread(_rs.Run);
 			_runThread.Start();
 			Proxy prox = new Proxy();
-			await prox.SearchContactsAsync("Max");
+			RPResult ret = await prox.SearchContactsAsync("Max");
+			Assert.AreEqual(ret.dt.Rows[0]["Forename"], "Max");
+			Assert.AreEqual(ret.dt.Rows[0]["Surname"], "Mustermann");
 		}
 	}
 }
