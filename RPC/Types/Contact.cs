@@ -76,9 +76,9 @@ namespace DataTransfer.Types
 			string parse = row["Birthday"] as string;
 
 			if (parse != null) {
-				Birthday = DateTime.Parse(parse, null);
+				BirthDate = DateTime.Parse(parse, null);
 			} else {
-				Birthday = null;
+				BirthDate = null;
 			}
 
 			ID = (int)row["ID"];
