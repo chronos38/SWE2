@@ -66,8 +66,8 @@ namespace Client.ViewModel
 			}
 		}
 
-		public ICommand Search { get; set; }
-		public ICommand Open { get; set; }
-		public ICommand New { get; set; }
+		public ICommand Search { get; private set; }
+		public ICommand Open { get; private set; }
+		public ICommand New { get; private set; }
 	}
 }

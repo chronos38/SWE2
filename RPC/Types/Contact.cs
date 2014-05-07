@@ -73,6 +73,14 @@ namespace DataTransfer.Types
 
 		public Contact FromDataRow(DataRow row)
 		{
+			string parse = row["Birthday"] as string;
+
+			if (parse != null) {
+				Birthday = DateTime.Parse(parse, null);
+			} else {
+				Birthday = null;
+			}
+
 			ID = (int)row["ID"];
 			UID = row["UID"] as string;
 			Name = row["Name"] as string;
@@ -80,7 +88,7 @@ namespace DataTransfer.Types
 			Forename = row["Forename"] as string;
 			Surname = row["Surname"] as string;
 			Suffix = row["Suffix"] as string;
-			Birthday = row["Birthday"] as DateTime?;
+			//Birthday = row["Birthday"] as DateTime?;
 			Street = row["Street"] as string;
 			StreetNumber = row["StreetNumber"] as string;
 			PostalCode = row["PostalCode"] as string;

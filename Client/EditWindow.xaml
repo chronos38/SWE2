@@ -17,7 +17,7 @@
                     <TextBox x:Name="txtPersonForename" Text="{Binding Forename, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
                     <TextBox x:Name="txtPersonSurname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
                     <CheckBox x:Name="chkPersonCompany" Content="" HorizontalAlignment="Left" Margin="88,125,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="btnPersonSearch" Content="Search" HorizontalAlignment="Left" Margin="269,149,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnPersonSearch" Content="Search" HorizontalAlignment="Left" Margin="267,149,0,0" VerticalAlignment="Top" Width="75"/>
                     <Button x:Name="btnPersonDelete" Content="Delete" HorizontalAlignment="Left" Margin="347,149,0,0" VerticalAlignment="Top" Width="75"/>
                     <Label Content="Forename" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
                     <Label Content="Surname" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>

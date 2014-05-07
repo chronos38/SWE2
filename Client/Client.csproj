@@ -61,6 +61,8 @@
     <Compile Include="Command\MainNewCommand.cs" />
     <Compile Include="Command\MainOpenCommand.cs" />
     <Compile Include="Command\MainSearchCommand.cs" />
+    <Compile Include="Command\PersonDeleteCommand.cs" />
+    <Compile Include="Command\PersonSearchCommand.cs" />
     <Compile Include="EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>

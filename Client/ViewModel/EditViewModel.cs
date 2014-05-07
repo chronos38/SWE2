@@ -64,7 +64,7 @@ namespace Client.ViewModel
 					string.IsNullOrEmpty(Forename) && 
 					string.IsNullOrEmpty(Surname) && 
 					string.IsNullOrEmpty(Suffix) &&
-					Birthday == null)) {
+					Birthday == null && !Checked.Value)) {
 					
 					return false;
 				}
@@ -91,7 +91,7 @@ namespace Client.ViewModel
 		#endregion
 
 		#region Company
-		public string _uid = null;
+		private string _uid = null;
 		public string UID
 		{
 			get { return _uid; }
@@ -105,7 +105,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		public string _name = null;
+		private string _name = null;
 		public string Name
 		{
 			get { return _name; }
@@ -121,7 +121,7 @@ namespace Client.ViewModel
 		#endregion
 
 		#region Person
-		public string _title = null;
+		private string _title = null;
 		public string Title
 		{
 			get { return _title; }
@@ -135,7 +135,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		public string _forename = null;
+		private string _forename = null;
 		public string Forename
 		{
 			get { return _forename; }
@@ -149,7 +149,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		public string _surname = null;
+		private string _surname = null;
 		public string Surname
 		{
 			get { return _surname; }
@@ -163,7 +163,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		public string _suffix = null;
+		private string _suffix = null;
 		public string Suffix
 		{
 			get { return _suffix; }
@@ -177,7 +177,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		public DateTime? _birthday = null;
+		private DateTime? _birthday = null;
 		public DateTime? Birthday
 		{
 			get { return _birthday; }
@@ -190,10 +190,38 @@ namespace Client.ViewModel
 				}
 			}
 		}
+
+		private bool? _checked = null;
+		public bool? Checked
+		{
+			get { return _checked; }
+			set
+			{
+				if (_checked != value) {
+					_checked = value;
+					OnPropertyChanged("Checked");
+					NotifyStateChanged();
+				}
+			}
+		}
+
+		private int? _company = null;
+		public int? Company
+		{
+			get { return _company; }
+			set
+			{
+				if (_company != value) {
+					_company = value;
+					OnPropertyChanged("Company");
+					NotifyStateChanged();
+				}
+			}
+		}
 		#endregion
 
 		#region Address
-		public string _street = null;
+		private string _street = null;
 		public string Street
 		{
 			get { return _street; }
@@ -207,7 +235,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		public string _streetNumber = null;
+		private string _streetNumber = null;
 		public string StreetNumber
 		{
 			get { return _streetNumber; }
@@ -221,7 +249,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		public string _postalcode = null;
+		private string _postalcode = null;
 		public string ZIP
 		{
 			get { return _postalcode; }
@@ -235,7 +263,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		public string _city = null;
+		private string _city = null;
 		public string City
 		{
 			get { return _city; }
@@ -250,8 +278,8 @@ namespace Client.ViewModel
 		}
 		#endregion
 
-		public ICommand Cancel { get; set; }
-		public ICommand Save { get; set; }
+		public ICommand Cancel { get; private set; }
+		public ICommand Save { get; private set; }
 
 		private void NotifyStateChanged()
 		{
