@@ -78,7 +78,7 @@ namespace DataTransfer.Types
 			if (parse != null) {
 				BirthDate = DateTime.Parse(parse, null);
 			} else {
-				BirthDate = null;
+				BirthDate = row["BirthDate"] as DateTime?;
 			}
 
 			ID = (int)row["ID"];
@@ -88,7 +88,7 @@ namespace DataTransfer.Types
 			Forename = row["Forename"] as string;
 			Surname = row["Surname"] as string;
 			Suffix = row["Suffix"] as string;
-			BirthDate = row["BirthDate"] as DateTime?;
+			//BirthDate = row["BirthDate"] as DateTime?;
 			Street = row["Street"] as string;
 			StreetNumber = row["StreetNumber"] as string;
 			PostalCode = row["PostalCode"] as string;

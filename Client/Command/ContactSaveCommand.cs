@@ -1,5 +1,6 @@
 ﻿using Client.RPC;
 using Client.ViewModel;
+using DataTransfer;
 using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,9 @@ namespace Client.Command
 			return true;
 		}
 
-		public override void Execute(object parameter)
+		public async override void Execute(object parameter)
 		{
-			// TODO: implement save logic
-			MessageBox.Show("Should save entry", "Save", MessageBoxButton.OK);
-
-			/*Proxy proxy = new Proxy();
+			Proxy proxy = new Proxy();
 			EditViewModel model = Model as EditViewModel;
 			Contact contact = new Contact(
 				model.ID,
@@ -40,7 +38,13 @@ namespace Client.Command
 				model.City
 			);
 
-			proxy.SendContactAsync(contact);*/
+			RPResult result = await proxy.SendContactAsync(contact);
+
+			if (result.success == 0) {
+				MessageBox.Show("Couldn't save contact, RPC-Call 'SendContactAsync' failed.", "Error", MessageBoxButton.OK);
+			}
+
+			Window.Close();
 		}
 
 		public ContactSaveCommand(Window window, EditViewModel model)

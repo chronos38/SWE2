@@ -64,7 +64,8 @@ namespace Client.ViewModel
 					string.IsNullOrEmpty(Forename) && 
 					string.IsNullOrEmpty(Surname) && 
 					string.IsNullOrEmpty(Suffix) &&
-					Birthday == null && !Checked.Value)) {
+					Birthday == null && 
+					(Checked == null || !Checked.Value))) {
 					
 					return false;
 				}
