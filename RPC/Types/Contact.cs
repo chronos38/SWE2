@@ -16,7 +16,7 @@ namespace DataTransfer.Types
 		public string Forename { get; private set; }
 		public string Surname { get; private set; }
 		public string Suffix { get; private set; }
-		public DateTime? Birthday { get; private set; }
+		public DateTime? BirthDate { get; private set; }
 		public string Street { get; protected set; }
 		public string StreetNumber { get; protected set; }
 		public string PostalCode { get; protected set; }
@@ -31,7 +31,7 @@ namespace DataTransfer.Types
 			Forename = fore;
 			Surname = sur;
 			Suffix = suffix;
-			Birthday = birth;
+			BirthDate = birth;
 			Street = street;
 			StreetNumber = number;
 			PostalCode = zip;
@@ -61,7 +61,7 @@ namespace DataTransfer.Types
 			result["Forename"] = Forename;
 			result["Surname"] = Surname;
 			result["Suffix"] = Suffix;
-			result["Birthday"] = Birthday;
+			result["BirthDate"] = BirthDate;
 			result["Street"] = Street;
 			result["StreetNumber"] = StreetNumber;
 			result["PostalCode"] = PostalCode;
@@ -88,7 +88,7 @@ namespace DataTransfer.Types
 			Forename = row["Forename"] as string;
 			Surname = row["Surname"] as string;
 			Suffix = row["Suffix"] as string;
-			//Birthday = row["Birthday"] as DateTime?;
+			BirthDate = row["BirthDate"] as DateTime?;
 			Street = row["Street"] as string;
 			StreetNumber = row["StreetNumber"] as string;
 			PostalCode = row["PostalCode"] as string;
@@ -102,9 +102,9 @@ namespace DataTransfer.Types
 			string parse = items[7] as string;
 
 			if (parse != null) {
-				Birthday = DateTime.Parse(parse, null);
+				BirthDate = DateTime.Parse(parse, null);
 			} else {
-				Birthday = null;
+				BirthDate = null;
 			}
 
 			ID = Int32.Parse(items[0] as string);
@@ -114,7 +114,7 @@ namespace DataTransfer.Types
 			Forename = items[4] as string;
 			Surname = items[5] as string;
 			Suffix = items[6] as string;
-			//Birthday = DateTime.Parse(items[7] as string, null);
+			//BirthDate = DateTime.Parse(items[7] as string, null);
 			Street = items[8] as string;
 			StreetNumber = items[9] as string;
 			PostalCode = items[10] as string;
@@ -136,7 +136,7 @@ namespace DataTransfer.Types
 			table.Columns.Add("Forename");
 			table.Columns.Add("Surname");
 			table.Columns.Add("Suffix");
-			table.Columns.Add("Birthday");
+			table.Columns.Add("BirthDate");
 			table.Columns.Add("Street");
 			table.Columns.Add("StreetNumber");
 			table.Columns.Add("PostalCode");

@@ -77,5 +77,6 @@ namespace DataTransfer.Converter
 		{
 			return false;
 		}
+
 	}
 }

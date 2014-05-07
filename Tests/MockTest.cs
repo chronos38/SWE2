@@ -29,5 +29,17 @@ namespace Tests
 			IDatabase db = IDatabaseSingleton.Instance();
 			Assert.AreEqual(typeof(Database), db.GetType());
 		}
+
+		[TestMethod]
+		public void DBSingletonChangesType()
+		{
+			IDatabaseSingleton.SetType<MockDB>();
+			IDatabase db = IDatabaseSingleton.Instance();
+			Assert.AreEqual(typeof(MockDB), db.GetType());
+
+			IDatabaseSingleton.SetType<Database>();
+			db = IDatabaseSingleton.Instance();
+			Assert.AreEqual(typeof(Database), db.GetType());
+		}
 	}
 }

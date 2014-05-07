@@ -12,7 +12,7 @@ namespace DataTransfer
 		public int count;
 		[XmlElement]
 		public DataTable dt;
-		[XmlElement("rowsAffected")]
-		public int rowsAffected;
+		[XmlElement("success")]
+		public int success;
 	}
 }

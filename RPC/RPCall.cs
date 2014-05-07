@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using System.Data;
 
 namespace DataTransfer
 {
@@ -12,6 +13,7 @@ namespace DataTransfer
 		[XmlArray("procedureArguments")]
 		[XmlArrayItem("Argument")]
 		public string[] procedureArgs { get; set; }
+		public DataTable dt;
 		
 		public RPCall()
 		{

@@ -42,7 +42,7 @@ namespace Client.ViewModel
 			Forename = contact.Forename;
 			Surname = contact.Surname;
 			Suffix = contact.Suffix;
-			Birthday = contact.Birthday;
+			Birthday = contact.BirthDate;
 			Street = contact.Street;
 			StreetNumber = contact.StreetNumber;
 			ZIP = contact.PostalCode;

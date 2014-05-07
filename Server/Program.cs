@@ -17,6 +17,7 @@ namespace Server
 		{
 			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
 			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
+			CommandDictionary.Instance.RegisterCommand("CommandUpsert", new CommandUpsert());
 			RPServer rs = new RPServer(12345, 2);
 			Thread runThread = new Thread(rs.Run);
 			runThread.Start();

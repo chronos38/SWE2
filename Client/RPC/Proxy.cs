@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using DataTransfer;
+using DataTransfer.Types;
+using System.Xml.Serialization;
+using System.Data;
+using DataTransfer.Converter;
 
 namespace Client.RPC
 {
@@ -29,6 +34,21 @@ namespace Client.RPC
 			call.procedureArgs = new string[] { name };
 			RPResult result = await _client.SendAndReceiveAsync(call);
 			return result;
+		}
+
+		public async Task<RPResult> SendContactAsync(Contact contact)
+		{
+			if (contact == null) {
+				throw new ArgumentNullException();
+			}
+			RPCall call = new RPCall("CommandUpsert");
+			List<Contact> temp = new List<Contact>() { contact };
+			ContactListConverter conv = new ContactListConverter();
+			call.dt = (DataTable) conv.ConvertTo(null, null, temp, typeof(DataTable));
+
+			RPResult result = await _client.SendAndReceiveAsync(call);
+			return result;
+
 		}
 	}
 }

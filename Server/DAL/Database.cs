@@ -117,7 +117,7 @@ namespace Server.DAL
 		{
 			NpgsqlCommand command = new NpgsqlCommand("" +
 				"INSERT INTO Contact" +
-				"(UID,Name,Title,Forename,Surname,Suffix,Birthday,Street,StreetNumber,PostalCode,City)VALUES" +
+				"(UID,Name,Title,Forename,Surname,Suffix,BirthDate,Street,StreetNumber,PostalCode,City)VALUES" +
 				"(:uid,:name,:title,:for,:sur,:suf,:birth,:street,:streetnumber,:zip,:city)",
 				_connection);
 
@@ -138,8 +138,8 @@ namespace Server.DAL
 			NpgsqlCommand command = new NpgsqlCommand("" +
 				"UPDATE Contact SET " +
 				"UID=:uid,Name=:name,Title=:title,Forename=:forename," +
-				"Surname=:surname,Suffix=:suffix,Birthday=:birth,Street=:street," +
-				"StreetNumber=:number,PostalCode=:zip,City=:city" +
+				"Surname=:surname,Suffix=:suffix,BirthDate=:birth,Street=:street," +
+				"StreetNumber=:number,PostalCode=:zip,City=:city " +
 				"WHERE ID = :id",
 				_connection);
 
@@ -243,7 +243,7 @@ namespace Server.DAL
 			command.Parameters["forename"].Value = contact.Forename;
 			command.Parameters["surname"].Value = contact.Surname;
 			command.Parameters["suffix"].Value = contact.Suffix;
-			command.Parameters["birth"].Value = contact.Birthday;
+			command.Parameters["birth"].Value = contact.BirthDate;
 			command.Parameters["street"].Value = contact.Street;
 			command.Parameters["number"].Value = contact.StreetNumber;
 			command.Parameters["zip"].Value = contact.PostalCode;
