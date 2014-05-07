@@ -29,7 +29,7 @@
                     <Label Content="Company" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top"/>
                     <Label Content="Birthday" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top"/>
                     <DatePicker x:Name="dtePersonBirthday" SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="88,176,0,0" VerticalAlignment="Top" Width="342" TabIndex="11"/>
-                    <ComboBox x:Name="cmbPersonCompany" ItemsSource="{Binding Companies}" IsEnabled="{Binding Checked}" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" IsEditable="True" TabIndex="8"/>
+                    <ComboBox x:Name="cmbPersonCompany" ItemsSource="{Binding Companies}" SelectedItem="{Binding Company}" IsEnabled="{Binding Checked}" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" IsEditable="True" TabIndex="8"/>
                     <TextBox x:Name="txtPersonSuffix" Text="{Binding Suffix, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="6"/>
                     <TextBox x:Name="txtPersonTitle" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="3"/>
                     <Label Content="Suffix" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top"/>

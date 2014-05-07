@@ -224,6 +224,20 @@ namespace Client.ViewModel
 				}
 			}
 		}
+
+		private List<CompanyViewModel> _companies = null;
+		public List<CompanyViewModel> Companies
+		{
+			get { return _companies; }
+			set
+			{
+				if (_companies != value) {
+					_companies = value;
+					OnPropertyChanged("Companies");
+					NotifyStateChanged();
+				}
+			}
+		}
 		#endregion
 
 		#region Address
