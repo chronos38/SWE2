@@ -110,7 +110,9 @@ namespace Server.DAL
 
 		private DataTable SelectCompanies()
 		{
-			return Select(new NpgsqlCommand("SELECT * FROM Contact WHERE UID IS NOT NULL OR Name IS NOT NULL", _connection));
+			NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM Contact WHERE UID IS NOT NULL OR Name IS NOT NULL", _connection);
+			command.Prepare();
+			return Select(command);
 		}
 
 		private void InsertContact(Contact contact)
