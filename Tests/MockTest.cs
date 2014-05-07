@@ -12,12 +12,22 @@ namespace Tests
 	public class MockTest
 	{
 		[TestMethod]
-		public void DBFactoryReturnsMockDatabase()
+		public void DBSingletonReturnsMockDatabase()
 		{
-			IDatabase db = IDatabaseSingleton.Instance<MockDB>();
-			List<Contact> test = db.SearchContacts("Max");
+			IDatabaseSingleton.SetType<MockDB>();
+			IDatabase db = IDatabaseSingleton.Instance();
+			Assert.AreEqual(typeof(MockDB), db.GetType());
+
+			/*List<Contact> test = db.SearchContacts("Max");
 			Assert.AreEqual(test[0].Forename, "Max");
-			Assert.AreEqual(test[0].Surname, "Mustermann");
+			Assert.AreEqual(test[0].Surname, "Mustermann");*/
+		}
+
+		[TestMethod]
+		public void DBSingletonReturnsDatabase()
+		{
+			IDatabase db = IDatabaseSingleton.Instance();
+			Assert.AreEqual(typeof(Database), db.GetType());
 		}
 	}
 }
