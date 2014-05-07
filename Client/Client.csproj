@@ -63,9 +63,11 @@
     <Compile Include="Command\MainSearchCommand.cs" />
     <Compile Include="Command\PersonDeleteCommand.cs" />
     <Compile Include="Command\PersonSearchCommand.cs" />
+    <Compile Include="Converter\ContactCompanyConverter.cs" />
     <Compile Include="EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\CompanyViewModel.cs" />
     <Compile Include="ViewModel\EditViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />

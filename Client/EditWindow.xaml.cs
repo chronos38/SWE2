@@ -42,5 +42,10 @@ namespace Client
 
 			this.DataContext = new ViewModel.EditViewModel(this, contact);
 		}
+
+		private void chkPersonCompany_Checked(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

@@ -3,6 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Contact" Height="620" Width="960" MinHeight="620" MinWidth="960" ResizeMode="CanMinimize">
     <Grid>
+        <Grid.InputBindings>
+            <KeyBinding Key="Return" Command="{Binding Save}"/>
+            <KeyBinding Key="Enter" Command="{Binding Save}"/>
+            <KeyBinding Key="Escape" Command="{Binding Cancel}"/>
+        </Grid.InputBindings>
         <Grid Background="#FFE5E5E5">
             <GroupBox x:Name="grpCompany" IsEnabled="{Binding CanEditCompany}" Header="Company" Margin="10,10,0,0" VerticalAlignment="Top" Height="96" Width="452" HorizontalAlignment="Left">
                 <Grid Margin="0">
@@ -16,15 +21,15 @@
                 <Grid Margin="0">
                     <TextBox x:Name="txtPersonForename" Text="{Binding Forename, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="4"/>
                     <TextBox x:Name="txtPersonSurname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="5"/>
-                    <CheckBox x:Name="chkPersonCompany" Content="" HorizontalAlignment="Left" Margin="88,125,0,0" VerticalAlignment="Top" TabIndex="7"/>
-                    <Button x:Name="btnPersonSearch" Content="Search" HorizontalAlignment="Left" Margin="267,149,0,0" VerticalAlignment="Top" Width="75" TabIndex="9"/>
-                    <Button x:Name="btnPersonDelete" Content="Delete" HorizontalAlignment="Left" Margin="347,149,0,0" VerticalAlignment="Top" Width="75" TabIndex="10"/>
+                    <CheckBox x:Name="chkPersonCompany" IsChecked="{Binding Checked}" HorizontalAlignment="Left" Margin="88,125,0,0" VerticalAlignment="Top" TabIndex="7"/>
+                    <Button x:Name="btnPersonSearch" Command="{Binding Search}" Content="Search" HorizontalAlignment="Left" Margin="267,149,0,0" VerticalAlignment="Top" Width="75" TabIndex="9"/>
+                    <Button x:Name="btnPersonDelete" Command="{Binding Delete}" Content="Delete" HorizontalAlignment="Left" Margin="347,149,0,0" VerticalAlignment="Top" Width="75" TabIndex="10"/>
                     <Label Content="Forename" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
                     <Label Content="Surname" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
                     <Label Content="Company" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top"/>
                     <Label Content="Birthday" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top"/>
                     <DatePicker x:Name="dtePersonBirthday" SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="88,176,0,0" VerticalAlignment="Top" Width="342" TabIndex="11"/>
-                    <ComboBox x:Name="cmbPersonCompany" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" IsEditable="True" TabIndex="8"/>
+                    <ComboBox x:Name="cmbPersonCompany" ItemsSource="{Binding Companies}" IsEnabled="{Binding Checked}" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" IsEditable="True" TabIndex="8"/>
                     <TextBox x:Name="txtPersonSuffix" Text="{Binding Suffix, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="6"/>
                     <TextBox x:Name="txtPersonTitle" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="3"/>
                     <Label Content="Suffix" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top"/>

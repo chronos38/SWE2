@@ -1,10 +1,15 @@
-﻿using Client.ViewModel;
+﻿using Client.Converter;
+using Client.RPC;
+using Client.ViewModel;
+using DataTransfer;
+using DataTransfer.Converter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Client.Command
 {
@@ -15,11 +20,33 @@ namespace Client.Command
 			return true;
 		}
 
-		public override void Execute(object parameter)
+		public async override void Execute(object parameter)
 		{
+			ContactListConverter con = new ContactListConverter();
+			Proxy proxy = new Proxy();
+			EditWindow window = Window as EditWindow;
+
+			if (window == null) {
+				return;
+			}
+
+			RPResult result = await proxy.GetCompaniesAsync();
+			List<CompanyViewModel> models = ContactCompanyConverter.Instance.Convert(con.ConvertFrom(result.dt), typeof(ItemCollection), null, null) as List<CompanyViewModel>;
+
+			foreach (CompanyViewModel model in models) {
+				int index = window.cmbPersonCompany.Items.Add(model);
+
+				if (parameter != null) {
+					int? id = parameter as int?;
+
+					if (id != null && id == model.ID) {
+						window.cmbPersonCompany.SelectedIndex = index;
+					}
+				}
+			}
 		}
 
-		public PersonSearchCommand(Window window, SearchViewModel model)
+		public PersonSearchCommand(Window window, EditViewModel model)
 		{
 			Window = window;
 			Model = model;

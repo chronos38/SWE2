@@ -17,9 +17,18 @@ namespace Client.Command
 
 		public override void Execute(object parameter)
 		{
+			EditViewModel model = Model as EditViewModel;
+			EditWindow window = Window as EditWindow;
+
+			if (window == null || model == null) {
+				return;
+			}
+
+			window.cmbPersonCompany.Items.Clear();
+			model.Company = null;
 		}
 
-		public PersonDeleteCommand(Window window, SearchViewModel model)
+		public PersonDeleteCommand(Window window, EditViewModel model)
 		{
 			Window = window;
 			Model = model;

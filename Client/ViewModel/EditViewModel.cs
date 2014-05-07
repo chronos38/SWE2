@@ -24,17 +24,19 @@ namespace Client.ViewModel
 			Surname = null;
 			Suffix = null;
 			Birthday = null;
+			Company = null;
 			Street = null;
 			StreetNumber = null;
 			ZIP = null;
 			City = null;
 
-			Cancel = new Command.ContactCancelCommand(window, this);
-			Save = new Command.ContactSaveCommand(window, this);
+			CreateCommands(window);
 		}
 
 		public EditViewModel(Window window, Contact contact)
 		{
+			EditWindow edit = window as EditWindow;
+
 			ID = contact.ID;
 			UID = contact.UID;
 			Name = contact.Name;
@@ -43,13 +45,14 @@ namespace Client.ViewModel
 			Surname = contact.Surname;
 			Suffix = contact.Suffix;
 			Birthday = contact.BirthDate;
+			//Company = contact.Company;
 			Street = contact.Street;
 			StreetNumber = contact.StreetNumber;
 			ZIP = contact.PostalCode;
 			City = contact.City;
 
-			Cancel = new Command.ContactCancelCommand(window, this);
-			Save = new Command.ContactSaveCommand(window, this);
+			CreateCommands(window);
+			Search.Execute(contact.Company);
 		}
 
 		#region Editable
@@ -64,8 +67,7 @@ namespace Client.ViewModel
 					string.IsNullOrEmpty(Forename) && 
 					string.IsNullOrEmpty(Surname) && 
 					string.IsNullOrEmpty(Suffix) &&
-					Birthday == null && 
-					(Checked == null || !Checked.Value))) {
+					Birthday == null && Checked == false)) {
 					
 					return false;
 				}
@@ -192,8 +194,8 @@ namespace Client.ViewModel
 			}
 		}
 
-		private bool? _checked = null;
-		public bool? Checked
+		private bool _checked = false;
+		public bool Checked
 		{
 			get { return _checked; }
 			set
@@ -201,13 +203,16 @@ namespace Client.ViewModel
 				if (_checked != value) {
 					_checked = value;
 					OnPropertyChanged("Checked");
-					NotifyStateChanged();
+
+					if (!_checked) {
+						Delete.Execute(null);
+					}
 				}
 			}
 		}
 
-		private int? _company = null;
-		public int? Company
+		private CompanyViewModel _company = null;
+		public CompanyViewModel Company
 		{
 			get { return _company; }
 			set
@@ -281,6 +286,16 @@ namespace Client.ViewModel
 
 		public ICommand Cancel { get; private set; }
 		public ICommand Save { get; private set; }
+		public ICommand Search { get; private set; }
+		public ICommand Delete { get; private set; }
+
+		private void CreateCommands(Window window)
+		{
+			Cancel = new Command.ContactCancelCommand(window, this);
+			Save = new Command.ContactSaveCommand(window, this);
+			Search = new Command.PersonSearchCommand(window, this);
+			Delete = new Command.PersonDeleteCommand(window, this);
+		}
 
 		private void NotifyStateChanged()
 		{

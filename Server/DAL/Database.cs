@@ -110,15 +110,15 @@ namespace Server.DAL
 
 		private DataTable SelectCompanies()
 		{
-			return Select(new NpgsqlCommand("SELECT * FROM Contact WHERE UID != null OR Name != null", _connection));
+			return Select(new NpgsqlCommand("SELECT * FROM Contact WHERE UID IS NOT NULL OR Name IS NOT NULL", _connection));
 		}
 
 		private void InsertContact(Contact contact)
 		{
 			NpgsqlCommand command = new NpgsqlCommand("" +
 				"INSERT INTO Contact" +
-				"(UID,Name,Title,Forename,Surname,Suffix,BirthDate,Street,StreetNumber,PostalCode,City)VALUES" +
-				"(:uid,:name,:title,:forename,:surname,:suffix,:birth,:street,:streetnumber,:zip,:city)",
+				"(UID,Name,Title,Forename,Surname,Suffix,BirthDate,Company,Street,StreetNumber,PostalCode,City)VALUES" +
+				"(:uid,:name,:title,:forename,:surname,:suffix,:birth,:company,:street,:streetnumber,:zip,:city)",
 				_connection);
 
 			// add parameters and prepare query
@@ -138,8 +138,8 @@ namespace Server.DAL
 			NpgsqlCommand command = new NpgsqlCommand("" +
 				"UPDATE Contact SET " +
 				"UID=:uid,Name=:name,Title=:title,Forename=:forename," +
-				"Surname=:surname,Suffix=:suffix,BirthDate=:birth,Street=:street," +
-				"StreetNumber=:streetnumber,PostalCode=:zip,City=:city " +
+				"Surname=:surname,Suffix=:suffix,BirthDate=:birth,Company=:company," +
+				"Street=:street,StreetNumber=:streetnumber,PostalCode=:zip,City=:city " +
 				"WHERE ID = :id",
 				_connection);
 
@@ -216,6 +216,7 @@ namespace Server.DAL
 			command.Parameters.Add("title", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("suffix", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("birth", NpgsqlTypes.NpgsqlDbType.Date);
+			command.Parameters.Add("company", NpgsqlTypes.NpgsqlDbType.Integer);
 			command.Parameters.Add("street", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("streetnumber", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Parameters.Add("zip", NpgsqlTypes.NpgsqlDbType.Text);
@@ -245,6 +246,7 @@ namespace Server.DAL
 			command.Parameters["surname"].Value = contact.Surname;
 			command.Parameters["suffix"].Value = contact.Suffix;
 			command.Parameters["birth"].Value = contact.BirthDate;
+			command.Parameters["company"].Value = contact.Company;
 			command.Parameters["street"].Value = contact.Street;
 			command.Parameters["streetnumber"].Value = contact.StreetNumber;
 			command.Parameters["zip"].Value = contact.PostalCode;
