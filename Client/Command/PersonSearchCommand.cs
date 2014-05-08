@@ -25,9 +25,12 @@ namespace Client.Command
 			ContactListConverter con = new ContactListConverter();
 			Proxy proxy = new Proxy();
 			EditWindow window = Window as EditWindow;
+			EditViewModel editModel = Model as EditViewModel;
 
-			if (window == null) {
+			if (window == null || editModel == null) {
 				return;
+			} else {
+				editModel.Delete.Execute(null);
 			}
 
 			RPResult result = await proxy.GetCompaniesAsync();

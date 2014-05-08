@@ -53,6 +53,10 @@ namespace Client.ViewModel
 
 			CreateCommands(window);
 			Search.Execute(contact.Company);
+
+			if (contact.Company != null) {
+				Checked = true;
+			}
 		}
 
 		#region Editable
