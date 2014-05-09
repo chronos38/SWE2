@@ -16,7 +16,6 @@ namespace Server
 
 		static void Main(string[] args)
 		{
-			CommandDictionary.Instance.RegisterCommand("CommandTest", new CommandTest());
 			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 			CommandDictionary.Instance.RegisterCommand("CommandUpsert", new CommandUpsert());
 			CommandDictionary.Instance.RegisterCommand("CommandGetCompanies", new CommandGetCompanies());

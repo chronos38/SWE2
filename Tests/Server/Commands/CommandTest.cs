@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransfer;
+using Server.BusinessLayer.Commands;
 
-namespace Server.BusinessLayer.Commands
+namespace Tests.Server.Commands
 {
 	public class CommandTest : ICommand
 	{

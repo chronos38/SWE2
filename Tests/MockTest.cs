@@ -4,7 +4,7 @@ using Server;
 using Server.DAL;
 using DataTransfer.Types;
 using System.Collections.Generic;
-using Tests.MockDAL;
+using Tests.Server.MockDAL;
 
 namespace Tests
 {
@@ -17,10 +17,6 @@ namespace Tests
 			IDatabaseSingleton.SetType<MockDB>();
 			IDatabase db = IDatabaseSingleton.Instance();
 			Assert.AreEqual(typeof(MockDB), db.GetType());
-
-			/*List<Contact> test = db.SearchContacts("Max");
-			Assert.AreEqual(test[0].Forename, "Max");
-			Assert.AreEqual(test[0].Surname, "Mustermann");*/
 		}
 
 		[TestMethod]

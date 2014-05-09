@@ -10,7 +10,7 @@ using DataTransfer;
 
 namespace Client.RPC
 {
-	public class RPClient : IDisposable
+	public class RPClient : IDisposable, IRPClient
 	{
 		HttpClient _client = new HttpClient();
 		XmlSerializer _RPCallSerializer = new XmlSerializer(typeof(RPCall));

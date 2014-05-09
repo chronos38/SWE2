@@ -14,10 +14,15 @@ namespace Client.RPC
 {
 	public class Proxy
 	{
-		RPClient _client = new RPClient();
+		IRPClient _client;
+		public Proxy(IRPClient client)
+		{
+			_client = client;
+		}
+
 		public Proxy()
 		{
-
+			_client =  new RPClient();
 		}
 
 		/// <summary>
@@ -36,6 +41,15 @@ namespace Client.RPC
 			return result;
 		}
 
+		/// <summary>
+		/// Send a Contact object to be updated or Inserted 
+		/// into the database if it does not already exist.
+		/// </summary>
+		/// <param name="contact">The contact to be inserted or updated</param>
+		/// <returns>
+		///		A RPResult object its success field determines
+		///		wether the query was successful(1) or not(0).
+		/// </returns>
 		public async Task<RPResult> SendContactAsync(Contact contact)
 		{
 			if (contact == null) {
@@ -51,6 +65,10 @@ namespace Client.RPC
 
 		}
 
+		/// <summary>
+		/// Returns all available companies 
+		/// </summary>
+		/// <returns>A RPResult with the companies in its "dt" field</returns>
 		public async Task<RPResult> GetCompaniesAsync()
 		{
 			RPCall call = new RPCall("CommandGetCompanies");

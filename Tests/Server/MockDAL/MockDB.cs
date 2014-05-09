@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using DataTransfer.Types;
 using Server.DAL;
 
-namespace Tests.MockDAL
+namespace Tests.Server.MockDAL
 {
 	public class MockDB : IDatabase
 	{
+
+		TestHelper th = new TestHelper();
+
 		public void Connect(string ip, int port, string user, string password, string db)
 		{
 
@@ -25,19 +28,13 @@ namespace Tests.MockDAL
 		{
 			List<Contact> result = new List<Contact>();
 			Contact content;
-			DateTime? time;
 			switch (filter) 
 			{
 				case "Max":
-					time = new DateTime?(new DateTime(1988,8,1));
-					content = new Contact(2, null, "Mustermann", null, "Max", "Mustermann", null, time, null, "Musterstrasse", "1", "54321", "Musterstadt");
+					content = th.GetTestPersonContact();
 					break;
-				case "null":
-					return result;
 				default:
-					time = new DateTime?(new DateTime(2000,1,1));
-					content = new Contact(1, "1", "teststring", "teststring", "teststring", "teststring", "teststring", time, null, "teststring", "teststring", "teststring", "teststring");
-					break;
+					return result;
 			}
 			result.Add(content);
 			return result;
@@ -50,7 +47,7 @@ namespace Tests.MockDAL
 		public List<Contact> GetCompanies()
 		{
 			List<Contact> result = new List<Contact>();
-			result.Add(new Contact(1, "1", "teststring", null, null, null, null, null, null, "teststring", "teststring", "teststring", "teststring"));
+			result.Add(th.GetTestCompanyContact());
 			return result;
 		}
 		public void UpsertContact(Contact contact)
