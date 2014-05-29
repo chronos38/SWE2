@@ -18,28 +18,18 @@ create table Contact (
 	Company integer null
 );
 
-drop table if exists InvoiceType cascade;
-create table InvoiceType (
-	ID serial primary key,
-	Type text null -- either 'Sales' or 'Purchase'
-);
-
-drop table if exists ValueAddedTax cascade;
-create table ValueAddedTax (
-	ID serial primary key,
-	Type text null,
-	Percent float null
-);
+drop type if exists InvoiceType cascade;
+create type InvoiceType as enum ( 'sale', 'purchase' );
 
 drop table if exists Invoice cascade;
 create table Invoice (
 	ID serial primary key,
 	Date date null,
-	MaturityDate date null,
+	Maturity date null,
 	Comment text null,
 	Message text null,
-	fk_Contact integer references Contact(ID) null,
-	fk_InvoiceType integer references InvoiceType(ID) null
+	Type InvoiceType null,
+	fk_Contact integer references Contact(ID) null
 );
 
 drop table if exists InvoiceItem cascade;
@@ -47,9 +37,7 @@ create table InvoiceItem (
 	ID serial primary key,
 	UnitPrice float null,
 	Quantity integer null,
-	--Amount float null,
-	--AmountNet float null,
-	fk_TaxType integer references ValueAddedTax(ID) null
+	VAT float null
 );
 
 drop table if exists InvoicePosition cascade;

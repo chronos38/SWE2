@@ -58,12 +58,18 @@
     <Compile Include="Command\Command.cs" />
     <Compile Include="Command\ContactCancelCommand.cs" />
     <Compile Include="Command\ContactSaveCommand.cs" />
+    <Compile Include="Command\InvoiceOpenCommand.cs" />
+    <Compile Include="Command\InvoiceSearchCommand.cs" />
     <Compile Include="Command\MainNewCommand.cs" />
     <Compile Include="Command\MainOpenCommand.cs" />
     <Compile Include="Command\MainSearchCommand.cs" />
     <Compile Include="Command\PersonDeleteCommand.cs" />
     <Compile Include="Command\PersonSearchCommand.cs" />
     <Compile Include="Converter\ContactCompanyConverter.cs" />
+    <Compile Include="Data\InvoiceSearchData.cs" />
+    <Compile Include="EditInvoiceWindow.xaml.cs">
+      <DependentUpon>EditInvoiceWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
@@ -75,6 +81,10 @@
     <Compile Include="RPC\Proxy.cs" />
     <Compile Include="RPC\RPClient.cs" />
     <Compile Include="UIHelper.cs" />
+    <Page Include="EditInvoiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

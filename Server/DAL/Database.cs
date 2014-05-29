@@ -96,6 +96,15 @@ namespace Server.DAL
 
 		public List<Invoice> SearchInvoices(string filter)
 		{
+			// variables
+			/*DataTable contacts = SelectInvoices(filter);
+
+			// check result
+			if (contacts == null) {
+				return new List<Contact>();
+			}
+
+			return CreateContactList(contacts);*/
 			throw new NotImplementedException();
 		}
 

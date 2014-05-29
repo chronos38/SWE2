@@ -1,5 +1,4 @@
-﻿using DataTransfer.Converter;
-using DataTransfer.Types;
+﻿using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,30 +16,18 @@ using System.Windows.Shapes;
 namespace Client
 {
 	/// <summary>
-	/// Interaction logic for EditWindow.xaml
+	/// Interaction logic for EditInvoiceWindow.xaml
 	/// </summary>
-	public partial class EditWindow : Window
+	public partial class EditInvoiceWindow : Window
 	{
-		public EditWindow()
+		public EditInvoiceWindow()
 		{
-			// initialize all
 			InitializeComponent();
-
-			// set content
-			//IntializeContact();
-
-			this.DataContext = new ViewModel.EditViewModel(this);
 		}
 
-		public EditWindow(Contact contact)
+		public EditInvoiceWindow(Invoice invoice)
 		{
-			// initialize all
 			InitializeComponent();
-
-			// set content
-			//IntializeContact();
-
-			this.DataContext = new ViewModel.EditViewModel(this, contact);
 		}
 	}
 }

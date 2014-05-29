@@ -3,12 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Contact" Height="620" Width="960" MinHeight="620" MinWidth="960" ResizeMode="CanMinimize">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.InputBindings>
             <KeyBinding Key="Return" Command="{Binding Save}"/>
             <KeyBinding Key="Enter" Command="{Binding Save}"/>
             <KeyBinding Key="Escape" Command="{Binding Cancel}"/>
         </Grid.InputBindings>
-        <Grid Background="#FFE5E5E5">
+        <Grid Background="#FFE5E5E5" Grid.ColumnSpan="2" Height="591" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <GroupBox x:Name="grpCompany" IsEnabled="{Binding CanEditCompany}" Header="Company" Margin="10,10,0,0" VerticalAlignment="Top" Height="96" Width="452" HorizontalAlignment="Left">
                 <Grid Margin="0">
                     <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -48,8 +56,16 @@
                     <TextBox x:Name="txtCity" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="15"/>
                 </Grid>
             </GroupBox>
-            <Button x:Name="btnSave" Command="{Binding Save}" Content="Save" HorizontalAlignment="Left" Margin="307,548,0,0" VerticalAlignment="Top" Width="75" TabIndex="16"/>
-            <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Cancel" HorizontalAlignment="Left" Margin="387,548,0,0" VerticalAlignment="Top" Width="75" TabIndex="17"/>
+            <Button x:Name="btnSave" Command="{Binding Save}" Content="Save" HorizontalAlignment="Left" Margin="307,548,0,0" VerticalAlignment="Top" Width="75" TabIndex="16" Height="20"/>
+            <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Cancel" HorizontalAlignment="Left" Margin="387,548,0,0" VerticalAlignment="Top" Width="75" TabIndex="17" Height="20"/>
+            <DataGrid Margin="10,20,10,10" Grid.Column="1" ItemsSource="{Binding InvoiceSearchResult}" IsReadOnly="True" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserResizeRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="100"/>
+                    <DataGridTextColumn Binding="{Binding Maturity}" Header="Maturity" Width="100"/>
+                    <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="100"/>
+                    <DataGridTextColumn Binding="{Binding Amount}" Header="Amount (€)" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -254,7 +255,6 @@ namespace Client.ViewModel
 				if (_street != value) {
 					_street = value;
 					OnPropertyChanged("Street");
-					NotifyStateChanged();
 				}
 			}
 		}
@@ -268,7 +268,6 @@ namespace Client.ViewModel
 				if (_streetNumber != value) {
 					_streetNumber = value;
 					OnPropertyChanged("StreetNumber");
-					NotifyStateChanged();
 				}
 			}
 		}
@@ -282,7 +281,6 @@ namespace Client.ViewModel
 				if (_postalcode != value) {
 					_postalcode = value;
 					OnPropertyChanged("ZIP");
-					NotifyStateChanged();
 				}
 			}
 		}
@@ -297,6 +295,21 @@ namespace Client.ViewModel
 					_city = value;
 					OnPropertyChanged("City");
 					NotifyStateChanged();
+				}
+			}
+		}
+		#endregion
+
+		#region Invoice
+		private DataView _invoices = null;
+		public DataView InvoiceSearchResult
+		{
+			get { return _invoices; }
+			set
+			{
+				if (_invoices != value) {
+					_invoices = value;
+					OnPropertyChanged("InvoiceSearchResult");
 				}
 			}
 		}

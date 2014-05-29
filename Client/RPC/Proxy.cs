@@ -9,6 +9,7 @@ using DataTransfer.Types;
 using System.Xml.Serialization;
 using System.Data;
 using DataTransfer.Converter;
+using Client.Data;
 
 namespace Client.RPC
 {
@@ -75,6 +76,11 @@ namespace Client.RPC
 			RPResult result = await _client.SendAndReceiveAsync(call);
 			return result;
 
+		}
+
+		public async Task<RPResult> SearchInvoicesAsync(InvoiceSearchData data)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

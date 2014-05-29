@@ -4,22 +4,13 @@ insert into Contact (Forename, Surname, BirthDate, Street, StreetNumber, PostalC
 -- contact
 insert into Contact (UID, Name, Street, StreetNumber, PostalCode, City) values ('Dreamer', 'Dreamland', 'Dreamstreet', 2, 12345, 'Dreamcity');
 
--- invoice type
-insert into InvoiceType (Type) values ('Sale');
-insert into InvoiceType (Type) values ('Purchase');
-
--- VAT
-insert into ValueAddedTax (Type, Percent) values ('Product', 20.0);
-insert into ValueAddedTax (Type, Percent) values ('Income', 20.0);
-insert into ValueAddedTax (Type, Percent) values ('Sale', 20.0);
-
 -- invoice
-insert into Invoice (Date, MaturityDate, fk_Contact, fk_InvoiceType) values (now(), current_date + 14, 2, 1);
-insert into Invoice (Date, MaturityDate, fk_Contact, fk_InvoiceType) values (now(), current_date + 14, 1, 2);
+insert into Invoice (Date, Maturity, Type, fk_Contact) values (now(), current_date + 14, 'sale', 2);
+insert into Invoice (Date, Maturity, Type, fk_Contact) values (now(), current_date + 14, 'purchase', 1);
 
 -- invoice items
-insert into InvoiceItem (UnitPrice, Quantity, fk_TaxType) values (123.90, 2, 3);
-insert into InvoiceItem (UnitPrice, Quantity, fk_TaxType) values (35.50, 5, 3);
+insert into InvoiceItem (UnitPrice, Quantity, VAT) values (123.90, 2, 20);
+insert into InvoiceItem (UnitPrice, Quantity, VAT) values (35.50, 5, 20);
 
 -- invoice position
 insert into InvoicePosition (fk_Invoice, fk_InvoiceItem) values (1, 1);
