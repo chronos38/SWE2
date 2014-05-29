@@ -65,7 +65,7 @@
                     <TextBox Grid.Column="1" Text="{Binding InvoiceSearchText, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="10,3,10,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"/>
                     <DataGrid x:Name="dgrdInvoiceSearchResult" Margin="10,0" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding InvoiceSearchResult}" IsReadOnly="True" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserResizeRows="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Contact}" Header="Contact" Width="100"/>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Contact" Width="100"/>
                             <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="100"/>
                             <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="100"/>
                             <DataGridTextColumn Binding="{Binding Amount}" Header="Amount (€)" Width="100"/>

@@ -17,7 +17,9 @@ namespace Client.Command
 
 		public override void Execute(object parameter)
 		{
-			throw new NotImplementedException();
+			EditViewModel model = Model as EditViewModel;
+			EditInvoiceWindow window = new EditInvoiceWindow(model.ID);
+			window.ShowDialog();
 		}
 
 		public InvoiceNewCommand(Window window, EditViewModel model)

@@ -45,6 +45,7 @@
     <Compile Include="RPResult.cs" />
     <Compile Include="Types\Contact.cs" />
     <Compile Include="Types\Invoice.cs" />
+    <Compile Include="Types\InvoiceItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

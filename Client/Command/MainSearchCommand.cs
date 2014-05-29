@@ -26,6 +26,10 @@ namespace Client.Command
 				Proxy proxy = new Proxy();
 				RPResult result = await proxy.SearchContactsAsync(text);
 				model.SearchResult = result.dt.DefaultView;
+
+				if (result.dt.Rows.Count == 1) {
+					model.Open.Execute(model.SearchResult[0]);
+				}
 			}
 		}
 

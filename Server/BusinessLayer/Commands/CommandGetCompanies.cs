@@ -20,7 +20,7 @@ namespace Server.BusinessLayer.Commands
 
 		public RPResult Execute(RPCall call)
 		{
-			List<Contact> companies = IDatabaseSingleton.Instance().GetCompanies();
+			List<Contact> companies = DatabaseSingleton.Instance().GetCompanies();
 			ContactListConverter conv = new ContactListConverter();
 
 			RPResult ret = new RPResult();

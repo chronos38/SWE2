@@ -14,28 +14,28 @@ namespace Tests
 		[TestMethod]
 		public void DBSingletonReturnsMockDatabase()
 		{
-			IDatabaseSingleton.SetType<MockDB>();
-			IDatabase db = IDatabaseSingleton.Instance();
+			DatabaseSingleton.SetType<MockDB>();
+			IDatabase db = DatabaseSingleton.Instance();
 			Assert.AreEqual(typeof(MockDB), db.GetType());
 		}
 
 		[TestMethod]
 		public void DBSingletonReturnsDatabase()
 		{
-			IDatabaseSingleton.SetType<Database>();
-			IDatabase db = IDatabaseSingleton.Instance();
+			DatabaseSingleton.SetType<Database>();
+			IDatabase db = DatabaseSingleton.Instance();
 			Assert.AreEqual(typeof(Database), db.GetType());
 		}
 
 		[TestMethod]
 		public void DBSingletonChangesType()
 		{
-			IDatabaseSingleton.SetType<MockDB>();
-			IDatabase db = IDatabaseSingleton.Instance();
+			DatabaseSingleton.SetType<MockDB>();
+			IDatabase db = DatabaseSingleton.Instance();
 			Assert.AreEqual(typeof(MockDB), db.GetType());
 
-			IDatabaseSingleton.SetType<Database>();
-			db = IDatabaseSingleton.Instance();
+			DatabaseSingleton.SetType<Database>();
+			db = DatabaseSingleton.Instance();
 			Assert.AreEqual(typeof(Database), db.GetType());
 		}
 	}

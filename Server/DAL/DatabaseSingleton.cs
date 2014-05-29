@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Server.DAL
 {
-	public class IDatabaseSingleton
+	public class DatabaseSingleton
 	{
 		static IDatabase DB = null;
 

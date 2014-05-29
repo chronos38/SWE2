@@ -24,7 +24,7 @@ namespace Server.BusinessLayer.Commands
 		{
 			try {
 				List<Contact> contact = CreateContactList(call.dt);
-				IDatabaseSingleton.Instance().UpsertContact(contact[0]);
+				DatabaseSingleton.Instance().UpsertContact(contact[0]);
 				RPResult retVal = new RPResult();
 				retVal.success = 1;
 				return retVal;

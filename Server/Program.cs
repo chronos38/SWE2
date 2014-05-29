@@ -19,7 +19,7 @@ namespace Server
 			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 			CommandDictionary.Instance.RegisterCommand("CommandUpsert", new CommandUpsert());
 			CommandDictionary.Instance.RegisterCommand("CommandGetCompanies", new CommandGetCompanies());
-			IDatabaseSingleton.SetType<Database>();
+			DatabaseSingleton.SetType<Database>();
 			RPServer rs = new RPServer(12345, 2);
 			Thread runThread = new Thread(rs.Run);
 			runThread.Start();

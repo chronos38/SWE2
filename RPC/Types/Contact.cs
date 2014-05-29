@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataTransfer.Types
 {
+	[Serializable]
 	public class Contact
 	{
 		public int ID { get; private set; }

@@ -9,8 +9,8 @@ insert into Invoice (Date, Maturity, Type, fk_Contact) values (now(), current_da
 insert into Invoice (Date, Maturity, Type, fk_Contact) values (now(), current_date + 14, 'purchase', 1);
 
 -- invoice items
-insert into InvoiceItem (UnitPrice, Quantity, VAT) values (123.90, 2, 20);
-insert into InvoiceItem (UnitPrice, Quantity, VAT) values (35.50, 5, 20);
+insert into InvoiceItem (Name, UnitPrice, Quantity, VAT) values ('Döner', 123.90, 2, 20);
+insert into InvoiceItem (Name, UnitPrice, Quantity, VAT) values ('Kebab', 35.50, 5, 20);
 
 -- invoice position
 insert into InvoicePosition (fk_Invoice, fk_InvoiceItem) values (1, 1);

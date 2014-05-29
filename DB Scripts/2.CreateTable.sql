@@ -35,6 +35,7 @@ create table Invoice (
 drop table if exists InvoiceItem cascade;
 create table InvoiceItem (
 	ID serial primary key,
+	Name text null,
 	UnitPrice float null,
 	Quantity integer null,
 	VAT float null

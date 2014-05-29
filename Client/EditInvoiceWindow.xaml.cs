@@ -29,5 +29,15 @@ namespace Client
 		{
 			InitializeComponent();
 		}
+
+		public EditInvoiceWindow(Contact contact)
+		{
+			InitializeComponent();
+		}
+
+		public EditInvoiceWindow(int contact)
+		{
+			InitializeComponent();
+		}
 	}
 }
