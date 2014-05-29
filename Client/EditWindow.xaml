@@ -13,11 +13,17 @@
             <KeyBinding Key="Escape" Command="{Binding Cancel}"/>
         </Grid.InputBindings>
         <Grid Background="#FFE5E5E5" Grid.ColumnSpan="2" Height="591" VerticalAlignment="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="545*"/>
+                <RowDefinition Height="46*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="127*"/>
+                <ColumnDefinition Width="32*"/>
+                <ColumnDefinition Width="127*"/>
+                <ColumnDefinition Width="32*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox x:Name="grpCompany" IsEnabled="{Binding CanEditCompany}" Header="Company" Margin="10,10,0,0" VerticalAlignment="Top" Height="96" Width="452" HorizontalAlignment="Left">
+            <GroupBox x:Name="grpCompany" IsEnabled="{Binding CanEditCompany}" Header="Company" Margin="10,10,10,0" VerticalAlignment="Top" Height="96" Grid.ColumnSpan="2">
                 <Grid Margin="0">
                     <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     <Label Content="UID" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
@@ -25,7 +31,7 @@
                     <TextBox x:Name="txtCompanyUID" Text="{Binding UID, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="2"/>
                 </Grid>
             </GroupBox>
-            <GroupBox x:Name="grpPerson" IsEnabled="{Binding CanEditPerson}" Header="Person" Margin="10,111,0,0" VerticalAlignment="Top" Height="235" Width="452" HorizontalAlignment="Left">
+            <GroupBox x:Name="grpPerson" IsEnabled="{Binding CanEditPerson}" Header="Person" Margin="10,111,10,0" VerticalAlignment="Top" Height="235" Grid.ColumnSpan="2">
                 <Grid Margin="0">
                     <TextBox x:Name="txtPersonForename" Text="{Binding Forename, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="4"/>
                     <TextBox x:Name="txtPersonSurname" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="5"/>
@@ -44,7 +50,7 @@
                     <Label Content="Title" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </GroupBox>
-            <GroupBox x:Name="grpAddresses" Header="Address" Margin="10,351,0,0" VerticalAlignment="Top" Height="192" Width="452" HorizontalAlignment="Left">
+            <GroupBox x:Name="grpAddresses" Header="Address" Margin="10,351,10,0" VerticalAlignment="Top" Height="184" Grid.ColumnSpan="2">
                 <Grid Margin="0">
                     <TextBox x:Name="txtStreet" Text="{Binding Street, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" TabIndex="12"/>
                     <Label Content="Street" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -56,9 +62,9 @@
                     <TextBox x:Name="txtCity" Text="{Binding City, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="88,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" TabIndex="15"/>
                 </Grid>
             </GroupBox>
-            <Button x:Name="btnSave" Command="{Binding Save}" Content="Save" HorizontalAlignment="Left" Margin="307,548,0,0" VerticalAlignment="Top" Width="75" TabIndex="16" Height="20"/>
-            <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Cancel" HorizontalAlignment="Left" Margin="387,548,0,0" VerticalAlignment="Top" Width="75" TabIndex="17" Height="20"/>
-            <DataGrid Margin="10,20,10,10" Grid.Column="1" ItemsSource="{Binding InvoiceSearchResult}" IsReadOnly="True" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserResizeRows="False">
+            <Button x:Name="btnSave" Command="{Binding Save}" Content="Save" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" TabIndex="16" Height="20" Grid.Row="1"/>
+            <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" TabIndex="17" Height="20" Grid.Row="1" Grid.Column="1"/>
+            <DataGrid Margin="10,20,10,10" Grid.Column="2" ItemsSource="{Binding InvoiceSearchResult}" IsReadOnly="True" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserResizeRows="False" Grid.ColumnSpan="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="100"/>
                     <DataGridTextColumn Binding="{Binding Maturity}" Header="Maturity" Width="100"/>
@@ -66,6 +72,8 @@
                     <DataGridTextColumn Binding="{Binding Amount}" Header="Amount (€)" Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <Button Content="New" Command="{Binding InvoiceNew}" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Width="75" Height="20"/>
+            <Button Content="Open" Command="{Binding InvoiceOpen}" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Width="75" Height="20"/>
         </Grid>
     </Grid>
 </Window>

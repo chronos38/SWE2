@@ -58,6 +58,7 @@
     <Compile Include="Command\Command.cs" />
     <Compile Include="Command\ContactCancelCommand.cs" />
     <Compile Include="Command\ContactSaveCommand.cs" />
+    <Compile Include="Command\InvoiceNewCommand.cs" />
     <Compile Include="Command\InvoiceOpenCommand.cs" />
     <Compile Include="Command\InvoiceSearchCommand.cs" />
     <Compile Include="Command\MainNewCommand.cs" />

@@ -1,4 +1,5 @@
-﻿using DataTransfer.Types;
+﻿using Client.Command;
+using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -294,7 +295,6 @@ namespace Client.ViewModel
 				if (_city != value) {
 					_city = value;
 					OnPropertyChanged("City");
-					NotifyStateChanged();
 				}
 			}
 		}
@@ -319,13 +319,17 @@ namespace Client.ViewModel
 		public ICommand Save { get; private set; }
 		public ICommand Search { get; private set; }
 		public ICommand Delete { get; private set; }
+		public ICommand InvoiceOpen { get; private set; }
+		public ICommand InvoiceNew { get; private set; }
 
 		private void CreateCommands(Window window)
 		{
-			Cancel = new Command.ContactCancelCommand(window, this);
-			Save = new Command.ContactSaveCommand(window, this);
-			Search = new Command.PersonSearchCommand(window, this);
-			Delete = new Command.PersonDeleteCommand(window, this);
+			Cancel = new ContactCancelCommand(window, this);
+			Save = new ContactSaveCommand(window, this);
+			Search = new PersonSearchCommand(window, this);
+			Delete = new PersonDeleteCommand(window, this);
+			InvoiceOpen = new InvoiceOpenCommand(window, this);
+			InvoiceNew = new InvoiceNewCommand(window, this);
 		}
 
 		private void NotifyStateChanged()
