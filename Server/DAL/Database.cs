@@ -95,6 +95,18 @@ namespace Server.DAL
 			return CreateContactList(contacts);
 		}
 
+		public List<Invoice> SearchInvoices(int id)
+		{
+			// variables
+			string query = "SELECT Contact.UID, Contact.Name, Contact.Forename, Contact.Surname, Invoice.fk_Contact, " +
+				"Invoice.ID, Invoice.Date, Invoice.Maturity, Invoice.Comment, Invoice.Message, Invoice.Type " +
+				"FROM Invoice JOIN Contact ON Invoice.fk_Contact = Contact.ID WHERE Contact.ID = " + id.ToString();
+
+			// execute
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+			return CreateInvoiceList(Select(command));
+		}
+
 		public List<Invoice> SearchInvoices(InvoiceSearchData data)
 		{
 			// variables
@@ -106,7 +118,6 @@ namespace Server.DAL
 			}
 
 			return CreateInvoiceList(invoices);
-			throw new NotImplementedException();
 		}
 
 		private DataTable SelectInvoices(InvoiceSearchData data)

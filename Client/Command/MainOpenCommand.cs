@@ -22,8 +22,10 @@ namespace Client.Command
 			DataRowView drv = parameter as DataRowView;
 
 			if (drv != null) {
+				SearchViewModel model = Model as SearchViewModel;
 				EditWindow window = new EditWindow(new Contact(drv.Row.ItemArray));
 				window.ShowDialog();
+				model.SearchResult = null;
 			}
 		}
 

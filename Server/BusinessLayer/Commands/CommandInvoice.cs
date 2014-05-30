@@ -22,15 +22,22 @@ namespace Server.BusinessLayer.Commands
 
 		public RPResult Execute(RPCall call)
 		{
-			if (call.Buffer == null || call.Buffer.Length < 1) {
-				throw new InvalidOperationException();
-			}
-			BinaryFormatter binaryFormatter = new BinaryFormatter();
-			MemoryStream memoryStream = new MemoryStream(call.Buffer);
-			InvoiceSearchData data = (InvoiceSearchData)binaryFormatter.Deserialize(memoryStream);
+			List<Invoice> invoices = null;
+			DataTable table = null;
 
-			List<Invoice> invoices = DatabaseSingleton.Instance().SearchInvoices(data);
-			DataTable table = Invoice.CreateTable();
+			if ((call.Buffer == null || call.Buffer.Length < 1) && (call.procedureArgs == null || call.procedureArgs.Length < 1)) {
+				throw new InvalidOperationException();
+			} else if (call.Buffer != null) {
+				BinaryFormatter binaryFormatter = new BinaryFormatter();
+				MemoryStream memoryStream = new MemoryStream(call.Buffer);
+				InvoiceSearchData data = (InvoiceSearchData)binaryFormatter.Deserialize(memoryStream);
+
+				invoices = DatabaseSingleton.Factory().SearchInvoices(data);
+			} else {
+				invoices = DatabaseSingleton.Factory().SearchInvoices(Int32.Parse(call.procedureArgs[0]));
+			}
+
+			table = Invoice.CreateTable();
 
 			foreach (Invoice invoice in invoices) {
 				table.Rows.Add(invoice.ToDataRow(table));

@@ -14,6 +14,7 @@ namespace Server.DAL
 		bool IsConnected();
 		void Close();
 		List<Contact> SearchContacts(string filter);
+		List<Invoice> SearchInvoices(int id);
 		List<Invoice> SearchInvoices(InvoiceSearchData data);
 		List<Contact> GetCompanies();
 		void UpsertContact(Contact contact);

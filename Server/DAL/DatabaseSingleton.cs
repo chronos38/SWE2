@@ -26,5 +26,12 @@ namespace Server.DAL
 			DB.Connect("127.0.0.1", 5432, "sweadmin", "swe", "swedb"); 
 			return DB;
 		}
+
+		public static IDatabase Factory()
+		{
+			IDatabase db = new Database();
+			db.Connect("127.0.0.1", 5432, "sweadmin", "swe", "swedb");
+			return db;
+		}
 	}
 }

@@ -1,9 +1,12 @@
 ﻿using Client.Command;
+using Client.RPC;
+using DataTransfer;
 using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,6 +62,8 @@ namespace Client.ViewModel
 			if (contact.Company != null) {
 				Checked = true;
 			}
+
+			CreateInvoiceTable();
 		}
 
 		#region Editable
@@ -337,6 +342,30 @@ namespace Client.ViewModel
 			OnPropertyChanged("IsCompany");
 			OnPropertyChanged("CanEditCompany");
 			OnPropertyChanged("CanEditPerson");
+		}
+
+		private async void CreateInvoiceTable()
+		{
+			Proxy proxy = new Proxy();
+			RPResult result = await proxy.SearchContactInvoicesAsync(ID);
+			DataTable search = result.dt;
+
+			search.Columns.Add("Amount");
+
+			foreach (DataRow row in search.Rows) {
+				Invoice invoice = new Invoice(row);
+				double amount = 0;
+
+				foreach (InvoiceItem item in invoice.Items) {
+					if (item.Gross != null) {
+						amount += item.Gross.Value;
+					}
+				}
+
+				row["Amount"] = amount.ToString("C", CultureInfo.CreateSpecificCulture("de-AT"));
+			}
+
+			this.InvoiceSearchResult = search.DefaultView;
 		}
 	}
 }
