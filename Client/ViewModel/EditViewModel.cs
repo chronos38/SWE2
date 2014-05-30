@@ -11,16 +11,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Client.ViewModel
 {
 	internal class EditViewModel : ViewModel
 	{
+		private EditWindow Window { get; set; }
 		public int ID { get; private set; }
 
 		public EditViewModel(Window window)
 		{
+			Window = window as EditWindow;
 			ID = -1;
 			UID = null;
 			Name = null;
@@ -40,7 +43,7 @@ namespace Client.ViewModel
 
 		public EditViewModel(Window window, Contact contact)
 		{
-			EditWindow edit = window as EditWindow;
+			Window = window as EditWindow;
 
 			ID = contact.ID;
 			UID = contact.UID;
@@ -62,6 +65,22 @@ namespace Client.ViewModel
 			if (contact.Company != null) {
 				Checked = true;
 			}
+
+			Window.dgrdInvoiceSearchResult.MouseDoubleClick += (object sender, MouseButtonEventArgs e) => {
+				// variables
+				DependencyObject source = (DependencyObject)e.OriginalSource;
+				DataGridRow rows = UIHelper.TryFindParent<DataGridRow>(source);
+
+				// check rows
+				if (rows == null) {
+					return;
+				}
+
+				// try casting to row
+				InvoiceOpen.Execute(rows.Item);
+
+				e.Handled = true;
+			};
 
 			CreateInvoiceTable();
 		}
