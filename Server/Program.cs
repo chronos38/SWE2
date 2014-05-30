@@ -13,12 +13,12 @@ namespace Server
 {
 	class Program
 	{
-
 		static void Main(string[] args)
 		{
 			CommandDictionary.Instance.RegisterCommand("CommandContact", new CommandContact());
 			CommandDictionary.Instance.RegisterCommand("CommandUpsert", new CommandUpsert());
 			CommandDictionary.Instance.RegisterCommand("CommandGetCompanies", new CommandGetCompanies());
+			CommandDictionary.Instance.RegisterCommand("CommandInvoice", new CommandInvoice());
 			DatabaseSingleton.SetType<Database>();
 			RPServer rs = new RPServer(12345, 2);
 			Thread runThread = new Thread(rs.Run);

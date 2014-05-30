@@ -5,8 +5,8 @@ insert into Contact (Forename, Surname, BirthDate, Street, StreetNumber, PostalC
 insert into Contact (UID, Name, Street, StreetNumber, PostalCode, City) values ('Dreamer', 'Dreamland', 'Dreamstreet', 2, 12345, 'Dreamcity');
 
 -- invoice
-insert into Invoice (Date, Maturity, Type, fk_Contact) values (now(), current_date + 14, 'sale', 2);
-insert into Invoice (Date, Maturity, Type, fk_Contact) values (now(), current_date + 14, 'purchase', 1);
+insert into Invoice (Date, Maturity, Type, fk_Contact) values (now(), current_date + 14, 'Incoming', 2);
+insert into Invoice (Date, Maturity, Type, fk_Contact) values (now(), current_date + 14, 'Outgoing', 1);
 
 -- invoice items
 insert into InvoiceItem (Name, UnitPrice, Quantity, VAT) values ('Döner', 123.90, 2, 20);

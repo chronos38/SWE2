@@ -2,9 +2,11 @@
 using Client.RPC;
 using Client.ViewModel;
 using DataTransfer;
+using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +30,11 @@ namespace Client.Command
 				model.DateTo,
 				model.InvoiceSearchText
 			));
-			model.SearchResult = ConvertSearchView(result.dt);
+			model.InvoiceSearchResult = ConvertSearchView(result.dt);
+
+			if (result.dt.Rows.Count == 1) {
+				model.InvoiceOpen.Execute(model.SearchResult[0]);
+			}
 		}
 
 		public InvoiceSearchCommand(Window window, SearchViewModel model)
@@ -39,7 +45,23 @@ namespace Client.Command
 
 		private DataView ConvertSearchView(DataTable search)
 		{
-			throw new NotImplementedException();
+			search.Columns.Add("Amount");
+			//search.Columns["Amount"].DataType = typeof(float);
+
+			foreach (DataRow row in search.Rows) {
+				Invoice invoice = new Invoice(row);
+				double amount = 0;
+
+				foreach (InvoiceItem item in invoice.Items) {
+					if (item.Gross != null) {
+						amount += item.Gross.Value;
+					}
+				}
+
+				row["Amount"] = amount.ToString("C", CultureInfo.CreateSpecificCulture("de-AT"));
+			}
+
+			return search.DefaultView;
 		}
 	}
 }

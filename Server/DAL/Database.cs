@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using Npgsql;
 using DataTransfer.Types;
+using Client.Data;
 
 namespace Server.DAL
 {
@@ -94,18 +95,134 @@ namespace Server.DAL
 			return CreateContactList(contacts);
 		}
 
-		public List<Invoice> SearchInvoices(string filter)
+		public List<Invoice> SearchInvoices(InvoiceSearchData data)
 		{
 			// variables
-			/*DataTable contacts = SelectInvoices(filter);
+			DataTable invoices = SelectInvoices(data);
 
 			// check result
-			if (contacts == null) {
-				return new List<Contact>();
+			if (invoices == null) {
+				return new List<Invoice>();
 			}
 
-			return CreateContactList(contacts);*/
+			return CreateInvoiceList(invoices);
 			throw new NotImplementedException();
+		}
+
+		private DataTable SelectInvoices(InvoiceSearchData data)
+		{
+			// variables
+			string from = data.From != null ? "Invoice.Date < :from" : null;
+			string to = data.To != null ? "Invoice.Date > :to" : null;
+			string contact = data.Contact != null ? "lower(Contact.UID) LIKE lower(:contact) OR lower(Contact.Name) LIKE lower(:contact) OR lower(Contact.Forename) LIKE lower(:contact) OR lower(Contact.Surname) LIKE lower(:contact)" : null;
+			string query = "SELECT Contact.UID, Contact.Name, Contact.Forename, Contact.Surname, Invoice.fk_Contact, " +
+				"Invoice.ID, Invoice.Date, Invoice.Maturity, Invoice.Comment, Invoice.Message, Invoice.Type " +
+				"FROM Invoice JOIN Contact ON Invoice.fk_Contact = Contact.ID WHERE TRUE";
+
+			// create where clause
+			if (from != null) {
+				query += " AND (" + from + ")";
+			}
+
+			if (to != null) {
+				query += " AND (" + to + ")";
+			}
+
+			if (contact != null) {
+				query += " AND (" + contact + ")";
+			}
+
+			// execute
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+			AddInvoiceParameter(command, data);
+			return Select(command);
+		}
+
+		private void AddInvoiceParameter(NpgsqlCommand command, InvoiceSearchData data)
+		{
+			if (data.From != null) {
+				command.Parameters.Add("from", NpgsqlTypes.NpgsqlDbType.Date);
+			}
+
+			if (data.To != null) {
+				command.Parameters.Add("to", NpgsqlTypes.NpgsqlDbType.Date);
+			}
+
+			if (data.Contact != null) {
+				command.Parameters.Add("contact", NpgsqlTypes.NpgsqlDbType.Text);
+			}
+
+			command.Prepare();
+
+			if (data.From != null) {
+				command.Parameters["from"].Value = data.From.Value;
+			}
+
+			if (data.To != null) {
+				command.Parameters["to"].Value = data.To.Value;
+			}
+
+			if (data.Contact != null) {
+				command.Parameters["contact"].Value = "%" + data.Contact + "%";
+			}
+		}
+
+		private List<Invoice> CreateInvoiceList(DataTable invoices)
+		{
+			string query = "SELECT InvoiceItem.Name, InvoiceItem.UnitPrice, InvoiceItem.Quantity, InvoiceItem.VAT " +
+				"FROM InvoiceItem JOIN InvoicePosition ON InvoiceItem.ID = InvoicePosition.fk_InvoiceItem JOIN Invoice ON InvoicePosition.fk_Invoice = Invoice.ID WHERE Invoice.ID = ";
+			List<Invoice> result = new List<Invoice>();
+
+			foreach (DataRow row in invoices.Rows) {
+				Invoice invoice = null;
+				string uid = row["UID"] as string;
+				string name = row["Name"] as string;
+				string forename = row["Forename"] as string;
+				string surname = row["Surname"] as string;
+				string select = query + row["ID"].ToString();
+				NpgsqlCommand command = new NpgsqlCommand(select, _connection);
+				DataTable invoiceItems = Select(command);
+
+				if (uid == null && name == null) {
+					name = forename + " " + surname;
+				} else {
+					name = uid + " <> " + name;
+				}
+
+				if (invoiceItems != null) {
+					List<InvoiceItem> items = new List<InvoiceItem>();
+
+					foreach (DataRow item in invoiceItems.Rows) {
+						items.Add(new InvoiceItem(item["Name"] as string, item["Quantity"] as int?, item["UnitPrice"] as double?, item["VAT"] as double?));
+					}
+
+					invoice = new Invoice(
+						(int)row["ID"], 
+						name,
+						row["Date"] as DateTime?,
+						row["Maturity"] as DateTime?,
+						row["Comment"] as string,
+						row["Message"] as string,
+						row["Type"] as string,
+						items,
+						(int)row["fk_Contact"]);
+				} else {
+					invoice = new Invoice(
+						(int)row["ID"],
+						name,
+						row["Date"] as DateTime?,
+						row["Maturity"] as DateTime?,
+						row["Comment"] as string,
+						row["Message"] as string,
+						row["Type"] as string,
+						new List<InvoiceItem>(),
+						(int)row["fk_Contact"]);
+				}
+
+				result.Add(invoice);
+			}
+
+			return result;
 		}
 
 		public void UpsertContact(Contact contact)
@@ -280,13 +397,18 @@ namespace Server.DAL
 		/// <returns>Selected rows or null if any error happened</returns>
 		private DataTable Select(NpgsqlCommand command)
 		{
+			NpgsqlDataReader dbReader = null;
+			DataTable dt = null;
+
 			try {
-				NpgsqlDataReader dbReader = command.ExecuteReader();
-				DataTable dt = new DataTable();
+				dbReader = command.ExecuteReader();
+				dt = new DataTable();
 				dt.Load(dbReader);
 				return dt;
-			} catch {
-				// TODO: specific exception handling
+			} catch (Exception e) {
+				if (dt != null) {
+					DataRow[] rows = dt.GetErrors(); // Für Debugging
+				}
 				return null;
 			}
 		}
@@ -300,7 +422,7 @@ namespace Server.DAL
 		{
 			try {
 				return command.ExecuteNonQuery();
-			} catch {
+			} catch (Exception e) {
 				// TODO: specific exception handling
 				return -1;
 			}

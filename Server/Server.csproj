@@ -47,6 +47,7 @@
     <Compile Include="BusinessLayer\CommandDictionary.cs" />
     <Compile Include="BusinessLayer\Commands\CommandContact.cs" />
     <Compile Include="BusinessLayer\Commands\CommandGetCompanies.cs" />
+    <Compile Include="BusinessLayer\Commands\CommandInvoice.cs" />
     <Compile Include="BusinessLayer\Commands\CommandUpsert.cs" />
     <Compile Include="BusinessLayer\Commands\ICommand.cs" />
     <Compile Include="DAL\IDatabase.cs" />

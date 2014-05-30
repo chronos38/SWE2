@@ -10,20 +10,31 @@ namespace DataTransfer.Types
 	public class InvoiceItem
 	{
 		public string Name { get; private set; }
-		public int Quantity { get; private set; }
-		public float UnitPrice { get; private set; }
-		public float VAT { get; private set; }
-		public float Gross { get; private set; }
-		public float Net { get; private set; }
+		public int? Quantity { get; private set; }
+		public double? UnitPrice { get; private set; }
+		public double? VAT { get; private set; }
+		public double? Gross { get; private set; }
+		public double? Net { get; private set; }
 
-		public InvoiceItem(string name, int quantity, float unitPrice, float vat)
+		public InvoiceItem(string name, int? quantity, double? unitPrice, double? vat)
 		{
 			Name = name;
-			quantity = Quantity;
+			Quantity = quantity;
 			UnitPrice = unitPrice;
 			VAT = vat;
-			Gross = quantity * unitPrice * vat;
-			Net = quantity * unitPrice;
+
+			if (quantity != null && unitPrice != null) {
+				Net = quantity * unitPrice;
+
+				if (vat != null) {
+					Gross = Net * (1 + (VAT / 100.0));
+				} else {
+					Gross = null;
+				}
+			} else {
+				Gross = null;
+				Net = null;
+			}
 		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransfer.Types;
+using Client.Data;
 
 namespace Server.DAL
 {
@@ -13,7 +14,7 @@ namespace Server.DAL
 		bool IsConnected();
 		void Close();
 		List<Contact> SearchContacts(string filter);
-		List<Invoice> SearchInvoices(string filter);
+		List<Invoice> SearchInvoices(InvoiceSearchData data);
 		List<Contact> GetCompanies();
 		void UpsertContact(Contact contact);
 	}

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Client.Data
 {
+	[Serializable]
 	public class InvoiceSearchData
 	{
 		public DateTime? From { get; private set; }

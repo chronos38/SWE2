@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using System.Data;
 using DataTransfer.Converter;
 using Client.Data;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Client.RPC
 {
@@ -80,7 +81,13 @@ namespace Client.RPC
 
 		public async Task<RPResult> SearchInvoicesAsync(InvoiceSearchData data)
 		{
-			throw new NotImplementedException();
+			BinaryFormatter binaryFormatter = new BinaryFormatter();
+			MemoryStream memoryStream = new MemoryStream();
+			binaryFormatter.Serialize(memoryStream, data);
+
+			RPCall call = new RPCall("CommandInvoice", memoryStream.GetBuffer());
+			RPResult result = await _client.SendAndReceiveAsync(call);
+			return result;
 		}
 	}
 }

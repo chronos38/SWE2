@@ -17,10 +17,6 @@ create table Contact (
 	City text null,
 	Company integer null
 );
-
-drop type if exists InvoiceType cascade;
-create type InvoiceType as enum ( 'sale', 'purchase' );
-
 drop table if exists Invoice cascade;
 create table Invoice (
 	ID serial primary key,
@@ -28,7 +24,7 @@ create table Invoice (
 	Maturity date null,
 	Comment text null,
 	Message text null,
-	Type InvoiceType null,
+	Type text null,
 	fk_Contact integer references Contact(ID) null
 );
 

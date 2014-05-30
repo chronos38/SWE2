@@ -14,6 +14,8 @@ namespace DataTransfer
 		[XmlArrayItem("Argument")]
 		public string[] procedureArgs { get; set; }
 		public DataTable dt;
+		[XmlElement("procedureArgument")]
+		public byte[] Buffer { get; set; }
 		
 		public RPCall()
 		{
@@ -27,6 +29,12 @@ namespace DataTransfer
 		public RPCall(string procName)
 		{
 			procedureName = procName;
+		}
+
+		public RPCall(string procName, byte[] arg)
+		{
+			procedureName = procName;
+			Buffer = arg;
 		}
 	}
 }
