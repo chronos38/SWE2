@@ -31,13 +31,13 @@
         <DatePicker Grid.Column="1" Margin="10,4,10,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Row="1"/>
         <TextBox Grid.Column="1" Height="23" Margin="10,5,10,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
         <TextBox Grid.Column="1" Height="23" Margin="10,5,10,0" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
-        <GroupBox Header="Invoice Position" Margin="10" Grid.Row="4" Grid.ColumnSpan="4" Height="413" Width="439">
+        <GroupBox Header="Invoice Position" Margin="18,10,10,20" Grid.Row="4" Grid.ColumnSpan="4">
             <Grid Margin="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="332*"/>
                     <ColumnDefinition Width="95*"/>
                 </Grid.ColumnDefinitions>
-                <DataGrid Margin="10" IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserAddRows="False" CanUserResizeRows="False">
+                <DataGrid Margin="10" IsReadOnly="False" AutoGenerateColumns="False" CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserAddRows="True" CanUserResizeRows="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="100"/>
                         <DataGridTextColumn Binding="{Binding UnitPrice}" Header="UnitPrice" Width="65"/>
@@ -46,10 +46,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button Content="New" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
-                <Button Content="Delete" Grid.Column="1" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="75"/>
-                <Button Content="Edit" Grid.Column="1" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="75"/>
+                <Button Content="Delete" Grid.Column="1" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="75"/>
                 <Label Content="Amount:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top"/>
-                <Label Content="€" Grid.Column="1" HorizontalAlignment="Right" Margin="47,116,10,0" VerticalAlignment="Top"/>
+                <Label Content="0 €" Grid.Column="1" HorizontalAlignment="Right" Margin="47,116,10,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
 
