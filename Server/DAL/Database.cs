@@ -123,8 +123,8 @@ namespace Server.DAL
 		private DataTable SelectInvoices(InvoiceSearchData data)
 		{
 			// variables
-			string from = data.From != null ? "Invoice.Date < :from" : null;
-			string to = data.To != null ? "Invoice.Date > :to" : null;
+			string from = data.From != null ? "Invoice.Date >= :from" : null;
+			string to = data.To != null ? "Invoice.Date <= :to" : null;
 			string contact = data.Contact != null ? "lower(Contact.UID) LIKE lower(:contact) OR lower(Contact.Name) LIKE lower(:contact) OR lower(Contact.Forename) LIKE lower(:contact) OR lower(Contact.Surname) LIKE lower(:contact)" : null;
 			string query = "SELECT Contact.UID, Contact.Name, Contact.Forename, Contact.Surname, Invoice.fk_Contact, " +
 				"Invoice.ID, Invoice.Date, Invoice.Maturity, Invoice.Comment, Invoice.Message, Invoice.Type " +
