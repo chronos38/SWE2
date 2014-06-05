@@ -52,6 +52,7 @@
     <Compile Include="BusinessLayer\Commands\CommandSearchCompany.cs" />
     <Compile Include="BusinessLayer\Commands\CommandGetCompany.cs" />
     <Compile Include="BusinessLayer\Commands\CommandUpsert.cs" />
+    <Compile Include="BusinessLayer\Commands\CommandUpsertInvoice.cs" />
     <Compile Include="BusinessLayer\Commands\ICommand.cs" />
     <Compile Include="DAL\IDatabase.cs" />
     <Compile Include="DAL\DatabaseFactory.cs" />

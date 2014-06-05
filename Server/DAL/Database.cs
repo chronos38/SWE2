@@ -71,6 +71,29 @@ namespace Server.DAL
 			}
 		}
 
+		public int UpsertInvoice(DataTable dataTable)
+		{
+			foreach (DataRow row in dataTable.Rows) {
+				if ((int)row["ID"] == -1) {
+					return InsertInvoice(row);
+				} else {
+					return UpdateInvoice(row);
+				}
+			}
+
+			return 0;
+		}
+
+		private int InsertInvoice(DataRow row)
+		{
+			throw new NotImplementedException();
+		}
+
+		private int UpdateInvoice(DataRow row)
+		{
+			throw new NotImplementedException();
+		}
+
 		public DataTable SearchCompany(int p1, string p2)
 		{
 			string query = "select ID, UID, Name from Contact where lower(Name) like lower(:name)";

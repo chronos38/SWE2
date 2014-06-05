@@ -109,5 +109,13 @@ namespace Client.RPC
 			RPCall call = new RPCall("CommandSetCompany", new string[] { id.Value.ToString() });
 			return await _client.SendAndReceiveAsync(call);
 		}
+
+		internal async Task<RPResult> UpsertInvoice(Invoice invoice)
+		{
+			RPCall call = new RPCall("CommandUpsertInvoice");
+			call.dt = Invoice.CreateTable();
+			call.dt.Rows.Add(invoice.ToDataRow(call.dt));
+			return await _client.SendAndReceiveAsync(call);
+		}
 	}
 }

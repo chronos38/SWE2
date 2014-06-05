@@ -14,7 +14,7 @@ namespace Client.ViewModel
 	{
 		private EditInvoiceWindow Window { get; set; }
 		public int ID { get; private set; }
-		private int Contact { get; set; }
+		public int Contact { get; private set; }
 
 		public EditInvoiceViewModel(EditInvoiceWindow window, Invoice invoice)
 		{
@@ -72,7 +72,8 @@ namespace Client.ViewModel
 		{
 			Window = window;
 			InitializeComponents();
-			// TODO: alles
+			Contact = contact;
+			ID = -1;
 		}
 
 		private string _name = null;
@@ -166,7 +167,7 @@ namespace Client.ViewModel
 			}
 		}
 
-		private bool? _isReadOnly = null;
+		private bool? _isReadOnly = false;
 		public bool? IsReadOnly
 		{
 			get { return _isReadOnly; }

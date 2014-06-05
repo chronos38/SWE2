@@ -11,7 +11,7 @@ namespace Client.Command
 	{
 		public override void Execute(object parameter)
 		{
-			// TODO: alles
+			Window.Close();
 		}
 
 		public InvoiceCancelCommand(EditInvoiceWindow window, EditInvoiceViewModel model)

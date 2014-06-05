@@ -84,5 +84,10 @@ namespace Tests.Server.MockDAL
 				return new DataTable();
 			}
 		}
+		
+		public int UpsertInvoice(DataTable dataTable)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
