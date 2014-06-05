@@ -12,7 +12,10 @@ namespace Client.Command
 	internal abstract class Command : ICommand
 	{
 		public event EventHandler CanExecuteChanged;
-		public abstract bool CanExecute(object parameter);
+		public virtual bool CanExecute(object parameter)
+		{
+			return true;
+		}
 		public abstract void Execute(object parameter);
 		protected Window Window { get; set; }
 		protected ViewModel.ViewModel Model { get; set; }

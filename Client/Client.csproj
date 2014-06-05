@@ -56,8 +56,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\Command.cs" />
+    <Compile Include="Command\InvoiceCancelCommand.cs" />
     <Compile Include="Command\InvoiceItemDeleteCommand.cs" />
     <Compile Include="Command\InvoiceItemNewCommand.cs" />
+    <Compile Include="Command\InvoicePrintCommand.cs" />
+    <Compile Include="Command\InvoiceSaveCommand.cs" />
     <Compile Include="Data\Company.cs" />
     <Compile Include="Command\ContactCancelCommand.cs" />
     <Compile Include="Command\ContactSaveCommand.cs" />

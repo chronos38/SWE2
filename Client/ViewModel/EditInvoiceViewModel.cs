@@ -186,6 +186,9 @@ namespace Client.ViewModel
 
 		public ICommand NewInvoiceItem { get; private set; }
 		public ICommand DeleteInvoiceItem { get; private set; }
+		public ICommand Cancel { get; private set; }
+		public ICommand Save { get; private set; }
+		public ICommand Print { get; private set; }
 
 		private void InitializeComponents()
 		{
@@ -196,6 +199,9 @@ namespace Client.ViewModel
 			// Commands
 			NewInvoiceItem = new InvoiceItemNewCommand(Window, this);
 			DeleteInvoiceItem = new InvoiceItemDeleteCommand(Window, this);
+			Cancel = new InvoiceCancelCommand(Window, this);
+			Save = new InvoiceSaveCommand(Window, this);
+			Print = new InvoicePrintCommand(Window, this);
 		}
 	}
 }
