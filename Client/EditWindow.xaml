@@ -43,7 +43,7 @@
                     <Label Content="Company" HorizontalAlignment="Left" Margin="10,118,0,0" VerticalAlignment="Top"/>
                     <Label Content="Birthday" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top"/>
                     <DatePicker x:Name="dtePersonBirthday" SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="88,176,0,0" VerticalAlignment="Top" Width="342" TabIndex="11"/>
-                    <ComboBox x:Name="cmbPersonCompany" Text="{Binding Company, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" TabIndex="8" Height="20" IsEditable="True">
+                    <ComboBox x:Name="cmbPersonCompany" Text="{Binding Company, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCompany, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="110,122,0,0" VerticalAlignment="Top" Width="320" TabIndex="8" Height="20" IsEditable="True">
                         <ComboBox.InputBindings>
                             <KeyBinding Key="Escape" Command="{Binding Delete}"/>
                             <KeyBinding Key="Return" Command="{Binding Search}" CommandParameter="{Binding Company}"/>

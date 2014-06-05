@@ -268,6 +268,24 @@ namespace Client.ViewModel
 				}
 			}
 		}
+
+		private string _selectedCompany = null;
+		public string SelectedCompany
+		{
+			get { return _selectedCompany; }
+			set
+			{
+				if (_selectedCompany != value) {
+					_selectedCompany = value;
+					OnPropertyChanged("Company");
+					NotifyStateChanged();
+
+					if (!string.IsNullOrWhiteSpace(_selectedCompany)) {
+						Search.Execute(_selectedCompany);
+					}
+				}
+			}
+		}
 		#endregion
 
 		#region Address
