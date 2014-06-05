@@ -6,30 +6,21 @@ using System.Threading.Tasks;
 
 namespace Server.DAL
 {
-	public class DatabaseSingleton
+	public class DatabaseFactory
 	{
-		static IDatabase DB = null;
+		static Type DatabaseType = null;
 
 		public static void SetType<T>() where T : IDatabase, new()
 		{
-			if ((DB == null) || (DB.GetType() != typeof(T))) {
-				DB = new T();
+			if ((DatabaseType == null) || (DatabaseType.GetType() != typeof(T))) {
+				DatabaseType = typeof(T);
 			}
 
-		}
-		public static IDatabase Instance()
-		{
-			if ((DB == null)) {
-				SetType<Database>();
-			}
-			/* TODO: Connection Parameter should not be hardcoded*/
-			DB.Connect("127.0.0.1", 5432, "sweadmin", "swe", "swedb"); 
-			return DB;
 		}
 
 		public static IDatabase Factory()
 		{
-			IDatabase db = new Database();
+			IDatabase db = (IDatabase)Activator.CreateInstance(DatabaseType);
 			db.Connect("127.0.0.1", 5432, "sweadmin", "swe", "swedb");
 			return db;
 		}

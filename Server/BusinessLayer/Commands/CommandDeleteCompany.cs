@@ -13,7 +13,7 @@ namespace Server.BusinessLayer.Commands
 		public RPResult Execute(RPCall call)
 		{
 			RPResult result = new RPResult();
-			result.success = DatabaseSingleton.Factory().DeleteCompany(Int32.Parse(call.procedureArgs[0]));
+			result.success = DatabaseFactory.Factory().DeleteCompany(Int32.Parse(call.procedureArgs[0]));
 			return result;
 		}
 	}

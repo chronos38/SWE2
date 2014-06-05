@@ -13,7 +13,7 @@ namespace Server.BusinessLayer.Commands
 		public RPResult Execute(RPCall call)
 		{
 			RPResult result = new RPResult();
-			result.dt = DatabaseSingleton.Factory().SearchCompany(Int32.Parse(call.procedureArgs[0]), call.procedureArgs[1]);
+			result.dt = DatabaseFactory.Factory().SearchCompany(Int32.Parse(call.procedureArgs[0]), call.procedureArgs[1]);
 			result.dt.TableName = "Companies";
 			return result;
 		}

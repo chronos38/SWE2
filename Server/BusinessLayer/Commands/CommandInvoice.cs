@@ -32,9 +32,9 @@ namespace Server.BusinessLayer.Commands
 				MemoryStream memoryStream = new MemoryStream(call.Buffer);
 				InvoiceSearchData data = (InvoiceSearchData)binaryFormatter.Deserialize(memoryStream);
 
-				invoices = DatabaseSingleton.Factory().SearchInvoices(data);
+				invoices = DatabaseFactory.Factory().SearchInvoices(data);
 			} else {
-				invoices = DatabaseSingleton.Factory().SearchInvoices(Int32.Parse(call.procedureArgs[0]));
+				invoices = DatabaseFactory.Factory().SearchInvoices(Int32.Parse(call.procedureArgs[0]));
 			}
 
 			table = Invoice.CreateTable();

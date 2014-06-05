@@ -13,7 +13,12 @@ namespace Tests.Server.MockDAL
 	public class MockDB : IDatabase
 	{
 
-		TestHelper th = new TestHelper();
+		TestHelper _th = new TestHelper();
+
+		/// <summary>
+		/// Determines the value DeleteCompany returns
+		/// </summary>
+		public int RowsAffected = 1;
 
 		public void Connect(string ip, int port, string user, string password, string db)
 		{
@@ -33,7 +38,7 @@ namespace Tests.Server.MockDAL
 			switch (filter) 
 			{
 				case "Max":
-					content = th.GetTestPersonContact();
+					content = _th.GetTestPersonContact();
 					break;
 				default:
 					return result;
@@ -54,7 +59,7 @@ namespace Tests.Server.MockDAL
 		public List<Contact> GetCompanies()
 		{
 			List<Contact> result = new List<Contact>();
-			result.Add(th.GetTestCompanyContact());
+			result.Add(_th.GetTestCompanyContact());
 			return result;
 		}
 		public void UpsertContact(Contact contact)
@@ -64,12 +69,16 @@ namespace Tests.Server.MockDAL
 
 		public DataTable SearchCompany(int p1, string p2)
 		{
-			throw new NotImplementedException();
+			if ((p1 == 1) && (p2 == "teststring")) {
+				return _th.GetTestCompanyDataTable();
+			} else {
+				return new DataTable();
+			}
 		}
 
 		public int DeleteCompany(int p)
 		{
-			throw new NotImplementedException();
+			return RowsAffected;
 		}
 
 		public DataTable SetCompany(int p)
