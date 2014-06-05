@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransfer.Types;
 using Server.DAL;
+using Client.Data;
 
 namespace Tests.Server.MockDAL
 {
@@ -39,7 +41,12 @@ namespace Tests.Server.MockDAL
 			result.Add(content);
 			return result;
 		}
-		public List<Invoice> SearchInvoices(string filter)
+		public List<Invoice> SearchInvoices(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public List<Invoice> SearchInvoices(InvoiceSearchData data)
 		{
 			throw new NotImplementedException();
 		}
@@ -53,6 +60,21 @@ namespace Tests.Server.MockDAL
 		public void UpsertContact(Contact contact)
 		{
 
+		}
+
+		public DataTable SearchCompany(int p1, string p2)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int DeleteCompany(int p)
+		{
+			throw new NotImplementedException();
+		}
+
+		public DataTable SetCompany(int p)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
