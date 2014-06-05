@@ -21,7 +21,7 @@ namespace Server
 			CommandDictionary.Instance.RegisterCommand("CommandInvoice", new CommandInvoice());
 			CommandDictionary.Instance.RegisterCommand("CommandDeleteCompany", new CommandDeleteCompany());
 			CommandDictionary.Instance.RegisterCommand("CommandSearchCompany", new CommandSearchCompany());
-			CommandDictionary.Instance.RegisterCommand("CommandSetCompany", new CommandSetCompany());
+			CommandDictionary.Instance.RegisterCommand("CommandSetCompany", new CommandGetCompany());
 			DatabaseFactory.SetType<Database>();
 			RPServer rs = new RPServer(12345, 2);
 			Thread runThread = new Thread(rs.Run);

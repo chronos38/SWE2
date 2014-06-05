@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Server.BusinessLayer.Commands
 {
-	class CommandSetCompany : ICommand
+	class CommandGetCompany : ICommand
 	{
 		public RPResult Execute(RPCall call)
 		{
