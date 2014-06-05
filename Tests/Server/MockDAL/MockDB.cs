@@ -15,11 +15,6 @@ namespace Tests.Server.MockDAL
 
 		TestHelper _th = new TestHelper();
 
-		/// <summary>
-		/// Determines the value DeleteCompany returns
-		/// </summary>
-		public int RowsAffected = 1;
-
 		public void Connect(string ip, int port, string user, string password, string db)
 		{
 
@@ -78,12 +73,16 @@ namespace Tests.Server.MockDAL
 
 		public int DeleteCompany(int p)
 		{
-			return RowsAffected;
+			return 1;
 		}
 
 		public DataTable GetCompany(int p)
 		{
-			throw new NotImplementedException();
+			if (p == 1) {
+				return _th.GetTestCompanyDataTable();
+			} else {
+				return new DataTable();
+			}
 		}
 	}
 }

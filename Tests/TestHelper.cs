@@ -31,7 +31,6 @@ namespace Tests
 			DataTable dt = new DataTable();
 			dt = (DataTable)_conv.ConvertTo(null, null, contacts, typeof(DataTable));
 			// Wahrscheinlich besser den dt händisch zu befüllen Zwecks entkoppelung von ContactListConverter
-			dt.TableName = "Contacts";
 			return dt;
 		}
 		public DataTable GetTestCompanyDataTable()
