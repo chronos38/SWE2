@@ -24,8 +24,9 @@ namespace DataTransfer.Types
 		public string Type { get; private set; }
 		public List<InvoiceItem> Items { get; private set; }
 		public int Contact { get; private set; }
+		public bool ReadOnly { get; private set; }
 
-		public Invoice(int id, string name, DateTime? date, DateTime? maturity, string comment, string message, string type, List<InvoiceItem> items, int contact)
+		public Invoice(int id, string name, DateTime? date, DateTime? maturity, string comment, string message, string type, List<InvoiceItem> items, int contact, bool readOnly)
 		{
 			ID = id;
 			Name = name;
@@ -36,9 +37,10 @@ namespace DataTransfer.Types
 			Type = type;
 			Items = items;
 			Contact = contact;
+			ReadOnly = readOnly;
 		}
 
-		public Invoice(int id, string name, DateTime? date, DateTime? maturity, string comment, string message, string type, byte[] items, int contact)
+		public Invoice(int id, string name, DateTime? date, DateTime? maturity, string comment, string message, string type, byte[] items, int contact, bool readOnly)
 		{
 			// variables
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -52,6 +54,7 @@ namespace DataTransfer.Types
 			Message = message;
 			Type = type;
 			Contact = contact;
+			ReadOnly = readOnly;
 
 			// deserialize
 			Items = (List<InvoiceItem>)binaryFormatter.Deserialize(new MemoryStream(items));
@@ -96,6 +99,7 @@ namespace DataTransfer.Types
 			result["Message"] = Message;
 			result["Type"] = Type;
 			result["Contact"] = Contact;
+			result["ReadOnly"] = ReadOnly;
 			
 			// serialize
 			binaryFormatter.Serialize(memoryStream, Items);
@@ -140,6 +144,7 @@ namespace DataTransfer.Types
 			Message = row["Message"] as string;
 			Type = row["Type"] as string;
 			Contact = Convert.ToInt32(row["ID"]);
+			ReadOnly = Convert.ToBoolean(row["ReadOnly"]);
 
 			return this;
 		}
@@ -179,6 +184,7 @@ namespace DataTransfer.Types
 			Message = objects[5] as string;
 			Type = objects[6] as string;
 			Contact = Convert.ToInt32(objects[8]);
+			ReadOnly = Convert.ToBoolean(objects[9]);
 
 			return this;
 		}
@@ -198,6 +204,7 @@ namespace DataTransfer.Types
 			table.Columns.Add("Type");
 			table.Columns.Add("Items");
 			table.Columns.Add("Contact");
+			table.Columns.Add("ReadOnly");
 			table.TableName = "Invoice";
 
 			table.Columns["ID"].DataType = typeof(int);
@@ -205,6 +212,7 @@ namespace DataTransfer.Types
 			table.Columns["Maturity"].DataType = typeof(DateTime);
 			table.Columns["Items"].DataType = typeof(byte[]);
 			table.Columns["Contact"].DataType = typeof(int);
+			table.Columns["ReadOnly"].DataType = typeof(bool);
 
 			return table;
 		}

@@ -140,7 +140,7 @@ namespace Server.DAL
 		{
 			// variables
 			string query = "SELECT Contact.UID, Contact.Name, Contact.Forename, Contact.Surname, Invoice.fk_Contact, " +
-				"Invoice.ID, Invoice.Date, Invoice.Maturity, Invoice.Comment, Invoice.Message, Invoice.Type " +
+				"Invoice.ID, Invoice.Date, Invoice.Maturity, Invoice.Comment, Invoice.Message, Invoice.Type, Invoice.ReadOnly " +
 				"FROM Invoice JOIN Contact ON Invoice.fk_Contact = Contact.ID WHERE Contact.ID = " + id.ToString();
 
 			// execute
@@ -255,7 +255,8 @@ namespace Server.DAL
 						row["Message"] as string,
 						row["Type"] as string,
 						items,
-						(int)row["fk_Contact"]);
+						(int)row["fk_Contact"],
+						(bool)row["ReadOnly"]);
 				} else {
 					invoice = new Invoice(
 						(int)row["ID"],
@@ -266,7 +267,8 @@ namespace Server.DAL
 						row["Message"] as string,
 						row["Type"] as string,
 						new List<InvoiceItem>(),
-						(int)row["fk_Contact"]);
+						(int)row["fk_Contact"],
+						(bool)row["ReadOnly"]);
 				}
 
 				result.Add(invoice);

@@ -14,13 +14,25 @@ namespace Client.ViewModel
 	{
 		private EditInvoiceWindow Window { get; set; }
 		public int ID { get; private set; }
+		private int Contact { get; set; }
 
 		public EditInvoiceViewModel(EditInvoiceWindow window, Invoice invoice)
 		{
 			Window = window;
-			CreateCommands();
-			// TODO: alles
+			InitializeComponents();
 
+			// Properties
+			ID = invoice.ID;
+			Name = invoice.Name;
+			Date = invoice.Date;
+			Maturity = invoice.Maturity;
+			Comment = invoice.Comment;
+			Message = invoice.Message;
+			Type = invoice.Type;
+			IsReadOnly = invoice.ReadOnly;
+			Contact = invoice.Contact;
+
+			// Invoice items
 			DataTable table = new DataTable("InvoiceItems");
 			table.Columns.Add("Name", typeof(string));
 			table.Columns.Add("Quantity", typeof(int));
@@ -59,8 +71,86 @@ namespace Client.ViewModel
 		public EditInvoiceViewModel(EditInvoiceWindow window, int contact)
 		{
 			Window = window;
-			CreateCommands();
+			InitializeComponents();
 			// TODO: alles
+		}
+
+		private string _name = null;
+		public string Name
+		{
+			get { return _name; }
+			set
+			{
+				if (_name != value) {
+					_name = value;
+					OnPropertyChanged("Name");
+				}
+			}
+		}
+
+		private DateTime? _date = null;
+		public DateTime? Date
+		{
+			get { return _date; }
+			set
+			{
+				if (_date != value) {
+					_date = value;
+					OnPropertyChanged("Date");
+				}
+			}
+		}
+
+		private DateTime? _maturity = null;
+		public DateTime? Maturity
+		{
+			get { return _maturity; }
+			set
+			{
+				if (_maturity != value) {
+					_maturity = value;
+					OnPropertyChanged("Maturity");
+				}
+			}
+		}
+
+		private string _comment = null;
+		public string Comment
+		{
+			get { return _comment; }
+			set
+			{
+				if (_comment != value) {
+					_comment = value;
+					OnPropertyChanged("Comment");
+				}
+			}
+		}
+
+		private string _message = null;
+		public string Message
+		{
+			get { return _message; }
+			set
+			{
+				if (_message != value) {
+					_message = value;
+					OnPropertyChanged("Message");
+				}
+			}
+		}
+
+		private string _type = null;
+		public string Type
+		{
+			get { return _type; }
+			set
+			{
+				if (_type != value) {
+					_type = value;
+					OnPropertyChanged("Type");
+				}
+			}
 		}
 
 		private DataView _invoiceItems = null;
@@ -76,11 +166,34 @@ namespace Client.ViewModel
 			}
 		}
 
+		private bool? _isReadOnly = null;
+		public bool? IsReadOnly
+		{
+			get { return _isReadOnly; }
+			set
+			{
+				if (_isReadOnly != value) {
+					_isReadOnly = value;
+					OnPropertyChanged("IsReadOnly");
+					OnPropertyChanged("IsWritable");
+				}
+			}
+		}
+		public bool? IsWritable
+		{
+			get { return !_isReadOnly; }
+		}
+
 		public ICommand NewInvoiceItem { get; private set; }
 		public ICommand DeleteInvoiceItem { get; private set; }
 
-		private void CreateCommands()
+		private void InitializeComponents()
 		{
+			// ComboBox
+			Window.cmbType.Items.Add("Incoming");
+			Window.cmbType.Items.Add("Outgoing");
+
+			// Commands
 			NewInvoiceItem = new InvoiceItemNewCommand(Window, this);
 			DeleteInvoiceItem = new InvoiceItemDeleteCommand(Window, this);
 		}

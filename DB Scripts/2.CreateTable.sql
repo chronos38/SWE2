@@ -23,7 +23,7 @@ create table Invoice (
 	Comment text null,
 	Message text null,
 	Type text null,
-	ReadOnly bool null,
+	ReadOnly bool default false,
 	fk_Contact integer references Contact(ID) null
 );
 
