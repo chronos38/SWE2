@@ -59,6 +59,8 @@
     <Compile Include="DAL\Database.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RPC\HttpConnection.cs" />
+    <Compile Include="RPC\IHttpConnection.cs" />
     <Compile Include="RPC\RPServer.cs" />
   </ItemGroup>
   <ItemGroup>

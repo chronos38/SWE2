@@ -58,7 +58,8 @@ namespace Server.RPC
 					try {
 						_sem.Release(); // At this point a new listener thread can be created.
 						HttpListenerContext ctx = await ctxTask;
-						_facade.HandleConnection(ctx);
+						HttpConnection con = new HttpConnection(ctx);
+						_facade.HandleConnection(con);
 						return;
 					} catch (Exception ex) {
 						error = ex.ToString();

@@ -13,7 +13,7 @@ using DataTransfer;
 
 namespace Server.RPC
 {
-	public class Facade
+	class Facade
 	{
 
 		XmlSerializer _RPCallSerializer = new XmlSerializer(typeof(RPCall));
@@ -28,16 +28,11 @@ namespace Server.RPC
 		/// Handles incoming requests.
 		/// </summary>
 		/// <param name="ctx">The HttpListenerContext returned by the HttpListener</param>
-		public void HandleConnection(HttpListenerContext ctx)
+		public void HandleConnection(IHttpConnection con)
 		{
-			Debug.Assert(ctx != null);
-
 			try {
 
-				HttpListenerRequest req = ctx.Request;
-				HttpListenerResponse res = ctx.Response;
-
-				StreamReader msg = new StreamReader(req.InputStream);
+				StreamReader msg = con.GetClientData();
 
 				try{
 					RPCall clientCall = Deserialize(msg);
@@ -48,15 +43,12 @@ namespace Server.RPC
 					}
 					RPResult result = requestedCommand.Execute(clientCall);
 					byte[] buffer = Encoding.UTF8.GetBytes(Serialize(result));
-					Stream output = res.OutputStream;
-					output.Write(buffer, 0, buffer.Length);
-					res.Close();
+					con.SendReponseData(buffer);
 				} catch(Exception ex) {
 					// Deserialization did not work aborting.
 					if (ex is InvalidOperationException || ex is ArgumentNullException) {
 						Console.WriteLine(ex.Message);
-						res.StatusCode = 500;
-						res.Close();
+						con.SendErrorCode(500);
 						return;
 					}
 					throw;
