@@ -1,10 +1,10 @@
-﻿using Client.Converter;
-using Client.RPC;
+﻿using Client.RPC;
 using Client.ViewModel;
 using DataTransfer;
 using DataTransfer.Converter;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,30 +22,35 @@ namespace Client.Command
 
 		public async override void Execute(object parameter)
 		{
+			int? id = parameter as int?;
+			string company = parameter as string;
 			ContactListConverter con = new ContactListConverter();
 			Proxy proxy = new Proxy();
 			EditWindow window = Window as EditWindow;
-			EditViewModel editModel = Model as EditViewModel;
+			EditViewModel model = Model as EditViewModel;
 
-			if (window == null || editModel == null) {
-				return;
-			} else {
-				editModel.Delete.Execute(null);
-			}
+			if (!string.IsNullOrWhiteSpace(company)) {
+				RPResult result = await proxy.SearchCompany(model.ID, company);
 
-			RPResult result = await proxy.GetCompaniesAsync();
-			List<CompanyViewModel> models = ContactCompanyConverter.Instance.Convert(con.ConvertFrom(result.dt), typeof(ItemCollection), null, null) as List<CompanyViewModel>;
+				if (result.dt != null && result.dt.Rows.Count == 1) {
+					DataRow row = result.dt.Rows[0];
+					model.Company = row["Name"] as string;
+					model.CompanyID = (int)row["ID"];
+					model.Checked = true;
+				} else {
+					window.cmbPersonCompany.Items.Clear();
+					model.Checked = false;
 
-			foreach (CompanyViewModel model in models) {
-				int index = window.cmbPersonCompany.Items.Add(model);
-
-				if (parameter != null) {
-					int? id = parameter as int?;
-
-					if (id != null && id == model.ID) {
-						window.cmbPersonCompany.SelectedIndex = index;
+					foreach (DataRow row in result.dt.Rows) {
+						window.cmbPersonCompany.Items.Add(row["Name"]);
 					}
 				}
+			} else if (id != null) {
+				RPResult result = await proxy.SetCompany(id);
+				DataRow row = result.dt.Rows[0];
+				model.Company = row["Name"] as string;
+				model.CompanyID = (int)row["ID"];
+				model.Checked = true;
 			}
 		}
 

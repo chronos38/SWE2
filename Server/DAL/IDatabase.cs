@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataTransfer.Types;
 using Client.Data;
+using System.Data;
 
 namespace Server.DAL
 {
@@ -18,5 +19,8 @@ namespace Server.DAL
 		List<Invoice> SearchInvoices(InvoiceSearchData data);
 		List<Contact> GetCompanies();
 		void UpsertContact(Contact contact);
+		DataTable SearchCompany(int p1, string p2);
+		int DeleteCompany(int p);
+		DataTable SetCompany(int p);
 	}
 }

@@ -39,8 +39,7 @@ namespace Client.RPC
 			}
 			RPCall call = new RPCall("CommandContact");
 			call.procedureArgs = new string[] { name };
-			RPResult result = await _client.SendAndReceiveAsync(call);
-			return result;
+			return await _client.SendAndReceiveAsync(call);
 		}
 
 		/// <summary>
@@ -62,8 +61,7 @@ namespace Client.RPC
 			ContactListConverter conv = new ContactListConverter();
 			call.dt = (DataTable) conv.ConvertTo(null, null, temp, typeof(DataTable));
 
-			RPResult result = await _client.SendAndReceiveAsync(call);
-			return result;
+			return await _client.SendAndReceiveAsync(call);
 
 		}
 
@@ -74,8 +72,7 @@ namespace Client.RPC
 		public async Task<RPResult> GetCompaniesAsync()
 		{
 			RPCall call = new RPCall("CommandGetCompanies");
-			RPResult result = await _client.SendAndReceiveAsync(call);
-			return result;
+			return await _client.SendAndReceiveAsync(call);
 
 		}
 
@@ -86,16 +83,31 @@ namespace Client.RPC
 			binaryFormatter.Serialize(memoryStream, data);
 
 			RPCall call = new RPCall("CommandInvoice", memoryStream.GetBuffer());
-			RPResult result = await _client.SendAndReceiveAsync(call);
-			return result;
+			return await _client.SendAndReceiveAsync(call);
 		}
 
 		public async Task<RPResult> SearchContactInvoicesAsync(int id)
 		{
 			RPCall call = new RPCall("CommandInvoice", new string[] { id.ToString() });
-			call.Buffer = null;
-			RPResult result = await _client.SendAndReceiveAsync(call);
-			return result;
+			return await _client.SendAndReceiveAsync(call);
+		}
+
+		internal async Task<RPResult> DeleteCompany(int p)
+		{
+			RPCall call = new RPCall("CommandDeleteCompany", new string[] { p.ToString() });
+			return await _client.SendAndReceiveAsync(call);
+		}
+
+		internal async Task<RPResult> SearchCompany(int p, string company)
+		{
+			RPCall call = new RPCall("CommandSearchCompany", new string[] { p.ToString(), company });
+			return await _client.SendAndReceiveAsync(call);
+		}
+
+		internal async Task<RPResult> SetCompany(int? id)
+		{
+			RPCall call = new RPCall("CommandSetCompany", new string[] { id.Value.ToString() });
+			return await _client.SendAndReceiveAsync(call);
 		}
 	}
 }

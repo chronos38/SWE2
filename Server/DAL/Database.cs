@@ -71,6 +71,47 @@ namespace Server.DAL
 			}
 		}
 
+		public DataTable SearchCompany(int p1, string p2)
+		{
+			string query = "select ID, Name from Contact where lower(Name) like lower(:name)";
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+			command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Prepare();
+			command.Parameters["name"].Value = "%" + p2 + "%";
+			DataTable table = Select(command);
+
+			if (table.Rows.Count == 1) {
+				query = "update Contact set Company=" + (int)table.Rows[0]["ID"] + " where ID=:id";
+				command = new NpgsqlCommand(query, _connection);
+				command.Parameters.Add("id", NpgsqlTypes.NpgsqlDbType.Integer);
+				command.Prepare();
+				command.Parameters["id"].Value = p1;
+				InsertUpdateDelete(command);
+			}
+
+			return table;
+		}
+
+		public int DeleteCompany(int p)
+		{
+			string query = "update Contact set Company=null where ID=:id";
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+			command.Parameters.Add("id", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Prepare();
+			command.Parameters["id"].Value = p;
+			return InsertUpdateDelete(command);
+		}
+
+		public DataTable SetCompany(int p)
+		{
+			string query = "select ID, Name from Contact where ID=:id";
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+			command.Parameters.Add("id", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Prepare();
+			command.Parameters["id"].Value = p;
+			return Select(command);
+		}
+
 		public List<Contact> GetCompanies()
 		{
 			DataTable companies = SelectCompanies();
@@ -196,8 +237,6 @@ namespace Server.DAL
 
 				if (uid == null && name == null) {
 					name = forename + " " + surname;
-				} else {
-					name = uid + " <> " + name;
 				}
 
 				if (invoiceItems != null) {

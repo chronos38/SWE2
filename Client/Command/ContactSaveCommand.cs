@@ -23,11 +23,6 @@ namespace Client.Command
 		{
 			Proxy proxy = new Proxy();
 			EditViewModel model = Model as EditViewModel;
-			int? id = null;
-
-			if (model.Company != null) {
-				id = model.Company.ID;
-			}
 
 			Contact contact = new Contact(
 				model.ID,
@@ -38,7 +33,7 @@ namespace Client.Command
 				model.Surname,
 				model.Suffix,
 				model.Birthday,
-				id,
+				model.CompanyID,
 				model.Street,
 				model.StreetNumber,
 				model.ZIP,

@@ -19,22 +19,34 @@ namespace DataTransfer
 		
 		public RPCall()
 		{
+			procedureName = "";
+			procedureArgs = null;
+			Buffer = null;
+			dt = null;
 		}
+
 		public RPCall(string procName, string[] args)
 		{
 			procedureName = procName;
 			procedureArgs = args;
+			Buffer = null;
+			dt = null;
 		}
 
 		public RPCall(string procName)
 		{
 			procedureName = procName;
+			procedureArgs = null;
+			Buffer = null;
+			dt = null;
 		}
 
 		public RPCall(string procName, byte[] arg)
 		{
 			procedureName = procName;
+			procedureArgs = null;
 			Buffer = arg;
+			dt = null;
 		}
 	}
 }

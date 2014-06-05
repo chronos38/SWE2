@@ -66,7 +66,6 @@
     <Compile Include="Command\MainSearchCommand.cs" />
     <Compile Include="Command\PersonDeleteCommand.cs" />
     <Compile Include="Command\PersonSearchCommand.cs" />
-    <Compile Include="Converter\ContactCompanyConverter.cs" />
     <Compile Include="EditInvoiceWindow.xaml.cs">
       <DependentUpon>EditInvoiceWindow.xaml</DependentUpon>
     </Compile>
@@ -74,7 +73,7 @@
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="RPC\IRPClient.cs" />
-    <Compile Include="ViewModel\CompanyViewModel.cs" />
+    <Compile Include="ViewModel\EditInvoiceViewModel.cs" />
     <Compile Include="ViewModel\EditViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
@@ -135,7 +134,9 @@
       <Name>DataTransfer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Converter\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
-﻿using Client.ViewModel;
+﻿using Client.RPC;
+using Client.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Client.Command
 
 		public override void Execute(object parameter)
 		{
+			Proxy proxy = new Proxy();
 			EditViewModel model = Model as EditViewModel;
 			EditWindow window = Window as EditWindow;
 
@@ -24,8 +26,10 @@ namespace Client.Command
 				return;
 			}
 
-			window.cmbPersonCompany.Items.Clear();
+			proxy.DeleteCompany(model.ID);
 			model.Company = null;
+			model.CompanyID = null;
+			model.Checked = false;
 		}
 
 		public PersonDeleteCommand(Window window, EditViewModel model)

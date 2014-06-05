@@ -241,8 +241,22 @@ namespace Client.ViewModel
 			}
 		}
 
-		private CompanyViewModel _company = null;
-		public CompanyViewModel Company
+		private int? _companyID = null;
+		public int? CompanyID
+		{
+			get { return _companyID; }
+			set
+			{
+				if (_companyID != value) {
+					_companyID = value;
+					OnPropertyChanged("CompanyID");
+					NotifyStateChanged();
+				}
+			}
+		}
+
+		private string _company = null;
+		public string Company
 		{
 			get { return _company; }
 			set
@@ -250,20 +264,6 @@ namespace Client.ViewModel
 				if (_company != value) {
 					_company = value;
 					OnPropertyChanged("Company");
-					NotifyStateChanged();
-				}
-			}
-		}
-
-		private List<CompanyViewModel> _companies = null;
-		public List<CompanyViewModel> Companies
-		{
-			get { return _companies; }
-			set
-			{
-				if (_companies != value) {
-					_companies = value;
-					OnPropertyChanged("Companies");
 					NotifyStateChanged();
 				}
 			}

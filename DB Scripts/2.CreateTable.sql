@@ -1,7 +1,4 @@
-﻿drop table if exists Address cascade;
-drop table if exists AdditionalAddress cascade;
-
-drop table if exists Contact cascade;
+﻿drop table if exists Contact cascade;
 create table Contact (
 	ID serial primary key,
 	UID text null,
@@ -15,8 +12,9 @@ create table Contact (
 	StreetNumber text null,
 	PostalCode text null,
 	City text null,
-	Company integer null
+	Company integer references Contact(ID) null
 );
+
 drop table if exists Invoice cascade;
 create table Invoice (
 	ID serial primary key,
@@ -25,6 +23,7 @@ create table Invoice (
 	Comment text null,
 	Message text null,
 	Type text null,
+	ReadOnly bool null,
 	fk_Contact integer references Contact(ID) null
 );
 
