@@ -33,7 +33,7 @@ namespace Client.Command
 			model.InvoiceSearchResult = ConvertSearchView(result.dt);
 
 			if (result.dt.Rows.Count == 1) {
-				model.InvoiceOpen.Execute(model.SearchResult[0]);
+				model.InvoiceOpen.Execute(model.InvoiceSearchResult[0]);
 			}
 		}
 
