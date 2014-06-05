@@ -65,11 +65,11 @@ namespace Tests
 		}
 
 		[TestMethod]
-		public void CommandSetCompanyReturnsCorrectTable()
+		public void CommandGetCompanyReturnsCorrectTable()
 		{
 			RPCall call = new RPCall();
 			call.procedureArgs = new string[] { "1" };
-			CommandSetCompany com = new CommandSetCompany();
+			CommandGetCompany com = new CommandGetCompany();
 			RPResult ret = com.Execute(call);
 			Assert.IsTrue(TestHelper.CompareDataTables(ret.dt, _th.GetTestCompanyDataTable()));
 		}
