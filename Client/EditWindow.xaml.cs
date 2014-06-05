@@ -23,23 +23,13 @@ namespace Client
 	{
 		public EditWindow()
 		{
-			// initialize all
 			InitializeComponent();
-
-			// set content
-			//IntializeContact();
-
 			this.DataContext = new ViewModel.EditViewModel(this);
 		}
 
 		public EditWindow(Contact contact)
 		{
-			// initialize all
 			InitializeComponent();
-
-			// set content
-			//IntializeContact();
-
 			this.DataContext = new ViewModel.EditViewModel(this, contact);
 		}
 	}

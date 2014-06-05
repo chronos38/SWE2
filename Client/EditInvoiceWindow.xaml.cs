@@ -1,4 +1,5 @@
-﻿using DataTransfer.Types;
+﻿using Client.ViewModel;
+using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +29,13 @@ namespace Client
 		public EditInvoiceWindow(Invoice invoice)
 		{
 			InitializeComponent();
+			this.DataContext = new EditInvoiceViewModel(this, invoice);
 		}
 
 		public EditInvoiceWindow(int contact)
 		{
 			InitializeComponent();
+			this.DataContext = new EditInvoiceViewModel(this, contact);
 		}
 	}
 }

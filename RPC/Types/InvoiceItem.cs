@@ -16,6 +16,16 @@ namespace DataTransfer.Types
 		public double? Gross { get; private set; }
 		public double? Net { get; private set; }
 
+		public InvoiceItem()
+		{
+			Name = null;
+			Quantity = null;
+			UnitPrice = null;
+			VAT = null;
+			Gross = null;
+			Net = null;
+		}
+
 		public InvoiceItem(string name, int? quantity, double? unitPrice, double? vat)
 		{
 			Name = name;
