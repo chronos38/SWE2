@@ -21,6 +21,6 @@ namespace Server.DAL
 		void UpsertContact(Contact contact);
 		DataTable SearchCompany(int p1, string p2);
 		int DeleteCompany(int p);
-		DataTable SetCompany(int p);
+		DataTable GetCompany(int p);
 	}
 }

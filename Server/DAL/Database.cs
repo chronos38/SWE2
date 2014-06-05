@@ -73,7 +73,7 @@ namespace Server.DAL
 
 		public DataTable SearchCompany(int p1, string p2)
 		{
-			string query = "select ID, Name from Contact where lower(Name) like lower(:name)";
+			string query = "select ID, UID, Name from Contact where lower(Name) like lower(:name)";
 			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
 			command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
 			command.Prepare();
@@ -102,7 +102,7 @@ namespace Server.DAL
 			return InsertUpdateDelete(command);
 		}
 
-		public DataTable SetCompany(int p)
+		public DataTable GetCompany(int p)
 		{
 			string query = "select ID, Name from Contact where ID=:id";
 			NpgsqlCommand command = new NpgsqlCommand(query, _connection);

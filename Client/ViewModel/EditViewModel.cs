@@ -269,8 +269,8 @@ namespace Client.ViewModel
 			}
 		}
 
-		private string _selectedCompany = null;
-		public string SelectedCompany
+		private object _selectedCompany = null;
+		public object SelectedCompany
 		{
 			get { return _selectedCompany; }
 			set
@@ -280,8 +280,9 @@ namespace Client.ViewModel
 					OnPropertyChanged("Company");
 					NotifyStateChanged();
 
-					if (!string.IsNullOrWhiteSpace(_selectedCompany)) {
-						Search.Execute(_selectedCompany);
+					Data.Company company = _selectedCompany as Data.Company;
+					if (company != null) {
+						Search.Execute(company.ID); // TODO: eigenen Befehl implementieren, da das Ergebniss von Search nicht eindeutig sein muss.
 					}
 				}
 			}

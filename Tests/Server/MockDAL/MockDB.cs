@@ -81,7 +81,7 @@ namespace Tests.Server.MockDAL
 			return RowsAffected;
 		}
 
-		public DataTable SetCompany(int p)
+		public DataTable GetCompany(int p)
 		{
 			throw new NotImplementedException();
 		}

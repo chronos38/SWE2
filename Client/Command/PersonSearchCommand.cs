@@ -1,4 +1,5 @@
-﻿using Client.RPC;
+﻿using Client.Data;
+using Client.RPC;
 using Client.ViewModel;
 using DataTransfer;
 using DataTransfer.Converter;
@@ -42,7 +43,7 @@ namespace Client.Command
 					model.Checked = false;
 
 					foreach (DataRow row in result.dt.Rows) {
-						window.cmbPersonCompany.Items.Add(row["Name"]);
+						window.cmbPersonCompany.Items.Add(new Company(row));
 					}
 				}
 			} else if (id != null) {
