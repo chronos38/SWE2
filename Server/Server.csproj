@@ -54,7 +54,7 @@
     <Compile Include="BusinessLayer\Commands\CommandUpsert.cs" />
     <Compile Include="BusinessLayer\Commands\ICommand.cs" />
     <Compile Include="DAL\IDatabase.cs" />
-    <Compile Include="DAL\DatabaseSingleton.cs" />
+    <Compile Include="DAL\DatabaseFactory.cs" />
     <Compile Include="RPC\Facade.cs" />
     <Compile Include="DAL\Database.cs" />
     <Compile Include="Program.cs" />

@@ -31,6 +31,7 @@ namespace Tests
 			DataTable dt = new DataTable();
 			dt = (DataTable)_conv.ConvertTo(null, null, contacts, typeof(DataTable));
 			// Wahrscheinlich besser den dt händisch zu befüllen Zwecks entkoppelung von ContactListConverter
+			dt.TableName = "Contacts";
 			return dt;
 		}
 		public DataTable GetTestCompanyDataTable()
@@ -41,5 +42,29 @@ namespace Tests
 			// Siehe oben
 			return dt;
 		}
+
+		public static bool CompareDataTables(DataTable dt1, DataTable dt2)
+		{
+			if ((dt1 == null) && (dt2 == null)) {
+				return true;
+			} else if((dt1 != null) && (dt2 != null)) {
+
+				if(dt1.Rows.Count != dt2.Rows.Count) {
+					return false;
+				}
+
+				for (int i = 0; i < dt1.Rows.Count; i++)
+				{
+					for(int j = 0; j<dt1.Columns.Count; j++)
+					{
+						if (dt1.Rows[i][j].ToString() != dt2.Rows[i][j].ToString())
+							return false;
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+
 	}
 }

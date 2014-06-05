@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyTest.cs" />
     <Compile Include="TestHelper.cs" />
+    <Compile Include="ServerCommandTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj">
