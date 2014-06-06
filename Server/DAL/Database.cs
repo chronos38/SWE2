@@ -7,6 +7,8 @@ using System.Data;
 using Npgsql;
 using DataTransfer.Types;
 using Client.Data;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Server.DAL
 {
@@ -86,11 +88,113 @@ namespace Server.DAL
 
 		private int InsertInvoice(DataRow row)
 		{
+			// Invoice items
+			BinaryFormatter binaryFormatter = new BinaryFormatter();
+			MemoryStream memoryStream = new MemoryStream(row["Items"] as byte[]);
+			List<InvoiceItem> items = (List<InvoiceItem>)binaryFormatter.Deserialize(memoryStream);
 			throw new NotImplementedException();
+
+			// query
+			string query = "insert into invoice(id,date,maturity,comment,message,type,readonly,fk_contact)values(DEFAULT,:date,:maturity,:comment,:message,:type,:readonly,:contact)returning id";
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+			
+			// parameters
+			command.Parameters.Add("date", NpgsqlTypes.NpgsqlDbType.Date);
+			command.Parameters.Add("maturity", NpgsqlTypes.NpgsqlDbType.Date);
+			command.Parameters.Add("comment", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("message", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("type", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("readonly", NpgsqlTypes.NpgsqlDbType.Boolean);
+			command.Parameters.Add("contact", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Prepare();
+
+			if (row["Date"] == null) {
+				command.Parameters["date"].Value = DBNull.Value;
+			} else {
+				command.Parameters["date"].Value = (DateTime)row["Date"];
+			}
+
+			if (row["Date"] == null) {
+				command.Parameters["maturity"].Value = DBNull.Value;
+			} else {
+				command.Parameters["maturity"].Value = (DateTime)row["Maturity"];
+			}
+
+			command.Parameters["comment"].Value = row["Comment"] as string;
+			command.Parameters["message"].Value = row["Message"] as string;
+			command.Parameters["type"].Value = row["Type"] as string;
+			command.Parameters["readonly"].Value = (bool)row["ReadOnly"];
+			command.Parameters["contact"].Value = (int)row["Contact"];
+
+			InsertInvoiceItems(items, Select(command));
+		}
+
+		private void InsertInvoiceItems(List<InvoiceItem> items, DataTable dataTable)
+		{
+			if (dataTable == null || dataTable.Rows.Count > 1) {
+				throw new ArgumentException();
+			}
+
+			DataRow row = dataTable.Rows[0];
+			string query = "insert into invoiceitem(id,name,unitprice,quantity,vat)values(DEFAULT,:name,:unitprice,:quantity,:vat)returning id";
+
+			foreach (InvoiceItem item in items) {
+				NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+
+				// parameters
+				command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
+				command.Parameters.Add("unitprice", NpgsqlTypes.NpgsqlDbType.Double);
+				command.Parameters.Add("quantity", NpgsqlTypes.NpgsqlDbType.Integer);
+				command.Parameters.Add("vat", NpgsqlTypes.NpgsqlDbType.Double);
+				command.Prepare();
+				command.Parameters["name"].Value = item.Name as string;
+
+				if (item.UnitPrice == null) {
+					command.Parameters["unitprice"].Value = DBNull.Value;
+				} else {
+					command.Parameters["unitprice"].Value = item.UnitPrice;
+				}
+
+				if (item.Quantity == null) {
+					command.Parameters["quantity"].Value = DBNull.Value;
+				} else {
+					command.Parameters["quantity"].Value = item.Quantity;
+				}
+
+				if (item.VAT == null) {
+					command.Parameters["vat"].Value = DBNull.Value;
+				} else {
+					command.Parameters["vat"].Value = item.VAT;
+				}
+
+				InserInvoicePosition((int)row["id"], Select(command));
+			}
+		}
+
+		private void InserInvoicePosition(int p, DataTable dataTable)
+		{
+			if (dataTable == null || dataTable.Rows.Count > 1) {
+				throw new ArgumentException();
+			}
+
+			string query = "insert into invoiceposition(fk_invoice,fk_invoiceitem)values(:invoice,:invoiceitem)";
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+			
+			// parameters
+			command.Parameters.Add("invoice", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Parameters.Add("invoiceitem", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Prepare();
+			command.Parameters["invoice"].Value = p;
+			command.Parameters["invoiceitem"].Value = (int)dataTable.Rows[0]["id"];
+			InsertUpdateDelete(command);
 		}
 
 		private int UpdateInvoice(DataRow row)
 		{
+			// Invoice items
+			BinaryFormatter binaryFormatter = new BinaryFormatter();
+			MemoryStream memoryStream = new MemoryStream(row["Items"] as byte[]);
+			List<InvoiceItem> items = (List<InvoiceItem>)binaryFormatter.Deserialize(memoryStream);
 			throw new NotImplementedException();
 		}
 

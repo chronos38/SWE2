@@ -38,11 +38,11 @@
                     <ColumnDefinition Width="332*"/>
                     <ColumnDefinition Width="95*"/>
                 </Grid.ColumnDefinitions>
-                <DataGrid x:Name="dgrdInvoiceItems" ItemsSource="{Binding InvoiceItems}" Margin="10" IsReadOnly="False" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserAddRows="False" CanUserResizeRows="False">
+                <DataGrid x:Name="dgrdInvoiceItems" ItemsSource="{Binding InvoiceItems}" Margin="10" IsReadOnly="False" AutoGenerateColumns="False" CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserAddRows="False" CanUserResizeRows="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="100"/>
-                        <DataGridTextColumn Binding="{Binding UnitPrice}" Header="UnitPrice" Width="65"/>
                         <DataGridTextColumn Binding="{Binding Quantity}" Header="Quantity" Width="65"/>
+                        <DataGridTextColumn Binding="{Binding UnitPrice}" Header="UnitPrice" Width="65"/>
                         <DataGridTextColumn Binding="{Binding VAT}" Header="VAT" Width="65"/>
                     </DataGrid.Columns>
                 </DataGrid>
