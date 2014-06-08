@@ -117,5 +117,13 @@ namespace Client.RPC
 			call.dt.Rows.Add(invoice.ToDataRow(call.dt));
 			return await _client.SendAndReceiveAsync(call);
 		}
+
+		internal async Task<RPResult> DeleteInvoiceItem(int p)
+		{
+			BinaryFormatter binaryFormatter = new BinaryFormatter();
+			RPCall call = new RPCall("CommandDeleteInvoiceItem");
+			call.Buffer = BitConverter.GetBytes(p);
+			return await _client.SendAndReceiveAsync(call);
+		}
 	}
 }

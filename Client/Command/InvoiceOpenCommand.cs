@@ -19,11 +19,13 @@ namespace Client.Command
 
 		public override void Execute(object parameter)
 		{
+			EditViewModel model = Model as EditViewModel;
 			DataRowView drv = parameter as DataRowView;
 
 			if (drv != null) {
 				EditInvoiceWindow window = new EditInvoiceWindow(new Invoice(drv.Row.ItemArray));
 				window.ShowDialog();
+				model.CreateInvoiceTable();
 			}
 		}
 

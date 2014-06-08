@@ -12,7 +12,7 @@ namespace Client.Command
 {
 	class InvoiceSaveCommand : Command
 	{
-		public override void Execute(object parameter)
+		public async override void Execute(object parameter)
 		{
 			EditInvoiceViewModel model = Model as EditInvoiceViewModel;
 
@@ -22,8 +22,11 @@ namespace Client.Command
 				List<InvoiceItem> items = new List<InvoiceItem>();
 
 				foreach (DataRow row in table.Rows) {
+					int? id = row["ID"] as int?;
+
 					items.Add(
 						new InvoiceItem(
+							id == null ? -1 : id.Value,
 							row["Name"] as string,
 							row["Quantity"] as int?,
 							row["UnitPrice"] as double?,
@@ -45,8 +48,10 @@ namespace Client.Command
 					model.IsReadOnly == true
 				);
 
-				proxy.UpsertInvoice(invoice);
+				await proxy.UpsertInvoice(invoice);
 			}
+
+			Window.Close();
 		}
 
 		public InvoiceSaveCommand(EditInvoiceWindow window, EditInvoiceViewModel model)

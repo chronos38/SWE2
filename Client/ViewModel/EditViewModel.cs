@@ -382,7 +382,7 @@ namespace Client.ViewModel
 			OnPropertyChanged("CanEditPerson");
 		}
 
-		private async void CreateInvoiceTable()
+		public async void CreateInvoiceTable()
 		{
 			Proxy proxy = new Proxy();
 			RPResult result = await proxy.SearchContactInvoicesAsync(ID);

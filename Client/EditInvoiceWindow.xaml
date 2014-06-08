@@ -24,8 +24,8 @@
         <Label Content="Maturity" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Height="26" Width="55" Grid.Row="1"/>
         <Label Content="Comment" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Height="26" Width="62" Grid.Row="3"/>
         <Label Content="Message" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Height="26" Width="57" Grid.Row="2"/>
-        <Button Content="Save" Command="{Binding Save}" IsEnabled="{Binding IsWritable}" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,9.601,10" Grid.Row="6" VerticalAlignment="Bottom" Width="75" Height="20"/>
-        <Button Content="Cancel" Command="{Binding Cancel}" IsEnabled="{Binding IsWritable}" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,9.601,10" Grid.Row="6" VerticalAlignment="Bottom" Width="75" Height="20"/>
+        <Button Content="Save" Command="{Binding Save}" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,9.601,10" Grid.Row="6" VerticalAlignment="Bottom" Width="75" Height="20"/>
+        <Button Content="Close" Command="{Binding Cancel}" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,9.601,10" Grid.Row="6" VerticalAlignment="Bottom" Width="75" Height="20"/>
         <CheckBox Content="Read Only" IsChecked="{Binding IsReadOnly}" HorizontalAlignment="Left" Margin="10,0,0,12" Grid.Row="6" VerticalAlignment="Bottom" Height="15" Width="74"/>
         <Button Content="Print" Command="{Binding Print}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="6" VerticalAlignment="Bottom" Width="75" Height="20"/>
         <DatePicker Grid.Column="1" SelectedDate="{Binding Date}" IsEnabled="{Binding IsWritable}" Margin="10,11,10,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="24"/>

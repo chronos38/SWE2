@@ -23,5 +23,6 @@ namespace Server.DAL
 		int DeleteCompany(int p);
 		DataTable GetCompany(int p);
 		int UpsertInvoice(DataTable dataTable);
+		int DeleteInvoiceItem(int p);
 	}
 }

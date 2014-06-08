@@ -9,6 +9,7 @@ namespace DataTransfer.Types
 	[Serializable]
 	public class InvoiceItem
 	{
+		public int ID { get; private set; }
 		public string Name { get; private set; }
 		public int? Quantity { get; private set; }
 		public double? UnitPrice { get; private set; }
@@ -18,6 +19,7 @@ namespace DataTransfer.Types
 
 		public InvoiceItem()
 		{
+			ID = -1;
 			Name = null;
 			Quantity = null;
 			UnitPrice = null;
@@ -26,8 +28,9 @@ namespace DataTransfer.Types
 			Net = null;
 		}
 
-		public InvoiceItem(string name, int? quantity, double? unitPrice, double? vat)
+		public InvoiceItem(int id, string name, int? quantity, double? unitPrice, double? vat)
 		{
+			ID = id;
 			Name = name;
 			Quantity = quantity;
 			UnitPrice = unitPrice;

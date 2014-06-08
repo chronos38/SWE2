@@ -34,6 +34,7 @@ namespace Client.ViewModel
 
 			// Invoice items
 			DataTable table = new DataTable("InvoiceItems");
+			table.Columns.Add("ID", typeof(int));
 			table.Columns.Add("Name", typeof(string));
 			table.Columns.Add("Quantity", typeof(int));
 			table.Columns.Add("UnitPrice", typeof(double));
@@ -41,6 +42,7 @@ namespace Client.ViewModel
 
 			foreach (InvoiceItem item in invoice.Items) {
 				DataRow row = table.NewRow();
+				row["ID"] = item.ID;
 				row["Name"] = item.Name;
 
 				if (item.Quantity == null) {
@@ -74,6 +76,15 @@ namespace Client.ViewModel
 			InitializeComponents();
 			Contact = contact;
 			ID = -1;
+
+			DataTable table = new DataTable("InvoiceItems");
+			table.Columns.Add("ID", typeof(int));
+			table.Columns.Add("Name", typeof(string));
+			table.Columns.Add("Quantity", typeof(int));
+			table.Columns.Add("UnitPrice", typeof(double));
+			table.Columns.Add("VAT", typeof(double));
+			table.AcceptChanges();
+			InvoiceItems = table.DefaultView;
 		}
 
 		private string _name = null;

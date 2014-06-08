@@ -1,4 +1,5 @@
-﻿using Client.ViewModel;
+﻿using Client.RPC;
+using Client.ViewModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,12 +19,13 @@ namespace Client.Command
 			return true;
 		}
 
-		public override void Execute(object parameter)
+		public async override void Execute(object parameter)
 		{
 			EditInvoiceViewModel model = Model as EditInvoiceViewModel;
 			EditInvoiceWindow window = Window as EditInvoiceWindow;
 
 			if (model != null && window != null) {
+				Proxy proxy = new Proxy();
 				DataTable table = model.InvoiceItems.Table;
 				int count = window.dgrdInvoiceItems.SelectedItems.Count;
 				object[] items = new object[count];
@@ -31,7 +33,12 @@ namespace Client.Command
 
 				foreach (object item in items) {
 					DataRowView rowView = item as DataRowView;
+					int? id = rowView.Row["ID"] as int?;
 					table.Rows.Remove(rowView.Row);
+
+					if (id != null) {
+						await proxy.DeleteInvoiceItem(id.Value);
+					}
 				}
 			}
 		}

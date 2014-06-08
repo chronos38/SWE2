@@ -20,6 +20,7 @@ namespace Client.Command
 			EditViewModel model = Model as EditViewModel;
 			EditInvoiceWindow window = new EditInvoiceWindow(model.ID);
 			window.ShowDialog();
+			model.CreateInvoiceTable();
 		}
 
 		public InvoiceNewCommand(Window window, EditViewModel model)

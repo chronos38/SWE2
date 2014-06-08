@@ -72,14 +72,34 @@ namespace Server.DAL
 				_connection = null;
 			}
 		}
+		
+		public int DeleteInvoiceItem(int p)
+		{
+			string item = "delete from invoiceitem where id=:id";
+			string position = "delete from invoiceposition where fk_invoiceitem=:id";
+
+			NpgsqlCommand command = new NpgsqlCommand(position, _connection);
+			command.Parameters.Add("id", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Prepare();
+			command.Parameters["id"].Value = p;
+			InsertUpdateDelete(command);
+
+			command = new NpgsqlCommand(item, _connection);
+			command.Parameters.Add("id", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Prepare();
+			command.Parameters["id"].Value = p;
+			InsertUpdateDelete(command);
+
+			return 1;
+		}
 
 		public int UpsertInvoice(DataTable dataTable)
 		{
 			foreach (DataRow row in dataTable.Rows) {
 				if ((int)row["ID"] == -1) {
-					return InsertInvoice(row);
+					InsertInvoice(row);
 				} else {
-					return UpdateInvoice(row);
+					UpdateInvoice(row);
 				}
 			}
 
@@ -92,7 +112,6 @@ namespace Server.DAL
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			MemoryStream memoryStream = new MemoryStream(row["Items"] as byte[]);
 			List<InvoiceItem> items = (List<InvoiceItem>)binaryFormatter.Deserialize(memoryStream);
-			throw new NotImplementedException();
 
 			// query
 			string query = "insert into invoice(id,date,maturity,comment,message,type,readonly,fk_contact)values(DEFAULT,:date,:maturity,:comment,:message,:type,:readonly,:contact)returning id";
@@ -126,20 +145,32 @@ namespace Server.DAL
 			command.Parameters["readonly"].Value = (bool)row["ReadOnly"];
 			command.Parameters["contact"].Value = (int)row["Contact"];
 
-			InsertInvoiceItems(items, Select(command));
+			return UpsertInvoiceItems(items, Select(command));
 		}
 
-		private void InsertInvoiceItems(List<InvoiceItem> items, DataTable dataTable)
+		private int UpsertInvoiceItems(List<InvoiceItem> items, DataTable dataTable)
 		{
 			if (dataTable == null || dataTable.Rows.Count > 1) {
 				throw new ArgumentException();
 			}
 
 			DataRow row = dataTable.Rows[0];
-			string query = "insert into invoiceitem(id,name,unitprice,quantity,vat)values(DEFAULT,:name,:unitprice,:quantity,:vat)returning id";
+			return UpsertInvoiceItems(items, (int)row["id"]);
+		}
+
+		private int UpsertInvoiceItems(List<InvoiceItem> items, int p)
+		{
+			NpgsqlCommand command = null;
+			string insert = "insert into invoiceitem(id,name,unitprice,quantity,vat)values(DEFAULT,:name,:unitprice,:quantity,:vat)returning id";
+			string update = "update invoiceitem set name=:name,unitprice=:unitprice,quantity=:quantity,vat=:vat where id=:id";
 
 			foreach (InvoiceItem item in items) {
-				NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+				if (item.ID < 0) {
+					command = new NpgsqlCommand(insert, _connection);
+				} else {
+					command = new NpgsqlCommand(update, _connection);
+					command.Parameters.Add("id", NpgsqlTypes.NpgsqlDbType.Integer);
+				}
 
 				// parameters
 				command.Parameters.Add("name", NpgsqlTypes.NpgsqlDbType.Text);
@@ -148,6 +179,10 @@ namespace Server.DAL
 				command.Parameters.Add("vat", NpgsqlTypes.NpgsqlDbType.Double);
 				command.Prepare();
 				command.Parameters["name"].Value = item.Name as string;
+
+				if (item.ID > -1) {
+					command.Parameters["id"].Value = item.ID;
+				}
 
 				if (item.UnitPrice == null) {
 					command.Parameters["unitprice"].Value = DBNull.Value;
@@ -167,8 +202,14 @@ namespace Server.DAL
 					command.Parameters["vat"].Value = item.VAT;
 				}
 
-				InserInvoicePosition((int)row["id"], Select(command));
+				if (item.ID < 0) {
+					InserInvoicePosition(p, Select(command));
+				} else {
+					InsertUpdateDelete(command);
+				}
 			}
+
+			return 1;
 		}
 
 		private void InserInvoicePosition(int p, DataTable dataTable)
@@ -195,7 +236,42 @@ namespace Server.DAL
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			MemoryStream memoryStream = new MemoryStream(row["Items"] as byte[]);
 			List<InvoiceItem> items = (List<InvoiceItem>)binaryFormatter.Deserialize(memoryStream);
-			throw new NotImplementedException();
+
+			// query
+			string query = "update invoice set date=:date,maturity=:maturity,comment=:comment,message=:message,type=:type,readonly=:readonly,fk_contact=:contact where id=:id";
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+
+			// parameters
+			command.Parameters.Add("id", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Parameters.Add("date", NpgsqlTypes.NpgsqlDbType.Date);
+			command.Parameters.Add("maturity", NpgsqlTypes.NpgsqlDbType.Date);
+			command.Parameters.Add("comment", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("message", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("type", NpgsqlTypes.NpgsqlDbType.Text);
+			command.Parameters.Add("readonly", NpgsqlTypes.NpgsqlDbType.Boolean);
+			command.Parameters.Add("contact", NpgsqlTypes.NpgsqlDbType.Integer);
+			command.Prepare();
+
+			if (row["Date"] == null) {
+				command.Parameters["date"].Value = DBNull.Value;
+			} else {
+				command.Parameters["date"].Value = (DateTime)row["Date"];
+			}
+
+			if (row["Date"] == null) {
+				command.Parameters["maturity"].Value = DBNull.Value;
+			} else {
+				command.Parameters["maturity"].Value = (DateTime)row["Maturity"];
+			}
+
+			command.Parameters["id"].Value = (int)row["ID"];
+			command.Parameters["comment"].Value = row["Comment"] as string;
+			command.Parameters["message"].Value = row["Message"] as string;
+			command.Parameters["type"].Value = row["Type"] as string;
+			command.Parameters["readonly"].Value = (bool)row["ReadOnly"];
+			command.Parameters["contact"].Value = (int)row["Contact"];
+
+			return UpsertInvoiceItems(items, (int)row["ID"]);
 		}
 
 		public DataTable SearchCompany(int p1, string p2)
@@ -348,7 +424,7 @@ namespace Server.DAL
 
 		private List<Invoice> CreateInvoiceList(DataTable invoices)
 		{
-			string query = "SELECT InvoiceItem.Name, InvoiceItem.UnitPrice, InvoiceItem.Quantity, InvoiceItem.VAT " +
+			string query = "SELECT InvoiceItem.ID, InvoiceItem.Name, InvoiceItem.UnitPrice, InvoiceItem.Quantity, InvoiceItem.VAT " +
 				"FROM InvoiceItem JOIN InvoicePosition ON InvoiceItem.ID = InvoicePosition.fk_InvoiceItem JOIN Invoice ON InvoicePosition.fk_Invoice = Invoice.ID WHERE Invoice.ID = ";
 			List<Invoice> result = new List<Invoice>();
 
@@ -370,7 +446,7 @@ namespace Server.DAL
 					List<InvoiceItem> items = new List<InvoiceItem>();
 
 					foreach (DataRow item in invoiceItems.Rows) {
-						items.Add(new InvoiceItem(item["Name"] as string, item["Quantity"] as int?, item["UnitPrice"] as double?, item["VAT"] as double?));
+						items.Add(new InvoiceItem((int)item["ID"], item["Name"] as string, item["Quantity"] as int?, item["UnitPrice"] as double?, item["VAT"] as double?));
 					}
 
 					invoice = new Invoice(
