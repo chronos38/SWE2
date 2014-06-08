@@ -70,16 +70,28 @@
             </GroupBox>
             <Button x:Name="btnSave" Command="{Binding Save}" Content="Save" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" TabIndex="16" Height="20" Grid.Row="1"/>
             <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Close" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" TabIndex="17" Height="20" Grid.Row="1" Grid.Column="1"/>
-            <DataGrid x:Name="dgrdInvoiceSearchResult" Margin="10,20,10,10" Grid.Column="2" ItemsSource="{Binding InvoiceSearchResult}" IsReadOnly="True" AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserReorderColumns="False" CanUserAddRows="False" CanUserResizeRows="False" Grid.ColumnSpan="2">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="100"/>
-                    <DataGridTextColumn Binding="{Binding Maturity}" Header="Maturity" Width="100"/>
-                    <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="100"/>
-                    <DataGridTextColumn Binding="{Binding Amount}" Header="Amount" Width="100"/>
-                </DataGrid.Columns>
-            </DataGrid>
             <Button Content="New" Command="{Binding InvoiceNew}" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Width="75" Height="20"/>
             <Button Content="Open" Command="{Binding InvoiceOpen}" CommandParameter="{Binding ElementName=dgrdInvoiceSearchResult, Path=SelectedItem}" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Width="75" Height="20"/>
+            <Grid Grid.Column="2" Margin="0,0,10,0" Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="18*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="447*"/>
+                </Grid.RowDefinitions>
+                <DataGrid x:Name="dgrdInvoiceSearchResult" Margin="10" ItemsSource="{Binding InvoiceSearchResult}" IsReadOnly="True" AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserReorderColumns="False" CanUserAddRows="False" CanUserResizeRows="False" Grid.Row="3">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="100"/>
+                        <DataGridTextColumn Binding="{Binding Maturity}" Header="Maturity" Width="100"/>
+                        <DataGridTextColumn Binding="{Binding Type}" Header="Type" Width="100"/>
+                        <DataGridTextColumn Binding="{Binding Amount}" Header="Amount" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label Content="From" HorizontalAlignment="Left" Margin="10,8,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                <DatePicker SelectedDate="{Binding DateFrom, UpdateSourceTrigger=PropertyChanged}" Margin="52,10,10,0" Grid.Row="1" VerticalAlignment="Top"/>
+                <Label Content="To" HorizontalAlignment="Left" Margin="10,8,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                <DatePicker SelectedDate="{Binding DateTo, UpdateSourceTrigger=PropertyChanged}" Margin="52,9,10,0" Grid.Row="2" VerticalAlignment="Top"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

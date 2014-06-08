@@ -86,9 +86,12 @@ namespace Client.RPC
 			return await _client.SendAndReceiveAsync(call);
 		}
 
-		public async Task<RPResult> SearchContactInvoicesAsync(int id)
+		public async Task<RPResult> SearchContactInvoicesAsync(int id, DateTime? from, DateTime? to)
 		{
-			RPCall call = new RPCall("CommandInvoice", new string[] { id.ToString() });
+			string f = from == null ? "" : from.ToString();
+			string t = to == null ? "" : to.ToString();
+
+			RPCall call = new RPCall("CommandInvoice", new string[] { id.ToString(), f, t });
 			return await _client.SendAndReceiveAsync(call);
 		}
 

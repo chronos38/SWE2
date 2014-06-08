@@ -1,4 +1,5 @@
 ﻿using Client.Command;
+using Client.Data;
 using Client.RPC;
 using DataTransfer;
 using DataTransfer.Types;
@@ -356,6 +357,34 @@ namespace Client.ViewModel
 				}
 			}
 		}
+
+		private DateTime? _from = null;
+		public DateTime? DateFrom
+		{
+			get { return _from; }
+			set
+			{
+				if (_from != value) {
+					_from = value;
+					OnPropertyChanged("DateFrom");
+					CreateInvoiceTable();
+				}
+			}
+		}
+
+		private DateTime? _to = null;
+		public DateTime? DateTo
+		{
+			get { return _to; }
+			set
+			{
+				if (_to != value) {
+					_to = value;
+					OnPropertyChanged("DateTo");
+					CreateInvoiceTable();
+				}
+			}
+		}
 		#endregion
 
 		public ICommand Cancel { get; private set; }
@@ -385,7 +414,7 @@ namespace Client.ViewModel
 		public async void CreateInvoiceTable()
 		{
 			Proxy proxy = new Proxy();
-			RPResult result = await proxy.SearchContactInvoicesAsync(ID);
+			RPResult result = await proxy.SearchContactInvoicesAsync(ID, DateFrom, DateTo);
 			DataTable search = result.dt;
 
 			search.Columns.Add("Amount");

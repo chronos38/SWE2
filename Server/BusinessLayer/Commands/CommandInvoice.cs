@@ -34,7 +34,9 @@ namespace Server.BusinessLayer.Commands
 
 				invoices = DatabaseFactory.Factory().SearchInvoices(data);
 			} else {
-				invoices = DatabaseFactory.Factory().SearchInvoices(Int32.Parse(call.procedureArgs[0]));
+				DateTime? from = call.procedureArgs[1] == "" ? new Nullable<DateTime>() : new Nullable<DateTime>(DateTime.Parse(call.procedureArgs[1]));
+				DateTime? to = call.procedureArgs[2] == "" ? new Nullable<DateTime>() : new Nullable<DateTime>(DateTime.Parse(call.procedureArgs[2]));
+				invoices = DatabaseFactory.Factory().SearchInvoices(Int32.Parse(call.procedureArgs[0]), from, to);
 			}
 
 			table = Invoice.CreateTable();

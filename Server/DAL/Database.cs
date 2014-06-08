@@ -339,15 +339,42 @@ namespace Server.DAL
 			return CreateContactList(contacts);
 		}
 
-		public List<Invoice> SearchInvoices(int id)
+		public List<Invoice> SearchInvoices(int id, DateTime? from, DateTime? to)
 		{
 			// variables
 			string query = "SELECT Contact.UID, Contact.Name, Contact.Forename, Contact.Surname, Invoice.fk_Contact, " +
 				"Invoice.ID, Invoice.Date, Invoice.Maturity, Invoice.Comment, Invoice.Message, Invoice.Type, Invoice.ReadOnly " +
-				"FROM Invoice JOIN Contact ON Invoice.fk_Contact = Contact.ID WHERE Contact.ID = " + id.ToString();
+				"FROM Invoice JOIN Contact ON Invoice.fk_Contact = Contact.ID WHERE (Contact.ID = " + id.ToString() + ")";
+
+			if (from != null) {
+				query += "and(Invoice.Date >= :from)";
+			}
+
+			if (to != null) {
+				query += "and(Invoice.Date <= :to)";
+			}
 
 			// execute
 			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+
+			if (from != null) {
+				command.Parameters.Add("from", NpgsqlTypes.NpgsqlDbType.Date);
+			}
+
+			if (to != null) {
+				command.Parameters.Add("to", NpgsqlTypes.NpgsqlDbType.Date);
+			}
+
+			command.Prepare();
+
+			if (from != null) {
+				command.Parameters["from"].Value = from;
+			}
+
+			if (to != null) {
+				command.Parameters["to"].Value = to;
+			}
+
 			return CreateInvoiceList(Select(command));
 		}
 

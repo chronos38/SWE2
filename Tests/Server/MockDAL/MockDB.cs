@@ -41,7 +41,7 @@ namespace Tests.Server.MockDAL
 			result.Add(content);
 			return result;
 		}
-		public List<Invoice> SearchInvoices(int id)
+		public List<Invoice> SearchInvoices(int id, DateTime? from, DateTime? to)
 		{
 			throw new NotImplementedException();
 		}
@@ -86,6 +86,11 @@ namespace Tests.Server.MockDAL
 		}
 		
 		public int UpsertInvoice(DataTable dataTable)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int DeleteInvoiceItem(int p)
 		{
 			throw new NotImplementedException();
 		}
