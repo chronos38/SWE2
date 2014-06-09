@@ -2,11 +2,15 @@
 using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
+// TODO: Amount brauch noch einen Update
 
 namespace Client.ViewModel
 {
@@ -68,6 +72,7 @@ namespace Client.ViewModel
 
 			table.AcceptChanges();
 			InvoiceItems = table.DefaultView;
+			ComputeAmount();
 		}
 
 		public EditInvoiceViewModel(EditInvoiceWindow window, int contact)
@@ -76,15 +81,6 @@ namespace Client.ViewModel
 			InitializeComponents();
 			Contact = contact;
 			ID = -1;
-
-			DataTable table = new DataTable("InvoiceItems");
-			table.Columns.Add("ID", typeof(int));
-			table.Columns.Add("Name", typeof(string));
-			table.Columns.Add("Quantity", typeof(int));
-			table.Columns.Add("UnitPrice", typeof(double));
-			table.Columns.Add("VAT", typeof(double));
-			table.AcceptChanges();
-			InvoiceItems = table.DefaultView;
 		}
 
 		private string _name = null;
@@ -178,6 +174,19 @@ namespace Client.ViewModel
 			}
 		}
 
+		private string _amount = "";
+		public string Amount
+		{
+			get { return _amount; }
+			set
+			{
+				if (_amount != value) {
+					_amount = value;
+					OnPropertyChanged("Amount");
+				}
+			}
+		}
+
 		private bool? _isReadOnly = false;
 		public bool? IsReadOnly
 		{
@@ -202,6 +211,25 @@ namespace Client.ViewModel
 		public ICommand Save { get; private set; }
 		public ICommand Print { get; private set; }
 
+		public void ComputeAmount()
+		{
+			double amount = 0;
+			DataTable table = InvoiceItems.Table;
+
+			foreach (DataRow row in table.Rows) {
+				int? quantity = row["Quantity"] as int?;
+				double? price = row["UnitPrice"] as double?;
+				double? vat = row["VAT"] as double?;
+
+				if (quantity != null && price != null && vat != null) {
+					double net = quantity.Value * price.Value;
+					amount += net * (1 + (vat.Value / 100));
+				}
+			}
+
+			Amount = amount.ToString("C", CultureInfo.CreateSpecificCulture("de-AT"));
+		}
+
 		private void InitializeComponents()
 		{
 			// ComboBox
@@ -214,6 +242,20 @@ namespace Client.ViewModel
 			Cancel = new InvoiceCancelCommand(Window, this);
 			Save = new InvoiceSaveCommand(Window, this);
 			Print = new InvoicePrintCommand(Window, this);
+
+			DataTable table = new DataTable("InvoiceItems");
+			table.Columns.Add("ID", typeof(int));
+			table.Columns.Add("Name", typeof(string));
+			table.Columns.Add("Quantity", typeof(int));
+			table.Columns.Add("UnitPrice", typeof(double));
+			table.Columns.Add("VAT", typeof(double));
+			table.AcceptChanges();
+			InvoiceItems = table.DefaultView;
+			InvoiceItems.ListChanged += new ListChangedEventHandler((object sender, ListChangedEventArgs args) => {
+				ComputeAmount();
+			});
+
+			ComputeAmount();
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using DataTransfer.Types;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,9 @@ namespace Client.Command
 				table.Rows.Add(table.NewRow());
 				table.AcceptChanges();
 				model.InvoiceItems = table.DefaultView;
+				model.InvoiceItems.ListChanged += new ListChangedEventHandler((object sender, ListChangedEventArgs args) => {
+					model.ComputeAmount();
+				});
 			}
 		}
 
