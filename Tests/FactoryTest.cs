@@ -9,10 +9,10 @@ using Tests.Server.MockDAL;
 namespace Tests
 {
 	[TestClass]
-	public class MockTest
+	public class FactoryTest
 	{
 		[TestMethod]
-		public void DBSingletonReturnsMockDatabase()
+		public void FactoryReturnsMockDatabase()
 		{
 			DatabaseFactory.SetType<MockDB>();
 			IDatabase db = DatabaseFactory.Factory();
@@ -20,7 +20,7 @@ namespace Tests
 		}
 
 		[TestMethod]
-		public void DBSingletonReturnsDatabase()
+		public void FactoryReturnsDatabase()
 		{
 			DatabaseFactory.SetType<Database>();
 			IDatabase db = DatabaseFactory.Factory();
@@ -28,7 +28,7 @@ namespace Tests
 		}
 
 		[TestMethod]
-		public void DBSingletonChangesType()
+		public void FactoryChangesType()
 		{
 			DatabaseFactory.SetType<MockDB>();
 			IDatabase db = DatabaseFactory.Factory();

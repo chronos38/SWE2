@@ -516,6 +516,14 @@ namespace Server.DAL
 			}
 		}
 
+		public void ExecuteSqlScript(string path)
+		{
+			FileInfo file = new FileInfo(path);
+			string script = file.OpenText().ReadToEnd();
+			NpgsqlCommand command = new NpgsqlCommand(script, _connection);
+			command.ExecuteNonQuery();
+		}
+
 		private DataTable SelectCompanies()
 		{
 			NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM Contact WHERE UID IS NOT NULL OR Name IS NOT NULL", _connection);
