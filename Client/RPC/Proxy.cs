@@ -128,5 +128,11 @@ namespace Client.RPC
 			call.Buffer = BitConverter.GetBytes(p);
 			return await _client.SendAndReceiveAsync(call);
 		}
+
+		internal async Task<RPResult> SelectInvoice(int p)
+		{
+			RPCall call = new RPCall("CommandSelectInvoice", new string[] { p.ToString() });
+			return await _client.SendAndReceiveAsync(call);
+		}
 	}
 }

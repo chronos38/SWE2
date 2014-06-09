@@ -24,5 +24,6 @@ namespace Server.DAL
 		DataTable GetCompany(int p);
 		int UpsertInvoice(DataTable dataTable);
 		int DeleteInvoiceItem(int p);
+		List<Invoice> SelectInvoice(int p);
 	}
 }

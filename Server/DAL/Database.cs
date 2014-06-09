@@ -72,6 +72,18 @@ namespace Server.DAL
 				_connection = null;
 			}
 		}
+
+		List<Invoice> SelectInvoice(int p)
+		{
+			// variables
+			string query = "SELECT Contact.UID, Contact.Name, Contact.Forename, Contact.Surname, Invoice.fk_Contact, " +
+				"Invoice.ID, Invoice.Date, Invoice.Maturity, Invoice.Comment, Invoice.Message, Invoice.Type " +
+				"FROM Invoice JOIN Contact ON Invoice.fk_Contact = Contact.ID WHERE Invoice.ID = " + p.ToString();
+
+			// execute
+			NpgsqlCommand command = new NpgsqlCommand(query, _connection);
+			return CreateInvoiceList(Select(command));
+		}
 		
 		public int DeleteInvoiceItem(int p)
 		{
