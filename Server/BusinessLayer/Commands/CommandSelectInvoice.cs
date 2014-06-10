@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Server.BusinessLayer.Commands
 {
-	class CommandSelectInvoice
+	class CommandSelectInvoice : ICommand
 	{
 		public RPResult Execute(RPCall call)
 		{

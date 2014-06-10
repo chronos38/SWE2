@@ -94,5 +94,10 @@ namespace Tests.Server.MockDAL
 		{
 			throw new NotImplementedException();
 		}
+
+		public List<Invoice> SelectInvoice(int p)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

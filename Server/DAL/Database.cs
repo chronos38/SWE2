@@ -73,7 +73,7 @@ namespace Server.DAL
 			}
 		}
 
-		List<Invoice> SelectInvoice(int p)
+		public List<Invoice> SelectInvoice(int p)
 		{
 			// variables
 			string query = "SELECT Contact.UID, Contact.Name, Contact.Forename, Contact.Surname, Invoice.fk_Contact, " +
