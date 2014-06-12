@@ -2,6 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Server.DAL;
 using System.IO;
+using System.Data;
+using System.Collections.Generic;
+using DataTransfer.Types;
 
 namespace Tests
 {
@@ -46,6 +49,12 @@ namespace Tests
 			db.Close();
 			Assert.IsFalse(db.IsConnected());
 		}
-
+		
+		[TestMethod]
+		public void DatabaseSearchContactsReturnsCorrectContact()
+		{
+			List<Contact> contactList = _TestDB.SearchContacts("Max");
+			Assert.AreEqual("Max", contactList[0].Forename);
+		}
 	}
 }

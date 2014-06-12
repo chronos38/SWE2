@@ -83,5 +83,25 @@ namespace Tests
 			RPResult ret = com.Execute(call);
 			Assert.AreEqual(1, ret.success);
 		}
+
+		[TestMethod]
+		public void CommandInvoiceReturnsCorrectTable()
+		{
+			RPCall call = new RPCall();
+			call.dt = _th.GetTestPersonDataTable();
+			CommandUpsert com = new CommandUpsert();
+			RPResult ret = com.Execute(call);
+			Assert.AreEqual(1, ret.success);
+		}
+
+		[TestMethod]
+		public void CommandUpsertInvoiceIsSuccessfull()
+		{
+			RPCall call = new RPCall();
+			call.procedureArgs = new string[] { "1" };
+			CommandGetCompany com = new CommandGetCompany();
+			RPResult ret = com.Execute(call);
+			Assert.IsTrue(TestHelper.CompareDataTables(ret.dt, _th.GetTestCompanyDataTable()));
+		}
 	}
 }

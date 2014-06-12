@@ -63,6 +63,7 @@
     <Compile Include="ServerCommandTest.cs" />
     <Compile Include="FacadeTest.cs" />
     <Compile Include="DALTest.cs" />
+    <Compile Include="CommandDictionaryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj">
