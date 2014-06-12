@@ -12,11 +12,17 @@ namespace Server.BusinessLayer
 		static readonly CommandDictionary _Instance = new CommandDictionary();
 		ConcurrentDictionary<string, ICommand> _availableCommands = new ConcurrentDictionary<string, ICommand>();
 
+		/// <summary>
+		/// Retrieve Singleton Instance
+		/// </summary>
 		public static CommandDictionary Instance
 		{
 			get { return _Instance; }
 		}
 
+		/// <param name="commandName">Name of the Command to be retrieved</param>
+		/// <param name="value">Found ICommand Object</param>
+		/// <returns>Returns False on Error</returns>
 		public bool GetCommand(string commandName, out ICommand value)
 		{
 			bool retval = _availableCommands.TryGetValue(commandName, out value);
@@ -24,7 +30,7 @@ namespace Server.BusinessLayer
 		}
 
 		/// <summary>
-		/// Register a new Command to be executed via RPC.
+		/// Register a new Command available for execution via RPC.
 		/// </summary>
 		/// <param name="commandName">The name of the method</param>
 		/// <param name="command">The instance of the command to be executed</param>

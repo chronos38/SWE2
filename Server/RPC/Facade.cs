@@ -25,9 +25,10 @@ namespace Server.RPC
 		}
 
 		/// <summary>
-		/// Handles incoming requests.
+		/// Handles incoming requests and calls the requested Command.
+		/// Sends Error 500 on Error
 		/// </summary>
-		/// <param name="ctx">The HttpListenerContext returned by the HttpListener</param>
+		/// <param name="con">IHttpConnection Object wich wraps HttpListenerContext</param>
 		public void HandleConnection(IHttpConnection con)
 		{
 			try {
@@ -60,12 +61,22 @@ namespace Server.RPC
 			}
 		}
 
+		/// <summary>
+		/// Creates a RPCall Object from a Serialized XML.
+		/// </summary>
+		/// <param name="reader">The Serialized XML Object</param>
+		/// <returns>RPCall Object containing the Clients Data</returns>
 		RPCall Deserialize(StreamReader reader)
 		{
 			RPCall call = (RPCall)_RPCallSerializer.Deserialize(reader);
 			return call;
 		}
 
+		/// <summary>
+		/// Serializes any RPResult Object into a XML String
+		/// </summary>
+		/// <param name="result">Serialized XML Object</param>
+		/// <returns>As XML Serialized Object</returns>
 		string Serialize(RPResult result)
 		{
 			StringWriter writer = new StringWriter();
